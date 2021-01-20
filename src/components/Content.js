@@ -1,33 +1,15 @@
-import { Grid } from '@material-ui/core';
 import React from 'react';
+import { Grid } from '@material-ui/core';
 import ExchangeCard from './ExchangeCard'
+import GameCard from './GameCard';
 
 
 const Content = () => {
     return ( 
-        <Grid container spacing={2}>
-            <Grid item sm={false} md={4} >
-                <ExchangeCard />
+        <Grid container spacing={2} justify="center">
+            <Grid item>
+                <GameCard></GameCard>
             </Grid>
-            <Grid item sm={false} md={4} >
-                <ExchangeCard />
-            </Grid>
-            <Grid item sm={false} md={4} >
-                <ExchangeCard />
-            </Grid>
-            <Grid item sm={false} md={4} >
-                <ExchangeCard />
-            </Grid>
-            <Grid item sm={false} md={4} >
-                <ExchangeCard />
-            </Grid>
-            <Grid item sm={false} md={4} >
-                <ExchangeCard />
-            </Grid>
-            <Grid item sm={false} md={4} >
-                <ExchangeCard />
-            </Grid>
-           
         </Grid>
     );
 }

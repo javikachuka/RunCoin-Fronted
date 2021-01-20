@@ -12,13 +12,13 @@ const ButtonLog = () => {
     if(eth.isConnected() == false){
         return (  
             <>  
-                <Button color="inherit" onClick={connetWallet}>Connect to a Wallet</Button>
+                <Button color="inherit" size="small" onClick={connetWallet}>Connect to a Wallet</Button>
             </>
         );
     }else{
         return (  
             <>  
-                <Button color="inherit" onClick={disconnectWallet}>Disconnect</Button>
+                <Button color="inherit" size="small" onClick={disconnectWallet}>Disconnect</Button>
             </>
         );
     }
