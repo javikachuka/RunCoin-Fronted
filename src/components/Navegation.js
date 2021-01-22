@@ -36,13 +36,7 @@ export default function Navegation() {
         icon={<HomeIcon fontSize="small" />}
         onClick={handleClick}
       />
-      <StyledBreadcrumb component="a" href="#" label="Catalog" onClick={handleClick} />
-      <StyledBreadcrumb
-        label="Accessories"
-        deleteIcon={<ExpandMoreIcon />}
-        onClick={handleClick}
-        onDelete={handleClick}
-      />
+      <StyledBreadcrumb component="a" href="#" label="Game" onClick={handleClick} />
     </Breadcrumbs>
   );
 }

@@ -1,5 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 
 var eth = ""
@@ -12,13 +14,13 @@ const ButtonLog = () => {
     if(eth.isConnected() == false){
         return (  
             <>  
-                <Button color="inherit" size="small" onClick={connetWallet}>Connect to a Wallet</Button>
+                <Button color="inherit" size="small" onClick={connetWallet} endIcon={<ArrowForwardIcon/>}>Connect to a Wallet</Button>
             </>
         );
     }else{
         return (  
             <>  
-                <Button color="inherit" size="small" onClick={disconnectWallet}>Disconnect</Button>
+                <Button color="inherit" size="small" onClick={disconnectWallet} endIcon={<ExitToAppIcon/>}>Disconnect</Button>
             </>
         );
     }

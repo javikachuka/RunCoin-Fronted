@@ -2,7 +2,9 @@ import React from 'react';
 import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles'
 import ButtonLog from './ButtonLog';
+import ButtonSetting from './ButtonSetting';
 import SettingsIcon from '@material-ui/icons/Settings';
+
 const useStyles = makeStyles(()=>({
     separarDerecha: {
         flex: 1
@@ -19,9 +21,10 @@ const Header = () => {
                         Run Coin
                     </Typography>
                     <ButtonLog />
-                    <Button color="inherit" size="small">
+                    <ButtonSetting/>
+                    {/* <Button color="inherit" size="small">
                         <SettingsIcon></SettingsIcon>
-                    </Button>
+                    </Button> */}
                 </Toolbar>
             </AppBar>
         </>

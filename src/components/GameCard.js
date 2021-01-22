@@ -6,13 +6,24 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 
-const useStyles = makeStyles({
+
+const useStyles = makeStyles((theme) => ({
     root: {
-      minWidth: 800,
-      minHeight: 400,
+      [theme.breakpoints.up('xs')]: {
+        minWidth: 380,
+        minHeight: 200,
+      },
+      [theme.breakpoints.up('sm')]: {
+        minWidth: 400,
+        minHeight: 200,
+      },
+      [theme.breakpoints.up('md')]: {
+        minWidth: 800,
+        minHeight: 400,
+      },
       background: 'rgba(0, 0, 0, 0.12)',
     },
-  });
+  }));
 
 const GameCard = () => {
 
