@@ -24,19 +24,19 @@ const App = () => {
         <Grid item container justify="center" spacing={4} lg={12} >
           <Grid item>
             <Alert severity="success" size="small">
-              <AlertTitle>Premio Actual</AlertTitle>
+              <AlertTitle>Prize Pool</AlertTitle>
                 This is an error alert — <strong>check it out!</strong>
             </Alert>
           </Grid>
           <Grid item>
             <Alert severity="info" size="small">
-              <AlertTitle>Siguiente Premio</AlertTitle>
+              <AlertTitle>Next Prize</AlertTitle>
                 This is an error alert — <strong>check it out!</strong>
             </Alert>
           </Grid>
           <Grid item>
             <Alert severity="error" size="small">
-              <AlertTitle>Dias de Temporada</AlertTitle>
+              <AlertTitle>Days</AlertTitle>
                 This is an error alert — <strong>check it out!</strong>
             </Alert>
           </Grid>
@@ -47,7 +47,8 @@ const App = () => {
             <Grid item >
               <Content />
             </Grid>
-            <Grid item container direction="column" sm={2} justify="space-evenly" alignItems="center">
+            <Grid item sm={2} ></Grid>
+            {/* <Grid item container direction="column" sm={2} justify="space-evenly" alignItems="center">
               <Grid item>
                 <Button variant="contained" color="primary">
                   Reclamar Premio
@@ -58,7 +59,7 @@ const App = () => {
                   Reclamar Token
               </Button>
               </Grid>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Box>
       </Grid>
