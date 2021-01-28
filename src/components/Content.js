@@ -6,7 +6,7 @@ import GameCard from './GameCard';
 
 const Content = () => {
     return ( 
-        <Grid container spacing={2} justify="center">
+        <Grid container justify="center">
             <Grid item>
                 <GameCard></GameCard>
             </Grid>

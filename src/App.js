@@ -5,8 +5,16 @@ import Header from './components/Header';
 import Content from './components/Content'
 import Navegation from './components/Navegation';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import {makeStyles} from '@material-ui/styles'
+
+const useStyles = makeStyles(()=>({
+  paper: {
+    padding: 5,
+  } 
+}))
 
 const App = () => {
+  const classes = useStyles()
   return (
     <>
       <Grid container direction="column"  >
@@ -21,20 +29,20 @@ const App = () => {
             </Grid>
           </Grid>
         </Box>
-        <Grid item container justify="center" spacing={4} lg={12} >
-          <Grid item>
+        <Grid item container justify="center" spacing={0} lg={12} >
+          <Grid item className={classes.paper}>
             <Alert severity="success" size="small">
               <AlertTitle>Prize Pool</AlertTitle>
                 This is an error alert — <strong>check it out!</strong>
             </Alert>
           </Grid>
-          <Grid item>
+          <Grid item className={classes.paper}>
             <Alert severity="info" size="small">
               <AlertTitle>Next Prize</AlertTitle>
                 This is an error alert — <strong>check it out!</strong>
             </Alert>
           </Grid>
-          <Grid item>
+          <Grid item className={classes.paper}>
             <Alert severity="error" size="small">
               <AlertTitle>Days</AlertTitle>
                 This is an error alert — <strong>check it out!</strong>
