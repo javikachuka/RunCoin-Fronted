@@ -11,9 +11,11 @@ let web3 = new Web3(Web3.givenProvider || Parameters.provider);
 const miContrato = new web3.eth.Contract(CONST_ABI, Parameters.addressContractR);
 
 
-//inicia el juego y retorna su {player:string,timestamp:numeros}
+//inicia el juego y retorna su {player:string,timestamp:uint ,wait: uint}
 //ejemplo de timestamp = 1287124121241 ; si resto el timestamp del anterior jugador con este serian los segundos que hay 
 // de diferencia.
+
+// Account
 export async function play(_account, _value) {
     //_cost wei
 
