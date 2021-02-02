@@ -16,15 +16,15 @@ const miContrato = new web3.eth.Contract(CONST_ABI, Parameters.addressContractR)
 // de diferencia.
 
 // Account
-export async function play(_account, _value) {
+export async function play(_account) {
     //_cost wei
 
     try {
         const _cost = await miContrato.methods.cost()
             .call((err, result) => result);
-
+        
         const player = await miContrato.methods
-            .game(_value)
+            .game(_cost)
             .send({
                     from: _account,
                     value: _cost,
