@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -18,6 +18,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import {play, listPlayerLastSeassons} from '../services/server';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -54,6 +55,13 @@ const useStyles = makeStyles((theme) => ({
     '&:last-child td, &:last-child th': {
       border: 0,
     },
+  },
+  info: {
+    padding: 5,
+  },
+  game : {
+    padding: 5,
+    marginLeft: 20,
   }
 }));
 
@@ -72,12 +80,31 @@ const GameCard = () => {
     setOpen(false);
   };
 
+  useEffect(
+    () => {
+      listPlayerLastSeassons(10).then(
+        (result) => {
+          console.log(result)
+        }
+      ).catch(
+        (error) => {
+          console.log(error)
+        }
+      )
+    }, []
+  )
+
   return (
     <Card className={classes.root} variant="elevation" >
       <CardContent>
         <Grid container justify="center">
-          <Grid item>
-            <Button variant="contained" color="primary">Play!</Button>
+          <Grid item container justify="flex-start" >
+            <Grid item className={classes.info} xs={false}  sm={5} >
+              <Typography variant="h5" gutterBottom style={{color: 'red'}}>Cost</Typography>
+            </Grid>
+            <Grid item xs={12} sm={7} >
+              <Button variant="contained" size="large" color="primary">Play!</Button>
+            </Grid>
           </Grid>
           <Grid item container xs={12} spacing={2} className={classes.margenButton} >
             <Grid item xs={12}>

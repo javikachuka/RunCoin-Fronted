@@ -5,8 +5,6 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Web3 from 'web3';
 const web3 = new Web3(window.web3.currentProvider);
 
-var connected = false;
-
 const ButtonLog = () => {
     const [logued, setLogued] = useState(false);
 
@@ -24,7 +22,7 @@ const ButtonLog = () => {
                     setLogued(true)
                 }
             });
-        }
+        }, []
     )
 
     async function connetWallet() { // funcion para loguearme a metamask

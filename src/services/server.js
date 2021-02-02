@@ -52,12 +52,12 @@ export async function listPlayerLastSeassons(cant) {
 
     try {
         const currentSeassons = await miContrato.methods.currentSeassons()
-            .call((err, result) => result);
-
+        .call((err, result) => result);
+        
         const cantPlayer = await miContrato.methods.getCantPlayer(currentSeassons)
             .call((err, result) => result);
         cant = cant > cantPlayer ? cantPlayer - 1 : cant;
-        players = [];
+        var players = [];
         let player = {};
         while (cant > 0) {
 
@@ -70,6 +70,7 @@ export async function listPlayerLastSeassons(cant) {
         return players;
 
     } catch (Ex) {
+        console.log(Ex)
         return false;
     }
 }
@@ -82,11 +83,11 @@ export async function getMorePlayer(cant, indexPlayer, indexSeasson) {
 
     try {
 
-        players = [];
+        var players = [];
         let player = {};
         while (cant > 0 && indexPlayer > 0) {
 
-            player = await miContrato.methods.getPlayer(currentSeassons, indexPlayer)
+            player = await miContrato.methods.getPlayer(indexSeasson, indexPlayer)
                 .call((err, result) => result);
 
             players.push(player);
