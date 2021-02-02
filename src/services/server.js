@@ -48,17 +48,23 @@ export async function play(_account, _value) {
 //opcion 1 timeGame= seria el tiempo desde que empezo a jugar hasta que otro jugador le corto el tiempo (cada vez que consultas siempre va ser el mismo tiempo).
 //opcion 2 timeGame= si es el ultimo jugador del array te devuelve el tiempo desde que empezo a jugar hasta que se consulto en la blockchain (cada vez que consultas va a cmbiar el tiempo)
 
-export async function listPlayerLastSeassons(cant) {
+export async function listPlayerLastSeassons(cant = -1) {
 
     try {
-        const currentSeassons = await miContrato.methods.currentSeassons()
-        .call((err, result) => result);
-        
+        const currentSeassons = await miContrato.methods.currentSeasson()
+            .call((err, result) => result);
+
         const cantPlayer = await miContrato.methods.getCantPlayer(currentSeassons)
             .call((err, result) => result);
-        cant = cant > cantPlayer ? cantPlayer - 1 : cant;
+        if (cant < 0) {
+            cant = cantPlayer;
+        } else {
+
+            cant = cant > cantPlayer ? cantPlayer - 1 : cant;
+        }
         var players = [];
         let player = {};
+        
         while (cant > 0) {
 
             player = await miContrato.methods.getPlayer(currentSeassons, cant)
@@ -147,4 +153,3 @@ miContrato.events.Game({
     console.log('Evento activado');
     console.log(event);
 });
-

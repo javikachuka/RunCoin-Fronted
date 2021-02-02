@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/smartContract
 /.pnp
 .pnp.js
 
