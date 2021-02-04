@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Web3 from 'web3';
+import {getUserLogued} from '../services/server';
 const web3 = new Web3(window.web3.currentProvider);
 
 const ButtonLog = () => {
@@ -10,18 +11,17 @@ const ButtonLog = () => {
 
     useEffect(
         () => {
-            web3.eth.getAccounts(function (err, accounts) { // chequea si hay un provider para poder conectarme la block
-                if (err != null) {
-                    console.error("An error occurred: " + err);
+            getUserLogued().then(
+                (result) => {
+                    if(result != null){
+                        setLogued(true)
+                    }
                 }
-                else if (accounts.length == 0) { // checkea si hay algun usuario ya logueado a metamask
-                    console.log("User is not logged in to MetaMask");
+            ).catch(
+                (error) => {
+                    console.log('error ')
                 }
-                else {
-                    console.log("User is logged in to MetaMask");
-                    setLogued(true)
-                }
-            });
+            )
         }, []
     )
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -18,7 +18,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {play, listPlayerLastSeassons} from '../services/server';
+import ItemGame from './ItemGame'
+import { play, listPlayerLastSeassons, getUserLogued } from '../services/server';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -59,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   info: {
     padding: 5,
   },
-  game : {
+  game: {
     padding: 5,
     marginLeft: 20,
   }
@@ -70,6 +71,7 @@ const GameCard = () => {
   const classes = useStyles()
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState('paper');
+  const [listPlayers, setListPlayers] = useState([]);
 
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);
@@ -80,11 +82,28 @@ const GameCard = () => {
     setOpen(false);
   };
 
+  // useEffect(() => {
+  //   console.log(listPlayers)
+  // }, [])
   useEffect(
     () => {
       listPlayerLastSeassons(10).then(
         (result) => {
-          console.log(result)
+          var array = result.map(
+            (r) => {
+              console.log(r.player)
+              return {
+                ...r,
+                player: r.player,
+                timeGame: r.timeGame,
+                timestamp: r.timestamp,
+                wait: r.wait
+              }
+            }
+          )
+          console.log(array);
+          setListPlayers(array);
+          console.log(listPlayers)
         }
       ).catch(
         (error) => {
@@ -94,65 +113,61 @@ const GameCard = () => {
     }, []
   )
 
+  const handlePlay = () => {
+    getUserLogued().then(
+      (result) => {
+        console.log(result)
+        if (result != null) {
+          let account = "'" + result + "'";
+          play(result).then(
+            (res) => {
+              console.log(res)
+            }
+          )
+        } else {
+          console.log('logueese por favor')
+        }
+      }
+    ).catch(
+      (error) => {
+        console.log('error al jugar')
+      }
+    )
+
+  }
+
+  const getDay = (timestamp) => {
+
+    console.log(timestamp)
+    const milliseconds = timestamp * 1000
+    const date = new Date(milliseconds)
+    return date.toLocaleDateString([], { hour: '2-digit', minute: '2-digit' , second: '2-digit'})
+}
+
   return (
     <Card className={classes.root} variant="elevation" >
       <CardContent>
         <Grid container justify="center">
           <Grid item container justify="flex-start" >
-            <Grid item className={classes.info} xs={false}  sm={5} >
-              <Typography variant="h5" gutterBottom style={{color: 'red'}}>Cost</Typography>
+            <Grid item className={classes.info} xs={false} sm={5} >
+              <Typography variant="h5" gutterBottom style={{ color: 'red' }}>Cost</Typography>
             </Grid>
             <Grid item xs={12} sm={7} >
-              <Button variant="contained" size="large" color="primary">Play!</Button>
+              <Button variant="contained" size="large" color="primary" onClick={handlePlay}>Play!</Button>
             </Grid>
           </Grid>
           <Grid item container xs={12} spacing={2} className={classes.margenButton} >
             <Grid item xs={12}>
-              <Typography variant="subtitle1" gutterBottom align='left'>
-                Id: 00021xxx2132
-              </Typography>
-              <ProgressBar value={25}></ProgressBar>
-              <Typography variant="subtitle2" gutterBottom align='right'>
-                time
-              </Typography>
+              {
+                listPlayers.map(
+                  (l) => {
+                    return (
+                      <ItemGame player={l.player} timeGame={l.timeGame} timestamp={l.timestamp} key={l.player + l.timestamp}></ItemGame>
+                    )
+                  }
+                )
+              }
             </Grid>
-            <Grid item xs={12}>
-              <Typography variant="subtitle1" gutterBottom align='left'>
-                Id: 00021xxx2132
-              </Typography>
-              <ProgressBar value={50}></ProgressBar>
-              <Typography variant="subtitle2" gutterBottom align='right'>
-                time
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="subtitle1" gutterBottom align='left'>
-                Id: 00021xxx2132
-              </Typography>
-              <ProgressBar value={10}></ProgressBar>
-              <Typography variant="subtitle2" gutterBottom align='right'>
-                time
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="subtitle1" gutterBottom align='left'>
-                Id: 00021xxx2132
-              </Typography>
-              <ProgressBar value={25}></ProgressBar>
-              <Typography variant="subtitle2" gutterBottom align='right'>
-                time
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="subtitle1" gutterBottom align='left'>
-                Id: 00021xxx2132
-              </Typography>
-              <ProgressBar value={85}></ProgressBar>
-              <Typography variant="subtitle2" gutterBottom align='right'>
-                time
-              </Typography>
-            </Grid>
-           
           </Grid>
         </Grid>
       </CardContent>
@@ -172,12 +187,19 @@ const GameCard = () => {
             <Table className={classes.table} size="small" aria-label="a dense table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Id Block</TableCell>
-                  <TableCell align="right">Game Time</TableCell>
+                  <TableCell>Player</TableCell>
+                  <TableCell align="right">Date</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-
+                {listPlayers.map((l) => (
+                  <TableRow key={l.player + l.timestamp+ l.timeGame}>
+                    <TableCell component="th" scope="row">
+                      {l.player}
+                    </TableCell>
+                    <TableCell align="right">{getDay(l.timestamp)}</TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </TableContainer>
