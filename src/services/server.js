@@ -33,6 +33,7 @@ export async function play(_account) {
             );
         return player;
     } catch (Ex) {
+        console.log(Ex)
         //ocurrieron los siguientes errores,
         //1- No esta habilitado para jugar.
         //2- el valor ingresado es menor al costo del juego el costo esta en WEI.
@@ -140,16 +141,40 @@ export async function getCantDaysCurrentOfSeassons() {
     }
 }
 
+export async function getUserLogued (){
+    try{
+        let data = null
+        await web3.eth.getAccounts( function (err, accounts) { // chequea si hay un provider para poder conectarme la block
+            if (err != null) {
+                console.error("An error occurred: " + err);
+            }
+            else if (accounts.length == 0) { // checkea si hay algun usuario ya logueado a metamask
+                console.log("User is not logged in to MetaMask");
+            }
+            else {
+                console.log("User is logged in to MetaMask");
+                data = accounts["0"] ;
+            }
+        });
+        return data
+    } catch (Ex) {
+        console.log(Ex)
+        return false ;
+    }
+}
+export async function watch(){
+    await miContrato.events.Game({
+        // filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
+        fromBlock: 'latest'
+    }, function (error, event) {
+        console.log('Evento activado');
+        console.log(event);
+    });
+}
+
 //**************Escuchar Eventos en la blockchain */
 //docs : https://web3js.readthedocs.io/en/v1.2.11/web3-eth-contract.html#id48
 //nose si funciona, se supone que escucha cuando el evento se dispara en la blockchain se ejecuta el codigo de adentro.
 // este escucha cada vez que alguien juegue.
 // si funciona te retorna estos parametros {address owner_play, uint256 cost,uint256 timestamp, uint256 wait}
 
-miContrato.events.Game({
-    // filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
-    fromBlock: 'latest'
-}, function (error, event) {
-    console.log('Evento activado');
-    console.log(event);
-});
