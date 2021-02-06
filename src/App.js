@@ -95,7 +95,7 @@ const App = () => {
           <Grid item className={classes.paper}>
             <Alert severity="error" size="small">
               <AlertTitle>Days Season</AlertTitle>
-              Days current of season - <strong>{daysCurrentSeassons}</strong>
+              Days current of season <strong>{daysCurrentSeassons}</strong>
             </Alert>
           </Grid>
         </Grid>

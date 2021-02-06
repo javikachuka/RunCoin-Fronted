@@ -162,6 +162,15 @@ export async function getUserLogued (){
         return false ;
     }
 }
+export async function watch(){
+    await miContrato.events.Game({
+        // filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
+        fromBlock: 'latest'
+    }, function (error, event) {
+        console.log('Evento activado');
+        console.log(event);
+    });
+}
 
 //**************Escuchar Eventos en la blockchain */
 //docs : https://web3js.readthedocs.io/en/v1.2.11/web3-eth-contract.html#id48
@@ -169,11 +178,3 @@ export async function getUserLogued (){
 // este escucha cada vez que alguien juegue.
 // si funciona te retorna estos parametros {address owner_play, uint256 cost,uint256 timestamp, uint256 wait}
 
-miContrato.events.Game({
-    // filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
-    fromBlock: 'latest'
-}, function (error, event) {
-    console.log('Evento activado');
-    console.log(event);
-    window.location.reload(false);
-});

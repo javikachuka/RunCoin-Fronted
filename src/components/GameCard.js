@@ -19,7 +19,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import ItemGame from './ItemGame'
-import { play, listPlayerLastSeassons, getUserLogued } from '../services/server';
+import { play, listPlayerLastSeassons, getUserLogued, watch } from '../services/server';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -87,7 +87,7 @@ const GameCard = () => {
   // }, [])
   useEffect(
     () => {
-      listPlayerLastSeassons(10).then(
+      listPlayerLastSeassons(15).then(
         (result) => {
           var array = result.map(
             (r) => {
@@ -122,6 +122,8 @@ const GameCard = () => {
           play(result).then(
             (res) => {
               console.log(res)
+              watch()
+              console.log('termine de ver')
             }
           )
         } else {
@@ -187,13 +189,15 @@ const GameCard = () => {
             <Table className={classes.table} size="small" aria-label="a dense table">
               <TableHead>
                 <TableRow>
+                  <TableCell>N</TableCell>
                   <TableCell>Player</TableCell>
                   <TableCell align="right">Date</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {listPlayers.map((l) => (
+                {listPlayers.map((l,index) => (
                   <TableRow key={l.player + l.timestamp+ l.timeGame}>
+                    <TableCell component="th" scope="row" >{index}</TableCell>
                     <TableCell component="th" scope="row">
                       {l.player}
                     </TableCell>
@@ -212,6 +216,7 @@ const GameCard = () => {
       </Dialog>
     </Card>
   );
+  
 }
 
 export default GameCard;
