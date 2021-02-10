@@ -21,7 +21,7 @@ const Header = () => {
                         Run Coin
                     </Typography>
                     <ButtonLog />
-                    <ButtonSetting/>
+                    {/* <ButtonSetting/> */}
                     {/* <Button color="inherit" size="small">
                         <SettingsIcon></SettingsIcon>
                     </Button> */}

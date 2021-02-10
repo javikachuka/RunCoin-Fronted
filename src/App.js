@@ -103,7 +103,7 @@ const App = () => {
           <Grid item container justify="center">
             <Grid item sm={2} ></Grid>
             <Grid item >
-              <Content />
+              <Content getRealPriceEth={getRealPriceEth} />
             </Grid>
             <Grid item sm={2} ></Grid>
             {/* <Grid item container direction="column" sm={2} justify="space-evenly" alignItems="center">

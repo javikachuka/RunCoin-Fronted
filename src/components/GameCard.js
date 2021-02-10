@@ -18,8 +18,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import ItemGame from './ItemGame'
-import { play, listPlayerLastSeassons, getUserLogued, watch } from '../services/server';
+import ItemGame from './ItemGame';
+import AlertPop from './AlertPop'
+import { Eth } from 'react-cryptocoins';
+import { play, listPlayerLastSeassons, getUserLogued, watch, getCostPlay } from '../services/server';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -66,12 +68,22 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const GameCard = () => {
+const GameCard = ({getRealPriceEth}) => {
 
   const classes = useStyles()
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState('paper');
   const [listPlayers, setListPlayers] = useState([]);
+  const [cost, setCost] = useState(0)
+  const [openPop, setOpenPop] = useState(false)
+
+  const handleClosePop = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenPop(false);
+  };
 
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);
@@ -87,6 +99,13 @@ const GameCard = () => {
   // }, [])
   useEffect(
     () => {
+      getCostPlay().then(
+        (res) => {
+          if (res != false){
+            setCost(res) ;
+          }
+        }
+      )
       listPlayerLastSeassons(15).then(
         (result) => {
           var array = result.map(
@@ -110,6 +129,7 @@ const GameCard = () => {
           console.log(error)
         }
       )
+
     }, []
   )
 
@@ -128,6 +148,7 @@ const GameCard = () => {
           )
         } else {
           console.log('logueese por favor')
+          setOpenPop(true)
         }
       }
     ).catch(
@@ -148,11 +169,17 @@ const GameCard = () => {
 
   return (
     <Card className={classes.root} variant="elevation" >
+      <AlertPop open={openPop} handleClosePop={handleClosePop}></AlertPop>
       <CardContent>
         <Grid container justify="center">
           <Grid item container justify="flex-start" >
-            <Grid item className={classes.info} xs={false} sm={5} >
-              <Typography variant="h5" gutterBottom style={{ color: 'red' }}>Cost</Typography>
+            <Grid item container className={classes.info} xs={false} sm={5} >
+              <Grid item>
+              <Typography variant="h5" gutterBottom style={{ color: '#91091e' }}>Cost:</Typography>
+              </Grid>
+              <Grid item>
+              <Typography variant="h6" style={{ marginLeft: '5px' }}><Eth></Eth> {getRealPriceEth(cost)}</Typography>
+              </Grid>
             </Grid>
             <Grid item xs={12} sm={7} >
               <Button variant="contained" size="large" color="primary" onClick={handlePlay}>Play!</Button>

@@ -4,11 +4,11 @@ import ExchangeCard from './ExchangeCard'
 import GameCard from './GameCard';
 
 
-const Content = () => {
+const Content = (props) => {
     return ( 
         <Grid container justify="center">
             <Grid item>
-                <GameCard></GameCard>
+                <GameCard getRealPriceEth={props.getRealPriceEth} ></GameCard>
             </Grid>
         </Grid>
     );
