@@ -3,26 +3,25 @@ import Button from '@material-ui/core/Button';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Web3 from 'web3';
-import {getUserLogued} from '../services/server';
+import {UserProvider, useUser} from '../context/userContext'
 const web3 = new Web3(window.web3.currentProvider);
 
+export default () => (
+    <UserProvider>
+        <ButtonLog>
+        </ButtonLog>
+    </UserProvider>
+)
+
 const ButtonLog = () => {
-    const [logued, setLogued] = useState(false);
+    const {user, logued, setLogued} = useUser()
 
     useEffect(
         () => {
-            getUserLogued().then(
-                (result) => {
-                    if(result != null){
-                        setLogued(true)
-                    }
-                }
-            ).catch(
-                (error) => {
-                    console.log('error ')
-                }
-            )
-        }, []
+            if(logued){
+                setLogued(true)
+            }
+        }
     )
 
     async function connetWallet() { // funcion para loguearme a metamask
@@ -71,6 +70,3 @@ const ButtonLog = () => {
         );
     }
 }
-
-
-export default ButtonLog;

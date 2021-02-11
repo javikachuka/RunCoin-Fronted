@@ -3,8 +3,8 @@ import { getUserLogued } from '../services/server';
 const UserContext = React.createContext();
 
 export function UserProvider(props) {
-    const [logued, setLogued] = useState(false);
     const [user, setUser] = useState(null);
+    const [logued, setLogued] = useState(false);
 
     useEffect(
         () => {
@@ -36,7 +36,7 @@ export function UserProvider(props) {
                     setLogued
                 }
             )
-        }, []
+        }, [user,logued]
     )
 
     return <UserContext.Provider value={value} {...props} />

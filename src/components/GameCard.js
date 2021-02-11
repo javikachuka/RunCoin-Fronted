@@ -22,7 +22,15 @@ import ItemGame from './ItemGame';
 import AlertPop from './AlertPop'
 import { Eth } from 'react-cryptocoins';
 import { play, listPlayerLastSeassons, getUserLogued, watch, getCostPlay } from '../services/server';
+import {UserProvider, useUser} from '../context/userContext'
 
+
+export default ({getRealPriceEth}) => (
+  <UserProvider>
+    <GameCard getRealPriceEth={getRealPriceEth}>
+    </GameCard>
+  </UserProvider>
+)
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,6 +78,7 @@ const useStyles = makeStyles((theme) => ({
 
 const GameCard = ({getRealPriceEth}) => {
 
+  const {user, logued, setLogued} = useUser()
   const classes = useStyles()
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState('paper');
@@ -134,28 +143,46 @@ const GameCard = ({getRealPriceEth}) => {
   )
 
   const handlePlay = () => {
-    getUserLogued().then(
-      (result) => {
-        console.log(result)
-        if (result != null) {
-          let account = "'" + result + "'";
-          play(result).then(
-            (res) => {
-              console.log(res)
-              watch()
-              console.log('termine de ver')
-            }
-          )
-        } else {
-          console.log('logueese por favor')
-          setOpenPop(true)
+    if(logued != false){
+      console.log('usuario logued')
+      console.log(user)
+      play(user.player).then(
+        (res) => {
+          watch()
+          console.log('termine de ver')
         }
-      }
-    ).catch(
-      (error) => {
-        console.log('error al jugar')
-      }
-    )
+      ).catch(
+        (error) => {
+          console.log('error al juegar ' + error )
+        }
+      )
+    }else{
+      console.log('user disconnected')
+      console.log(user)
+      setOpenPop(true)
+    }
+    // getUserLogued().then(
+    //   (result) => {
+    //     console.log(result)
+    //     if (result != null) {
+    //       let account = "'" + result + "'";
+    //       play(result).then(
+    //         (res) => {
+    //           console.log(res)
+    //           watch()
+    //           console.log('termine de ver')
+    //         }
+    //       )
+    //     } else {
+    //       console.log('logueese por favor')
+    //       setOpenPop(true)
+    //     }
+    //   }
+    // ).catch(
+    //   (error) => {
+    //     console.log('error al jugar')
+    //   }
+    // )
 
   }
 
@@ -245,5 +272,3 @@ const GameCard = ({getRealPriceEth}) => {
   );
   
 }
-
-export default GameCard;
