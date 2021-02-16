@@ -56,12 +56,12 @@ export async function listPlayerLastSeassons(cant = -1) {
             .call((err, result) => result);
 
         const cantPlayer = await miContrato.methods.getCantPlayer(currentSeassons)
-            .call((err, result) => result);
+            .call((err, result) => result) ;
         if (cant < 0) {
             cant = cantPlayer;
         } else {
 
-            cant = cant > cantPlayer ? cantPlayer - 1 : cant;
+            cant = cant >= cantPlayer ? parteInt(cantPlayer) - 1 : cant;
         }
         var players = [];
         let player = {};
