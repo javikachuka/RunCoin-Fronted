@@ -22,10 +22,10 @@ import ItemGame from './ItemGame';
 import AlertPop from './AlertPop'
 import { Eth } from 'react-cryptocoins';
 import { play, listPlayerLastSeassons, getUserLogued, watch, getCostPlay } from '../services/server';
-import {UserProvider, useUser} from '../context/userContext'
+import { UserProvider, useUser } from '../context/userContext'
 
 
-export default ({getRealPriceEth}) => (
+export default ({ getRealPriceEth }) => (
   <UserProvider>
     <GameCard getRealPriceEth={getRealPriceEth}>
     </GameCard>
@@ -76,9 +76,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const GameCard = ({getRealPriceEth}) => {
+const GameCard = ({ getRealPriceEth }) => {
 
-  const {user, logued, setLogued} = useUser()
+  const { user, logued, setLogued } = useUser()
   const classes = useStyles()
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState('paper');
@@ -110,12 +110,12 @@ const GameCard = ({getRealPriceEth}) => {
     () => {
       getCostPlay().then(
         (res) => {
-          if (res != false){
-            setCost(res) ;
+          if (res != false) {
+            setCost(res);
           }
         }
       )
-      listPlayerLastSeassons(15).then(
+      listPlayerLastSeassons(20).then(
         (result) => {
           var array = result.map(
             (r) => {
@@ -125,7 +125,7 @@ const GameCard = ({getRealPriceEth}) => {
                 player: r.player,
                 timeGame: r.timeGame,
                 timestamp: r.timestamp,
-                wait: r.wait
+                wait: r.wait,
               }
             }
           )
@@ -143,20 +143,30 @@ const GameCard = ({getRealPriceEth}) => {
   )
 
   const handlePlay = () => {
-    if(logued != false){
+    if (logued != false) {
       console.log('usuario logued')
       console.log(user)
       play(user.player).then(
         (res) => {
-          watch()
+          watch().then(
+            (res) => {
+              console.log('todo ok')
+              console.log(res)
+            }
+          ).catch(
+            (err) => {
+              console.log('fallo')
+              console.log(err)
+            }
+          )
           console.log('termine de ver')
         }
       ).catch(
         (error) => {
-          console.log('error al juegar ' + error )
+          console.log('error al juegar ' + error)
         }
       )
-    }else{
+    } else {
       console.log('user disconnected')
       console.log(user)
       setOpenPop(true)
@@ -191,8 +201,8 @@ const GameCard = ({getRealPriceEth}) => {
     console.log(timestamp)
     const milliseconds = timestamp * 1000
     const date = new Date(milliseconds)
-    return date.toLocaleDateString([], { hour: '2-digit', minute: '2-digit' , second: '2-digit'})
-}
+    return date.toLocaleDateString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+  }
 
   return (
     <Card className={classes.root} variant="elevation" >
@@ -202,10 +212,10 @@ const GameCard = ({getRealPriceEth}) => {
           <Grid item container justify="flex-start" >
             <Grid item container className={classes.info} xs={false} sm={5} >
               <Grid item>
-              <Typography variant="h5" gutterBottom style={{ color: '#91091e' }}>Cost:</Typography>
+                <Typography variant="h5" gutterBottom style={{ color: '#91091e' }}>Cost:</Typography>
               </Grid>
               <Grid item>
-              <Typography variant="h6" style={{ marginLeft: '5px' }}><Eth></Eth> {getRealPriceEth(cost)}</Typography>
+                <Typography variant="h6" style={{ marginLeft: '5px' }}><Eth></Eth> {getRealPriceEth(cost)}</Typography>
               </Grid>
             </Grid>
             <Grid item xs={12} sm={7} >
@@ -216,10 +226,18 @@ const GameCard = ({getRealPriceEth}) => {
             <Grid item xs={12}>
               {
                 listPlayers.map(
-                  (l) => {
-                    return (
-                      <ItemGame player={l.player} timeGame={l.timeGame} timestamp={l.timestamp} key={l.player + l.timestamp}></ItemGame>
-                    )
+                  (l, index) => {
+                    if (index == 0) {
+                      console.log('el trye')
+                      return (
+                        <ItemGame player={l.player} timeGame={l.timeGame} timestamp={l.timestamp} wait={l.wait} isLast={true} key={l.player + l.timestamp}></ItemGame>
+                      )
+                    } else {
+                      console.log('el false')
+                      return (
+                        <ItemGame player={l.player} timeGame={l.timeGame} timestamp={l.timestamp} wait={l.wait} isLast={false} key={l.player + l.timestamp}></ItemGame>
+                      )
+                    }
                   }
                 )
               }
@@ -246,16 +264,21 @@ const GameCard = ({getRealPriceEth}) => {
                   <TableCell>N</TableCell>
                   <TableCell>Player</TableCell>
                   <TableCell align="right">Date</TableCell>
+                  <TableCell align="right">Wait</TableCell>
+                  <TableCell align="right">Time Game</TableCell>
+                  {/* <TableCell align="right"></TableCell> */}
                 </TableRow>
               </TableHead>
               <TableBody>
-                {listPlayers.map((l,index) => (
-                  <TableRow key={l.player + l.timestamp+ l.timeGame}>
+                {listPlayers.map((l, index) => (
+                  <TableRow key={l.player + l.timestamp + l.timeGame}>
                     <TableCell component="th" scope="row" >{index}</TableCell>
                     <TableCell component="th" scope="row">
                       {l.player}
                     </TableCell>
                     <TableCell align="right">{getDay(l.timestamp)}</TableCell>
+                    <TableCell component="th" scope="row" >{l.wait}</TableCell>
+                    <TableCell component="th" scope="row" >{l.timeGame}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -270,5 +293,5 @@ const GameCard = ({getRealPriceEth}) => {
       </Dialog>
     </Card>
   );
-  
+
 }

@@ -71,6 +71,8 @@ export async function listPlayerLastSeassons(cant = -1) {
             player = await miContrato.methods.getPlayer(currentSeassons, cant)
                 .call((err, result) => result);
 
+            player.wait = parseInt(player.wait)
+            player.timeGame = parseInt(player.timeGame)
             players.push(player);
             cant--;
         }
@@ -169,6 +171,7 @@ export async function watch(){
     }, function (error, event) {
         console.log('Evento activado');
         console.log(event);
+        console.log(error)
     });
 }
 
@@ -178,3 +181,10 @@ export async function watch(){
 // este escucha cada vez que alguien juegue.
 // si funciona te retorna estos parametros {address owner_play, uint256 cost,uint256 timestamp, uint256 wait}
 
+// miContrato.events.Game({
+//     // filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
+//     fromBlock: 'latest'
+// }, function (error, event) {
+//     console.log('Evento activado');
+//     console.log(event);
+// });

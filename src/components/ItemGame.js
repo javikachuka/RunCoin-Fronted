@@ -18,14 +18,14 @@ const ItemGame = (props) => {
             <Typography variant="subtitle1" gutterBottom align='left'>
                 Id: {props.player}
             </Typography>
-            <ProgressBar value={50}></ProgressBar>
+            <ProgressBar {...props}></ProgressBar>
             <div style={{display:"flex", justifyContent:"flex-end"}}>
             <Typography variant="subtitle2" gutterBottom align='right' noWrap>
                 <strong>Date:</strong> {getDay(props.timestamp)}
             </Typography>
-            <Typography variant="subtitle2" style={{marginLeft:10}} gutterBottom align='right' noWrap>
+            {/* <Typography variant="subtitle2" style={{marginLeft:10}} gutterBottom align='right' noWrap>
                 <strong>Game Time:</strong> {props.timeGame}
-            </Typography>
+            </Typography> */}
             </div>
         </>
     );
