@@ -56,17 +56,21 @@ export async function listPlayerLastSeassons(cant = -1) {
             .call((err, result) => result);
 
         const cantPlayer = await miContrato.methods.getCantPlayer(currentSeassons)
-            .call((err, result) => result) ;
-        if (cant < 0) {
-            cant = cantPlayer;
+            .call((err, result) => result) ;  
+        if (cant <= 0) {
+            //trae desde el utlimo jugador hasta el primero
+            cant = 0;
         } else {
+            //el limite de jugador es
 
-            cant = cant >= cantPlayer ? parseInt(cantPlayer) - 1 : cant;
+            cant = cant >= cantPlayer ? 0 : cant;
+         
         }
         var players = [];
         let player = {};
         console.log(cant)
-        while (cant > 0) {
+
+        while (cantPlayer >= cant) {
 
             player = await miContrato.methods.getPlayer(currentSeassons, cant)
                 .call((err, result) => result);
@@ -74,7 +78,7 @@ export async function listPlayerLastSeassons(cant = -1) {
             player.wait = parseInt(player.wait)
             player.timeGame = parseInt(player.timeGame)
             players.push(player);
-            cant--;
+            cantPlayer--;
         }
         return players;
 
