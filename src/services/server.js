@@ -8,7 +8,7 @@ const Web3 = require("web3");
 //prueba conectar el proveedor de metamask primero sino usa la varabile en Parameters "provider"
 let web3 = new Web3(Web3.givenProvider || Parameters.provider);
 //se crea el contrato 
-const miContrato = new web3.eth.Contract(CONST_ABI, Parameters.addressContractR);
+export const miContrato = new web3.eth.Contract(CONST_ABI, Parameters.addressContractR);
 
 
 //inicia el juego y retorna su {player:string,timestamp:uint ,wait: uint}
@@ -61,11 +61,11 @@ export async function listPlayerLastSeassons(cant = -1) {
             cant = cantPlayer;
         } else {
 
-            cant = cant >= cantPlayer ? parteInt(cantPlayer) - 1 : cant;
+            cant = cant >= cantPlayer ? parseInt(cantPlayer) - 1 : cant;
         }
         var players = [];
         let player = {};
-        
+        console.log(cant)
         while (cant > 0) {
 
             player = await miContrato.methods.getPlayer(currentSeassons, cant)

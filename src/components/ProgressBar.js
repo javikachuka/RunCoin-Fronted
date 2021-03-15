@@ -90,6 +90,7 @@ export default function ProgressBar(props) {
   useEffect(
     () => {
       // console.log(props)
+      console.log("render progress bar");
       if (isLast) {
 
         const timer = setTimeout(() => {
@@ -143,7 +144,7 @@ export default function ProgressBar(props) {
     );
   } else if (timeGame >= end) {
 
-    console.log('win' + props.player)
+    // console.log('win' + props.player)
 
     return (
       <div className={classes.root}>
@@ -152,7 +153,7 @@ export default function ProgressBar(props) {
       </div>
     );
   } else {
-    console.log('loss' + props.player)
+    // console.log('loss' + props.player)
     return (
       <div className={classes.root}>
         <BorderLinearProgressLoss variant="determinate" value={value} />

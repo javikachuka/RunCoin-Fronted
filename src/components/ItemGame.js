@@ -6,8 +6,6 @@ const ItemGame = (props) => {
 
 
     const getDay = (timestamp) => {
-
-        console.log(timestamp)
         const milliseconds = timestamp * 1000
         const date = new Date(milliseconds)
         return date.toLocaleDateString([], { hour: '2-digit', minute: '2-digit' , second: '2-digit'})

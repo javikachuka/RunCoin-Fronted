@@ -3,6 +3,7 @@ import { emphasize, withStyles } from '@material-ui/core/styles';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Chip from '@material-ui/core/Chip';
 import HomeIcon from '@material-ui/icons/Home';
+import SportsEsports from '@material-ui/icons/SportsEsports';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const StyledBreadcrumb = withStyles((theme) => ({
@@ -36,7 +37,13 @@ export default function Navegation() {
         icon={<HomeIcon fontSize="small" />}
         onClick={handleClick}
       />
-      <StyledBreadcrumb component="a" href="#" label="Game" onClick={handleClick} />
+      <StyledBreadcrumb 
+        component="a" 
+        href="#" 
+        label="Game" 
+        onClick={handleClick} 
+        icon={<SportsEsports fontSize="small" />}
+      />
     </Breadcrumbs>
   );
 }

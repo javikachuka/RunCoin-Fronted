@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -23,14 +23,16 @@ import AlertPop from './AlertPop'
 import { Eth } from 'react-cryptocoins';
 import { play, listPlayerLastSeassons, getUserLogued, watch, getCostPlay } from '../services/server';
 import { UserProvider, useUser } from '../context/userContext'
+import LoginContext from '../context/LoginContext'
+import ListOfPlayers from './ListOfPlayers';
 
 
-export default ({ getRealPriceEth }) => (
-  <UserProvider>
-    <GameCard getRealPriceEth={getRealPriceEth}>
-    </GameCard>
-  </UserProvider>
-)
+// export default ({ getRealPriceEth }) => (
+//   <UserProvider>
+//     <GameCard getRealPriceEth={getRealPriceEth}>
+//     </GameCard>
+//   </UserProvider>
+// )
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,11 +80,13 @@ const useStyles = makeStyles((theme) => ({
 
 const GameCard = ({ getRealPriceEth }) => {
 
-  const { user, logued, setLogued } = useUser()
+
+  const { user, setUser, logued, setLogued } = useContext(LoginContext)
+  // const { user, logued } = useUser()
   const classes = useStyles()
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState('paper');
-  const [listPlayers, setListPlayers] = useState([]);
+  const [listPlayersTotal, setListPlayersTotal] = useState([]);
   const [cost, setCost] = useState(0)
   const [openPop, setOpenPop] = useState(false)
 
@@ -95,8 +99,29 @@ const GameCard = ({ getRealPriceEth }) => {
   };
 
   const handleClickOpen = (scrollType) => () => {
-    setOpen(true);
-    setScroll(scrollType);
+    listPlayerLastSeassons(20).then(
+      (result) => {
+        var array = result.map(
+          (r) => {
+            return {
+              ...r,
+              player: r.player,
+              timeGame: r.timeGame,
+              timestamp: r.timestamp,
+              wait: r.wait,
+            }
+          }
+        )
+        setListPlayersTotal(array);
+        setOpen(true);
+        setScroll(scrollType);
+      }
+    ).catch(
+      (error) => {
+        console.log('error array total ' + error)
+      }
+    )
+
   };
 
   const handleClose = () => {
@@ -108,58 +133,24 @@ const GameCard = ({ getRealPriceEth }) => {
   // }, [])
   useEffect(
     () => {
+      console.log("render game card");
       getCostPlay().then(
         (res) => {
-          if (res != false) {
+          if (res !== false) {
             setCost(res);
           }
         }
       )
-      listPlayerLastSeassons(20).then(
-        (result) => {
-          var array = result.map(
-            (r) => {
-              console.log(r.player)
-              return {
-                ...r,
-                player: r.player,
-                timeGame: r.timeGame,
-                timestamp: r.timestamp,
-                wait: r.wait,
-              }
-            }
-          )
-          console.log(array);
-          setListPlayers(array);
-          console.log(listPlayers)
-        }
-      ).catch(
-        (error) => {
-          console.log(error)
-        }
-      )
+      
 
-    }, []
+    }, [logued, user]
   )
 
   const handlePlay = () => {
-    if (logued != false) {
-      console.log('usuario logued')
-      console.log(user)
+    if (logued !== false) {
       play(user.player).then(
         (res) => {
-          watch().then(
-            (res) => {
-              console.log('todo ok')
-              console.log(res)
-            }
-          ).catch(
-            (err) => {
-              console.log('fallo')
-              console.log(err)
-            }
-          )
-          console.log('termine de ver')
+          console.log("Has Jugado con exito")
         }
       ).catch(
         (error) => {
@@ -168,7 +159,6 @@ const GameCard = ({ getRealPriceEth }) => {
       )
     } else {
       console.log('user disconnected')
-      console.log(user)
       setOpenPop(true)
     }
     // getUserLogued().then(
@@ -198,7 +188,6 @@ const GameCard = ({ getRealPriceEth }) => {
 
   const getDay = (timestamp) => {
 
-    console.log(timestamp)
     const milliseconds = timestamp * 1000
     const date = new Date(milliseconds)
     return date.toLocaleDateString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
@@ -224,23 +213,7 @@ const GameCard = ({ getRealPriceEth }) => {
           </Grid>
           <Grid item container xs={12} spacing={2} className={classes.margenButton} >
             <Grid item xs={12}>
-              {
-                listPlayers.map(
-                  (l, index) => {
-                    if (index == 0) {
-                      console.log('el trye')
-                      return (
-                        <ItemGame player={l.player} timeGame={l.timeGame} timestamp={l.timestamp} wait={l.wait} isLast={true} key={l.player + l.timestamp}></ItemGame>
-                      )
-                    } else {
-                      console.log('el false')
-                      return (
-                        <ItemGame player={l.player} timeGame={l.timeGame} timestamp={l.timestamp} wait={l.wait} isLast={false} key={l.player + l.timestamp}></ItemGame>
-                      )
-                    }
-                  }
-                )
-              }
+              <ListOfPlayers />
             </Grid>
           </Grid>
         </Grid>
@@ -255,7 +228,7 @@ const GameCard = ({ getRealPriceEth }) => {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
-        <DialogTitle id="scroll-dialog-title">Player List</DialogTitle>
+        <DialogTitle id="scroll-dialog-title">Players List</DialogTitle>
         <DialogContent dividers={scroll === 'paper'}>
           <TableContainer component={Paper}>
             <Table className={classes.table} size="small" aria-label="a dense table">
@@ -270,7 +243,7 @@ const GameCard = ({ getRealPriceEth }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {listPlayers.map((l, index) => (
+                {listPlayersTotal.map((l, index) => (
                   <TableRow key={l.player + l.timestamp + l.timeGame}>
                     <TableCell component="th" scope="row" >{index}</TableCell>
                     <TableCell component="th" scope="row">
@@ -295,3 +268,5 @@ const GameCard = ({ getRealPriceEth }) => {
   );
 
 }
+
+export default GameCard

@@ -10,7 +10,6 @@ export function UserProvider(props) {
         () => {
             getUserLogued().then(
                 (res) => {
-                    console.log(res)
                     if (res != null) {
                         setLogued(true)
                         setUser({
@@ -36,7 +35,7 @@ export function UserProvider(props) {
                     setLogued
                 }
             )
-        }, [user,logued]
+        }, 
     )
 
     return <UserContext.Provider value={value} {...props} />
