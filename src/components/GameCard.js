@@ -65,6 +65,7 @@ const GameCard = ({ getRealPriceEth }) => {
   const classes = useStyles()
   const [cost, setCost] = useState(0)
   const [openPop, setOpenPop] = useState(false)
+  const [openPopInfo, setOpenPopInfo] = useState(false)
 
   const handleClosePop = (event, reason) => {
     if (reason === 'clickaway') {
@@ -72,6 +73,14 @@ const GameCard = ({ getRealPriceEth }) => {
     }
 
     setOpenPop(false);
+  };
+
+  const handleClosePopInfo = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenPopInfo(false);
   };
 
   const handleClickOpen = (scrollType) => () => {
@@ -102,8 +111,10 @@ const GameCard = ({ getRealPriceEth }) => {
 
   const handlePlay = () => {
     if (logued !== false) {
+      setOpenPopInfo(true)
       play(user.player).then(
         (res) => {
+          console.log(res);
           console.log("Has Jugado con exito")
         }
       ).catch(
@@ -142,7 +153,8 @@ const GameCard = ({ getRealPriceEth }) => {
 
   return (
     <Card className={classes.root} variant="elevation" >
-      <AlertPop open={openPop} handleClosePop={handleClosePop}></AlertPop>
+      <AlertPop open={openPop} handleClosePop={handleClosePop} type='error' sms='Please connect to a wallet!'></AlertPop>
+      <AlertPop open={openPopInfo} handleClosePopInfo={handleClosePopInfo} type='info' sms='Game in queue'></AlertPop>
       <CardContent>
         <Grid container justify="center">
           <Grid item container justify="flex-start" >

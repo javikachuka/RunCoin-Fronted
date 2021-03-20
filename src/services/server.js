@@ -23,15 +23,21 @@ export async function play(_account) {
         const _cost = await miContrato.methods.cost()
             .call((err, result) => result);
 
+        let confirm = false
         const player = await miContrato.methods
             .game(_cost)
             .send({
                     from: _account,
                     value: _cost,
                 },
-                function (error, transactionHash) {}
+                function (error, transactionHash) {
+                    console.log(transactionHash);
+                    if(transactionHash !== undefined){
+                        confirm = true
+                    }
+                }
             );
-        return player;
+        return confirm;
     } catch (Ex) {
         console.log(Ex)
         //ocurrieron los siguientes errores,

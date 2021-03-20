@@ -17,15 +17,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AlertPop({open, handleClosePop}) {
+export default function AlertPop({open, handleClosePop, type, sms}) {
   const classes = useStyles();
   
 
   return (
     <div className={classes.root}>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClosePop} >
-        <Alert onClose={handleClosePop}  severity="error">
-          Please connect to a wallet
+        <Alert onClose={handleClosePop}  severity={type}>
+          {sms}
         </Alert>
       </Snackbar>
     </div>

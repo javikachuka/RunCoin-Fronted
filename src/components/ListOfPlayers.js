@@ -5,10 +5,14 @@ import ItemGame from '../components/ItemGame'
 import { Button, List } from '@material-ui/core';
 import { useList } from '../hooks/useList';
 import { player } from '../services/server';
+import AlertPop from './AlertPop'
 
 const ListOfPlayers = () => {
 
     const { list, setNewGame } = useList()
+
+
+    
 
     // const [list, setList] = useState([])
     // const [newGame, setNewGame] = useState(null)
