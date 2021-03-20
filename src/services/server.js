@@ -22,7 +22,7 @@ export async function play(_account) {
     try {
         const _cost = await miContrato.methods.cost()
             .call((err, result) => result);
-        
+
         const player = await miContrato.methods
             .game(_cost)
             .send({
@@ -56,16 +56,16 @@ export async function listPlayerLastSeassons(cant = -1) {
             .call((err, result) => result);
 
         let cantPlayer = await miContrato.methods.getCantPlayer(currentSeassons)
-            .call((err, result) => result) ;  
-        cantPlayer --; 
+            .call((err, result) => result);
+        cantPlayer--;
         if (cant <= 0) {
             //trae desde el utlimo jugador hasta el primero
             cant = 0;
         } else {
             //el limite de jugador es
 
-            cant = cant >= cantPlayer ? 0 :  cantPlayer - cant;
-         
+            cant = cant >= cantPlayer ? 0 : cantPlayer - cant;
+
         }
         var players = [];
         let player = {};
@@ -149,36 +149,51 @@ export async function getCantDaysCurrentOfSeassons() {
     }
 }
 
-export async function getUserLogued (){
-    try{
+export async function getUserLogued() {
+    try {
         let data = null
-        await web3.eth.getAccounts( function (err, accounts) { // chequea si hay un provider para poder conectarme la block
+        await web3.eth.getAccounts(function (err, accounts) { // chequea si hay un provider para poder conectarme la block
             if (err != null) {
                 console.error("An error occurred: " + err);
-            }
-            else if (accounts.length == 0) { // checkea si hay algun usuario ya logueado a metamask
+            } else if (accounts.length == 0) { // checkea si hay algun usuario ya logueado a metamask
                 console.log("User is not logged in to MetaMask");
-            }
-            else {
+            } else {
                 console.log("User is logged in to MetaMask");
-                data = accounts["0"] ;
+                data = accounts["0"];
             }
         });
         return data
     } catch (Ex) {
         console.log(Ex)
-        return false ;
+        return false;
     }
 }
-export async function watch(){
-    await miContrato.events.Game({
-        // filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
-        fromBlock: 'latest'
-    }, function (error, event) {
-        console.log('Evento activado');
-        console.log(event);
-        console.log(error)
-    });
+export async function watch() {
+    web3.eth.getBlockNumber().then(
+        n => {
+            n = n - 10
+            miContrato.getPastEvents(
+                'Game', {
+                    fromBlock: 'latest',
+                    toBlock: n
+                }
+            ).then(
+                events => {
+                    console.log(events);
+                }
+            )
+        }
+
+    );
+
+    // await miContrato.events.Game({
+    //     // filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
+    //     fromBlock: 'latest'
+    // }, function (error, event) {
+    //     console.log('Evento activado');
+    //     console.log(event);
+    //     console.log(error)
+    // });
 }
 
 //**************Escuchar Eventos en la blockchain */
