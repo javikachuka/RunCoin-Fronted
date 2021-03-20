@@ -57,6 +57,7 @@ export async function listPlayerLastSeassons(cant = -1) {
 
         let cantPlayer = await miContrato.methods.getCantPlayer(currentSeassons)
             .call((err, result) => result) ;  
+        cantPlayer --; 
         if (cant <= 0) {
             //trae desde el utlimo jugador hasta el primero
             cant = 0;

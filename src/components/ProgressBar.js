@@ -56,10 +56,10 @@ export default function ProgressBar(props) {
   const classes = useStyles();
   const [value, setValue] = useState(20);
   const [aux, setAux] = useState(props.timeGame)
+  const [isLast, setIsLast] = useState(props.index === 0 ? true : false)
   // const [porcent, setPorcent] = useState(20)
   const [esperar, setEsperar] = useState(props.wait - props.timeGame)
   const [end, setEnd] = useState(props.wait)
-  const [isLast, setIsLast] = useState(props.isLast)
   const [timeGame, setTimeGame] = useState(props.timeGame)
   const begin = 20;
 
@@ -89,8 +89,14 @@ export default function ProgressBar(props) {
 
   useEffect(
     () => {
+      let montado = true
+      if(props.index === 0){
+        setIsLast(true)
+      }else{
+        setIsLast(false)
+      }
       // console.log(props)
-      console.log("render progress bar");
+      // console.log("render progress bar");
       if (isLast) {
 
         const timer = setTimeout(() => {
@@ -110,7 +116,7 @@ export default function ProgressBar(props) {
             // console.log('entre')
             setValue(begin + getWaitPorcent());
           } else {
-            // console.log('sal')
+            console.log('salppepepepp')
             return () => clearTimeout(timer)
           }
         }, 1000);
@@ -125,17 +131,12 @@ export default function ProgressBar(props) {
         }
       }
 
+      return () => console.log('desmontando');
+
     }, [esperar, value]
   )
 
   if (isLast) {
-    // console.log('last' + props.player)
-    // console.log(props.player + ' ' + value)
-    // console.log('aux    ' + aux)
-    // console.log('esperar    ' + esperar)
-    // console.log('waitPorce    ' + getWaitPorcent())
-    // console.log('calc    ' + (getWaitPorcent()))
-    // console.log(props.wait + ' ' + props.timeGame)
     return (
       <div className={classes.root}>
         <BorderLinearProgressInGame variant="determinate" value={value} />
@@ -143,9 +144,7 @@ export default function ProgressBar(props) {
       </div>
     );
   } else if (timeGame >= end) {
-
-    // console.log('win' + props.player)
-
+    
     return (
       <div className={classes.root}>
         <BorderLinearProgressWin variant="determinate" value={value} />
@@ -153,7 +152,6 @@ export default function ProgressBar(props) {
       </div>
     );
   } else {
-    // console.log('loss' + props.player)
     return (
       <div className={classes.root}>
         <BorderLinearProgressLoss variant="determinate" value={value} />
