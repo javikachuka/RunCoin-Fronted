@@ -75,8 +75,6 @@ export async function listPlayerLastSeassons(cant = -1) {
         }
         var players = [];
         let player = {};
-        console.log(cant)
-        let stop = cantPlayer - cant;
 
         while (cantPlayer >= cant) {
 
@@ -123,8 +121,10 @@ export async function getMorePlayer(cant, indexPlayer=-1, indexSeasson=-1) {
 
             player = await miContrato.methods.getPlayer(indexSeasson, indexPlayer)
                 .call((err, result) => result);
-
-            players.push(player.index=indexPlayer);
+            player.wait = parseInt(player.wait)
+            player.timeGame = parseInt(player.timeGame)
+            player.index = parseInt(indexPlayer);
+            players.push(player);
             indexPlayer--;
             cant--;
         }
