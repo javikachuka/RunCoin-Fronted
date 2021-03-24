@@ -13,6 +13,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { listPlayerLastSeassons } from '../services/server'
+import Loading from './Loading';
+import {transformAddress} from '../utils/transformAddress'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -26,16 +28,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const DetailsList = ({ scrollType }) => {
+const DetailsList = ({ scrollType, handleClose, open }) => {
 
-    const [open, setOpen] = React.useState(true);
-    const [scroll, setScroll] = React.useState('paper');
+    const [scroll, setScroll] = useState('paper');
     const [listPlayersTotal, setListPlayersTotal] = useState([]);
+    const [load, setLoad] = useState(true);
     const classes = useStyles()
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+
 
     const getDay = (timestamp) => {
         const milliseconds = timestamp * 1000
@@ -46,27 +46,29 @@ const DetailsList = ({ scrollType }) => {
     useEffect(
         () => {
             setScroll(scrollType);
-            listPlayerLastSeassons().then(
-                (result) => {
-                    var array = result.map(
-                        (r) => {
-                            return {
-                                ...r,
-                                player: r.player,
-                                timeGame: r.timeGame,
-                                timestamp: r.timestamp,
-                                wait: r.wait,
+            if(listPlayersTotal.length == 0){
+                listPlayerLastSeassons().then(
+                    (result) => {
+                        var array = result.map(
+                            (r) => {
+                                return {
+                                    ...r,
+                                    player: r.player,
+                                    timeGame: r.timeGame,
+                                    timestamp: r.timestamp,
+                                    wait: r.wait,
+                                }
                             }
-                        }
-                    )
-                    setListPlayersTotal(array);
-
-                }
-            ).catch(
-                (error) => {
-                    console.log('error array total ' + error)
-                }
-            )
+                        )
+                        setListPlayersTotal(array)
+                        setLoad(false)
+                    }
+                ).catch(
+                    (error) => {
+                        console.log('error array total ' + error)
+                    }
+                )
+            }
         }, [scrollType]
     )
     return (
@@ -81,33 +83,38 @@ const DetailsList = ({ scrollType }) => {
             >
                 <DialogTitle id="scroll-dialog-title">Players List</DialogTitle>
                 <DialogContent dividers={scroll === 'paper'}>
-                    <TableContainer component={Paper}>
-                        <Table className={classes.table} size="small" aria-label="a dense table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>N</TableCell>
-                                    <TableCell>Player</TableCell>
-                                    <TableCell align="right">Date</TableCell>
-                                    <TableCell align="right">Wait</TableCell>
-                                    <TableCell align="right">Time Game</TableCell>
-                                    {/* <TableCell align="right"></TableCell> */}
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {listPlayersTotal.map((l, index) => (
-                                    <TableRow key={l.player + l.timestamp + l.timeGame}>
-                                        <TableCell component="th" scope="row" >{index}</TableCell>
-                                        <TableCell component="th" scope="row">
-                                            {l.player}
-                                        </TableCell>
-                                        <TableCell align="right">{getDay(l.timestamp)}</TableCell>
-                                        <TableCell component="th" scope="row" >{l.wait}</TableCell>
-                                        <TableCell component="th" scope="row" >{l.timeGame}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                    {
+                        load
+                            ? <Loading />
+                            : <TableContainer component={Paper}>
+                                <Table className={classes.table} size="small" aria-label="a dense table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>N</TableCell>
+                                            <TableCell>Player</TableCell>
+                                            <TableCell align="right">Date</TableCell>
+                                            <TableCell align="right">Wait</TableCell>
+                                            <TableCell align="right">Time Game</TableCell>
+                                            {/* <TableCell align="right"></TableCell> */}
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {listPlayersTotal.map((l, index) => (
+                                            <TableRow key={l.player + l.timestamp + l.timeGame}>
+                                                <TableCell component="th" scope="row" >{index}</TableCell>
+                                                <TableCell component="th" scope="row">
+                                                    {transformAddress(l.player)}
+                                                </TableCell>
+                                                <TableCell align="right">{getDay(l.timestamp)}</TableCell>
+                                                <TableCell component="th" scope="row" >{l.wait}</TableCell>
+                                                <TableCell component="th" scope="row" >{l.timeGame}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                    }
+
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">

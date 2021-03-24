@@ -5,6 +5,7 @@ import { listPlayerLastSeassons } from '../services/server';
 export const useList = () => {
     const { list, setList } = useContext(ListContext)
     const [newGame, setNewGame] = useState(null)
+    const [load, setLoad] = useState(true)
     useEffect(
         () => {
             if(newGame == null){
@@ -20,7 +21,7 @@ export const useList = () => {
     }
 
     async function fetchApi() {
-        await listPlayerLastSeassons(80)
+        await listPlayerLastSeassons(9)
             .then(
                 (result) => {
                     var array = result.map(
@@ -36,6 +37,7 @@ export const useList = () => {
                     )
                     console.log(array);
                     setList(array);
+                    setLoad(false);
 
                 }
             ).catch(
@@ -44,5 +46,5 @@ export const useList = () => {
                 }
             )
     }
-    return { list, setNewGame }
+    return { list, setNewGame, load }
 }

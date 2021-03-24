@@ -66,6 +66,7 @@ const GameCard = ({ getRealPriceEth }) => {
   const [cost, setCost] = useState(0)
   const [openPop, setOpenPop] = useState(false)
   const [openPopInfo, setOpenPopInfo] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const handleClosePop = (event, reason) => {
     if (reason === 'clickaway') {
@@ -84,11 +85,13 @@ const GameCard = ({ getRealPriceEth }) => {
   };
 
   const handleClickOpen = (scrollType) => () => {
-    console.log('clickj');
-    return (
-      <DetailsList scrollType={scrollType} />
-    )
+    console.log('clickj')
+    setOpen(true)
 
+  };
+
+  const handleClose = () => {
+    setOpen(false)
   };
 
   // useEffect(() => {
@@ -104,18 +107,18 @@ const GameCard = ({ getRealPriceEth }) => {
           }
         }
       )
-      
+
 
     }, [logued, user]
   )
 
   const handlePlay = () => {
     if (logued !== false) {
-      setOpenPopInfo(true)
       play(user.player).then(
         (res) => {
           console.log(res);
           console.log("Has Jugado con exito")
+          setOpenPopInfo(true)
         }
       ).catch(
         (error) => {
@@ -154,7 +157,7 @@ const GameCard = ({ getRealPriceEth }) => {
   return (
     <Card className={classes.root} variant="elevation" >
       <AlertPop open={openPop} handleClosePop={handleClosePop} type='error' sms='Please connect to a wallet!'></AlertPop>
-      <AlertPop open={openPopInfo} handleClosePopInfo={handleClosePopInfo} type='info' sms='Game in queue'></AlertPop>
+      <AlertPop open={openPopInfo} handleClosePop={handleClosePopInfo} type='success' sms='Game success!'></AlertPop>
       <CardContent>
         <Grid container justify="center">
           <Grid item container justify="flex-start" >
@@ -179,6 +182,11 @@ const GameCard = ({ getRealPriceEth }) => {
       </CardContent>
       <CardActions className={classes.buttonCard}>
         <Button color="secondary" size="small" onClick={handleClickOpen('body')}>Show more</Button>
+        {
+          open
+            ? <DetailsList scrollType='body' handleClose={handleClose} open={open} />
+            : null
+        }
       </CardActions>
     </Card>
   );

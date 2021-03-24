@@ -7,6 +7,7 @@ import { UserProvider, useUser } from '../context/userContext'
 import LoginContext from '../context/LoginContext'
 import WalletModel from '../models/WalletModel';
 import { useLogin } from '../hooks/useLogin';
+import {transformAddress} from '../utils/transformAddress'
 
 // const web3 = new Web3(window.web3.currentProvider);
 
@@ -23,15 +24,6 @@ const ButtonLog = () => {
     const { web3Loading, getweb3, disconnect } = WalletModel();
     const [myWeb3, setMyWeb3] = useState(null);
 
-    const transformAddress = (address) => {
-        if(address == "" || address == null){
-            return address
-        }
-        let first = address.slice(0,5)
-        let last = address.slice(37,42)
-        let newAddress = first + "..." + last
-        return newAddress
-    }
 
     // useEffect(
     //     () => {

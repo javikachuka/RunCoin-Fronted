@@ -6,13 +6,14 @@ import { Button, List } from '@material-ui/core';
 import { useList } from '../hooks/useList';
 import { player } from '../services/server';
 import AlertPop from './AlertPop'
+import Loading from './Loading';
 
 const ListOfPlayers = () => {
 
-    const { list, setNewGame } = useList()
+    const { list, setNewGame, load } = useList()
 
 
-    
+
 
     // const [list, setList] = useState([])
     // const [newGame, setNewGame] = useState(null)
@@ -118,24 +119,25 @@ const ListOfPlayers = () => {
     return (
         <>
             {
-                list.map(
-                    (l, index) => {
-                        return (
-                            <ItemGame player={l.player} timeGame={l.timeGame} timestamp={l.timestamp} wait={l.wait} index={index} key={l.player + l.timestamp}></ItemGame>
-                        )
-                        // if (index === 0) {
-                        //     return (
-                        //         <ItemGame player={l.player} timeGame={l.timeGame} timestamp={l.timestamp} wait={l.wait} isLast={true} key={l.player + l.timestamp}></ItemGame>
-                        //     )
-                        // } else {
-                        //     return (
-                        //         <ItemGame player={l.player} timeGame={l.timeGame} timestamp={l.timestamp} wait={l.wait} isLast={false} key={l.player + l.timestamp}></ItemGame>
-                        //     )
-                        // }
-                    }
-                )
+                load
+                    ? <Loading />
+                    : list.map(
+                        (l, index) => {
+                            return (
+                                <ItemGame player={l.player} timeGame={l.timeGame} timestamp={l.timestamp} wait={l.wait} index={index} key={l.player + l.timestamp}></ItemGame>
+                            )
+                            // if (index === 0) {
+                            //     return (
+                            //         <ItemGame player={l.player} timeGame={l.timeGame} timestamp={l.timestamp} wait={l.wait} isLast={true} key={l.player + l.timestamp}></ItemGame>
+                            //     )
+                            // } else {
+                            //     return (
+                            //         <ItemGame player={l.player} timeGame={l.timeGame} timestamp={l.timestamp} wait={l.wait} isLast={false} key={l.player + l.timestamp}></ItemGame>
+                            //     )
+                            // }
+                        }
+                    )
             }
-            <Button onClick={() => console.log(list)}>Apretame</Button>
         </>
     );
 }

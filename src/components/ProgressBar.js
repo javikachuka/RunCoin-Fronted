@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography'
+import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
+import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied';
 
 const BorderLinearProgressInGame = withStyles((theme) => ({
   root: {
@@ -97,7 +99,7 @@ export default function ProgressBar(props) {
       }
       // console.log(props)
       // console.log("render progress bar");
-      if (isLast) {
+      if (isLast && (timeGame < end)) {
 
         const timer = setTimeout(() => {
 
@@ -136,7 +138,7 @@ export default function ProgressBar(props) {
     }, [esperar, value]
   )
 
-  if (isLast) {
+  if (isLast && (timeGame < end)) {
     return (
       <div className={classes.root}>
         <BorderLinearProgressInGame variant="determinate" value={value} />
@@ -148,14 +150,14 @@ export default function ProgressBar(props) {
     return (
       <div className={classes.root}>
         <BorderLinearProgressWin variant="determinate" value={value} />
-        <Typography variant="subtitle1" color="initial">you have won</Typography>
+        <Typography variant="subtitle1" color="initial"><SentimentVerySatisfiedIcon color="secondary" /></Typography>
       </div>
     );
   } else {
     return (
       <div className={classes.root}>
         <BorderLinearProgressLoss variant="determinate" value={value} />
-        <Typography variant="subtitle1" color="initial"></Typography>
+        <Typography variant="subtitle1" color="initial"><SentimentDissatisfiedIcon color="action" style={{color : '#e57373'}} /></Typography>
       </div>
     );
   }
