@@ -100,23 +100,38 @@ export async function listPlayerLastSeassons(cant = -1) {
 //cant= la cantidad de player que queres ver,
 // indexPlayer= a partir del indice que queres ver.
 //indexseasson= indice de la session, 
-export async function getMorePlayer(cant, indexPlayer, indexSeasson) {
+export async function getMorePlayer(cant, indexPlayer=-1, indexSeasson=-1) {
 
     try {
 
         var players = [];
         let player = {};
-        while (cant > 0 && indexPlayer > 0) {
+        if(indexSeasson== -1){
+
+            indexSeasson = await miContrato.methods.currentSeasson()
+                .call((err, result) => result);
+        }
+        if(indexPlayer == -1){
+
+            indexPlayer = await miContrato.methods.getCantPlayer(indexSeasson)
+                .call((err, result) => result -1)  ;
+        }
+    
+
+            
+        while (cant > 0 && indexPlayer >= 0) {
 
             player = await miContrato.methods.getPlayer(indexSeasson, indexPlayer)
                 .call((err, result) => result);
 
-            players.push(player);
+            players.push(player.index=indexPlayer);
             indexPlayer--;
+            cant--;
         }
         return players;
 
     } catch (Ex) {
+        console.log(Ex);
         return false;
     }
 }
