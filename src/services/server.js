@@ -8,7 +8,8 @@ const Web3 = require("web3");
 //prueba conectar el proveedor de metamask primero sino usa la varabile en Parameters "provider"
 let web3 = new Web3(Web3.givenProvider || Parameters.provider);
 //se crea el contrato 
-export const miContrato = new web3.eth.Contract(CONST_ABI, Parameters.addressContractR);
+// export const miContrato = new web3.eth.Contract(CONST_ABI, Parameters.addressContractR);
+export const miContrato = new web3.eth.Contract(CONST_ABI, Parameters.addressContractOKT);
 
 
 //inicia el juego y retorna su {player:string,timestamp:uint ,wait: uint}
@@ -169,6 +170,7 @@ export async function getCantDaysCurrentOfSeassons() {
         return false;
     }
 }
+//trae solamente las direcciones de los ganadores, si la temporada tiene 3 ganadores solo trae los 3
 export async function getWinnersSeasson(indexSeasson =-1) {
 
     try {
@@ -191,6 +193,30 @@ export async function getWinnersSeasson(indexSeasson =-1) {
         return [];
     }
 }
+//obteiene todas las direcciones de todos los jugadores y la cantidad de vecees que jugaron
+export async function getAllGameOfPlayer(indexSeasson =-1) {
+
+    try {
+        if(indexSeasson ==-1){
+
+            indexSeasson= await miContrato.methods.currentSeasson()
+            .call((err, result) => result);
+        }
+        // winners.players son address   winner.cantGame la cantidad de veces que jugaron
+        let allPlayers=[];
+        let players = await miContrato.methods.getCantGameForPlayer(indexSeasson)
+            .call((err, result) => result);
+            for(let i=0;i<players.player.length;i++){
+                allPlayers.push({address: players.player[i] , cantGame: players.cantGame[i] });
+            }
+           
+        return allPlayers;
+    } catch (Ex) {
+        console.log(Ex);
+        return [];
+    }
+}
+
 export async function getPoolSeasson(indexSeasson =-1) {
 
     try {

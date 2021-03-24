@@ -18,8 +18,27 @@ export const CONST_ABI =[
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "indexSeasson",
+				"type": "uint256"
+			}
+		],
+		"name": "calcTotalSeasson",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
-		"name": "claimWithToken",
+		"name": "claimLastPlayer",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -33,12 +52,25 @@ export const CONST_ABI =[
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "_to",
-				"type": "address"
+				"internalType": "uint256",
+				"name": "indexSeasson",
+				"type": "uint256"
 			}
 		],
-		"name": "distributeTokenGovernance",
+		"name": "claimOrgPool",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "claimToken",
 		"outputs": [],
 		"stateMutability": "payable",
 		"type": "function"
@@ -46,12 +78,12 @@ export const CONST_ABI =[
 	{
 		"inputs": [
 			{
-				"internalType": "uint256[]",
-				"name": "_randoms",
-				"type": "uint256[]"
+				"internalType": "uint256",
+				"name": "indexSeasson",
+				"type": "uint256"
 			}
 		],
-		"name": "distributeTokenWinners",
+		"name": "claimWinnerSeassonPool",
 		"outputs": [],
 		"stateMutability": "payable",
 		"type": "function"
@@ -127,11 +159,6 @@ export const CONST_ABI =[
 				"internalType": "address",
 				"name": "contract_governance",
 				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "contract_winner",
-				"type": "address"
 			}
 		],
 		"stateMutability": "nonpayable",
@@ -153,7 +180,7 @@ export const CONST_ABI =[
 				"type": "uint256"
 			},
 			{
-				"indexed": false,
+				"indexed": true,
 				"internalType": "uint256",
 				"name": "timestamp",
 				"type": "uint256"
@@ -163,23 +190,16 @@ export const CONST_ABI =[
 				"internalType": "uint256",
 				"name": "wait",
 				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "seasson",
+				"type": "uint256"
 			}
 		],
 		"name": "Game",
 		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_cantToken",
-				"type": "uint256"
-			}
-		],
-		"name": "setCantToken",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
 	},
 	{
 		"inputs": [
@@ -250,24 +270,6 @@ export const CONST_ABI =[
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_otherDealer",
-				"type": "address"
-			},
-			{
-				"internalType": "bool",
-				"name": "value",
-				"type": "bool"
-			}
-		],
-		"name": "setOtherDealers",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
 				"name": "_owner",
 				"type": "address"
 			}
@@ -306,19 +308,6 @@ export const CONST_ABI =[
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "_reward",
-				"type": "uint256"
-			}
-		],
-		"name": "setReward",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "address",
 				"name": "_new_address",
 				"type": "address"
@@ -338,12 +327,30 @@ export const CONST_ABI =[
 	{
 		"inputs": [
 			{
+				"internalType": "uint256",
+				"name": "indexSeasson",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "cantWinner",
+				"type": "uint256"
+			}
+		],
+		"name": "setTotalWinnerSeasson",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address",
-				"name": "_new_address",
+				"name": "_winner",
 				"type": "address"
 			}
 		],
-		"name": "setTW",
+		"name": "setWinnerCurrent",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -425,8 +432,38 @@ export const CONST_ABI =[
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "cantToken",
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "cantPlayForSeasson",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "cantTokenGForOwner",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -493,6 +530,25 @@ export const CONST_ABI =[
 		"inputs": [
 			{
 				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "donation",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
 				"name": "_index",
 				"type": "uint256"
 			}
@@ -508,6 +564,43 @@ export const CONST_ABI =[
 				"internalType": "uint256",
 				"name": "valMax",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "indexSeasson",
+				"type": "uint256"
+			}
+		],
+		"name": "getCantGameForPlayer",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "player",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "cantGame",
+				"type": "uint256[]"
 			}
 		],
 		"stateMutability": "view",
@@ -594,16 +687,11 @@ export const CONST_ABI =[
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "_value",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "cantParticipants",
+				"name": "indexSeasson",
 				"type": "uint256"
 			}
 		],
-		"name": "getRandom",
+		"name": "getPoolSeasson",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -652,6 +740,30 @@ export const CONST_ABI =[
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "indexSeasson",
+				"type": "uint256"
+			}
+		],
+		"name": "getWinnersSeasson",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "players",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "cantGame",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "helper",
 		"outputs": [
@@ -693,12 +805,12 @@ export const CONST_ABI =[
 	{
 		"inputs": [
 			{
-				"internalType": "address",
+				"internalType": "uint256",
 				"name": "",
-				"type": "address"
+				"type": "uint256"
 			}
 		],
-		"name": "otherDealers",
+		"name": "orgWhithdraw",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -750,7 +862,7 @@ export const CONST_ABI =[
 	},
 	{
 		"inputs": [],
-		"name": "reward",
+		"name": "poolRun",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -759,6 +871,53 @@ export const CONST_ABI =[
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "poolSeasson",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "arr",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "address[]",
+				"name": "dataAux",
+				"type": "address[]"
+			},
+			{
+				"internalType": "int256",
+				"name": "left",
+				"type": "int256"
+			},
+			{
+				"internalType": "int256",
+				"name": "right",
+				"type": "int256"
+			}
+		],
+		"name": "quickSort",
+		"outputs": [],
+		"stateMutability": "pure",
 		"type": "function"
 	},
 	{
@@ -790,6 +949,40 @@ export const CONST_ABI =[
 				"internalType": "uint256",
 				"name": "wait",
 				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "cost",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "data",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "address[]",
+				"name": "dataAux",
+				"type": "address[]"
+			}
+		],
+		"name": "sort",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
 			}
 		],
 		"stateMutability": "view",
@@ -820,6 +1013,81 @@ export const CONST_ABI =[
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "totalPool",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "totalWinnerSeasson",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "winnerCurrent",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "winnerSeasson",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -838,4 +1106,4 @@ export const CONST_ABI =[
 		"stateMutability": "view",
 		"type": "function"
 	}
-];
+]
