@@ -169,6 +169,48 @@ export async function getCantDaysCurrentOfSeassons() {
         return false;
     }
 }
+export async function getWinnersSeasson(indexSeasson =-1) {
+
+    try {
+        if(indexSeasson ==-1){
+
+            indexSeasson= await miContrato.methods.currentSeasson()
+            .call((err, result) => result);
+        }
+        // winners.players son address   winner.cantGame la cantidad de veces que jugaron
+        let allWinners=[];
+        let winners = await miContrato.methods.getWinnersSeasson(indexSeasson)
+            .call((err, result) => result);
+            for(let i=0;i<winners.players.length;i++){
+                allWinners.push({address: winners.players[i] , cantGame: winners.cantGame[i] });
+            }
+           
+        return allWinners;
+    } catch (Ex) {
+        console.log(Ex);
+        return [];
+    }
+}
+export async function getPoolSeasson(indexSeasson =-1) {
+
+    try {
+        if(indexSeasson ==-1){
+
+            indexSeasson= await miContrato.methods.currentSeasson()
+            .call((err, result) => result);
+        }
+        // winners.players son address   winner.cantGame la cantidad de veces que jugaron
+       
+        let poolSeasson = await miContrato.methods.getPoolSeasson(indexSeasson)
+            .call((err, result) => result);
+          
+           
+        return poolSeasson;
+    } catch (Ex) {
+        console.log(Ex);
+        return 0;
+    }
+}
 
 export async function getUserLogued() {
     try {
@@ -189,6 +231,12 @@ export async function getUserLogued() {
         return false;
     }
 }
+
+
+
+
+
+
 export async function watch() {
     web3.eth.getBlockNumber().then(
         n => {
