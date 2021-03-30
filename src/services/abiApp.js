@@ -1,173 +1,15 @@
-export const CONST_ABI =[
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_second",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_valMax",
-				"type": "uint256"
-			}
-		],
-		"name": "addTime",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "indexSeasson",
-				"type": "uint256"
-			}
-		],
-		"name": "calcTotalSeasson",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "claimLastPlayer",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "indexSeasson",
-				"type": "uint256"
-			}
-		],
-		"name": "claimOrgPool",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "claimToken",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "indexSeasson",
-				"type": "uint256"
-			}
-		],
-		"name": "claimWinnerSeassonPool",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_index",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_second",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_valMax",
-				"type": "uint256"
-			}
-		],
-		"name": "editTime",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "game",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "player",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "wait",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_cantDays",
-				"type": "uint256"
-			}
-		],
-		"name": "setCantDays",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "contract_governance",
-				"type": "address"
-			}
-		],
+export const CONST_ABI = [{
+		"inputs": [{
+			"internalType": "address",
+			"name": "contract_governance",
+			"type": "address"
+		}],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
 	},
 	{
 		"anonymous": false,
-		"inputs": [
-			{
+		"inputs": [{
 				"indexed": true,
 				"internalType": "address",
 				"name": "owner_play",
@@ -202,169 +44,8 @@ export const CONST_ABI =[
 		"type": "event"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_cantTokenGovernance",
-				"type": "uint256"
-			}
-		],
-		"name": "setCantTokenGovernance",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_cost",
-				"type": "uint256"
-			}
-		],
-		"name": "setCostWei",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint16",
-				"name": "_div",
-				"type": "uint16"
-			}
-		],
-		"name": "setDiv",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint16",
-				"name": "_helper",
-				"type": "uint16"
-			}
-		],
-		"name": "setHelper",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address payable",
-				"name": "_org",
-				"type": "address"
-			}
-		],
-		"name": "setOrg",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_owner",
-				"type": "address"
-			}
-		],
-		"name": "setOwner",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bool",
-				"name": "_playing",
-				"type": "bool"
-			}
-		],
-		"name": "setPlaying",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint16",
-				"name": "_pool",
-				"type": "uint16"
-			}
-		],
-		"name": "setPool",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_new_address",
-				"type": "address"
-			}
-		],
-		"name": "setTG",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "indexSeasson",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "cantWinner",
-				"type": "uint256"
-			}
-		],
-		"name": "setTotalWinnerSeasson",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_winner",
-				"type": "address"
-			}
-		],
-		"name": "setWinnerCurrent",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
 		"anonymous": false,
-		"inputs": [
-			{
+		"inputs": [{
 				"indexed": true,
 				"internalType": "address",
 				"name": "winner",
@@ -382,8 +63,7 @@ export const CONST_ABI =[
 	},
 	{
 		"anonymous": false,
-		"inputs": [
-			{
+		"inputs": [{
 				"indexed": true,
 				"internalType": "address",
 				"name": "winner",
@@ -406,34 +86,61 @@ export const CONST_ABI =[
 		"type": "event"
 	},
 	{
-		"inputs": [],
-		"name": "cantDays",
-		"outputs": [
+		"inputs": [{
+				"internalType": "uint256",
+				"name": "_second",
+				"type": "uint256"
+			},
 			{
 				"internalType": "uint256",
-				"name": "",
+				"name": "_valMax",
 				"type": "uint256"
 			}
 		],
+		"name": "addTime",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "indexSeasson",
+			"type": "uint256"
+		}],
+		"name": "calcTotalSeasson",
+		"outputs": [{
+			"internalType": "bool",
+			"name": "",
+			"type": "bool"
+		}],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "cantDays",
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [],
 		"name": "cantDaysCurrent",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
+		"inputs": [{
 				"internalType": "address",
 				"name": "",
 				"type": "address"
@@ -445,117 +152,188 @@ export const CONST_ABI =[
 			}
 		],
 		"name": "cantPlayForSeasson",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
+		"inputs": [{
+			"internalType": "address",
+			"name": "",
+			"type": "address"
+		}],
 		"name": "cantTokenGForOwner",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [],
 		"name": "cantTokenGovernance",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [],
+		"name": "claimLastPlayer",
+		"outputs": [{
+			"internalType": "bool",
+			"name": "",
+			"type": "bool"
+		}],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "indexSeasson",
+			"type": "uint256"
+		}],
+		"name": "claimOrgPool",
+		"outputs": [{
+			"internalType": "bool",
+			"name": "",
+			"type": "bool"
+		}],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "claimToken",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "indexSeasson",
+			"type": "uint256"
+		}],
+		"name": "claimWinnerSeassonPool",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "cost",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [],
 		"name": "currentSeasson",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [],
 		"name": "div",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"name": "donation",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
+		"inputs": [{
 				"internalType": "uint256",
 				"name": "_index",
 				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_second",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_valMax",
+				"type": "uint256"
 			}
 		],
-		"name": "getATime",
-		"outputs": [
+		"name": "editTime",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "_value",
+			"type": "uint256"
+		}],
+		"name": "game",
+		"outputs": [{
+				"internalType": "address",
+				"name": "player",
+				"type": "address"
+			},
 			{
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "wait",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "_index",
+			"type": "uint256"
+		}],
+		"name": "getATime",
+		"outputs": [{
 				"internalType": "uint256",
 				"name": "second",
 				"type": "uint256"
@@ -570,29 +348,39 @@ export const CONST_ABI =[
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "getBalance",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "indexSeasson",
+			"type": "uint256"
+		}],
+		"name": "getAllPoolForSeasson",
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "indexSeasson",
-				"type": "uint256"
-			}
-		],
+		"inputs": [],
+		"name": "getBalance",
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "indexSeasson",
+			"type": "uint256"
+		}],
 		"name": "getCantGameForPlayer",
-		"outputs": [
-			{
+		"outputs": [{
 				"internalType": "address[]",
 				"name": "player",
 				"type": "address[]"
@@ -607,46 +395,37 @@ export const CONST_ABI =[
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_indexSeasson",
-				"type": "uint256"
-			}
-		],
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "_indexSeasson",
+			"type": "uint256"
+		}],
 		"name": "getCantPlayer",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_from",
-				"type": "address"
-			}
-		],
+		"inputs": [{
+			"internalType": "address",
+			"name": "_from",
+			"type": "address"
+		}],
 		"name": "getCantTokenGForOwner",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
+		"inputs": [{
 				"internalType": "uint256",
 				"name": "_seassonIndex",
 				"type": "uint256"
@@ -658,8 +437,7 @@ export const CONST_ABI =[
 			}
 		],
 		"name": "getPlayer",
-		"outputs": [
-			{
+		"outputs": [{
 				"internalType": "address",
 				"name": "player",
 				"type": "address"
@@ -684,48 +462,24 @@ export const CONST_ABI =[
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "indexSeasson",
-				"type": "uint256"
-			}
-		],
-		"name": "getPoolSeasson",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_cost",
-				"type": "uint256"
-			}
-		],
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "_cost",
+			"type": "uint256"
+		}],
 		"name": "getSecondMax",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [],
 		"name": "getValueReward",
-		"outputs": [
-			{
+		"outputs": [{
 				"internalType": "uint256",
 				"name": "recompensa",
 				"type": "uint256"
@@ -740,16 +494,13 @@ export const CONST_ABI =[
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "indexSeasson",
-				"type": "uint256"
-			}
-		],
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "indexSeasson",
+			"type": "uint256"
+		}],
 		"name": "getWinnersSeasson",
-		"outputs": [
-			{
+		"outputs": [{
 				"internalType": "address[]",
 				"name": "players",
 				"type": "address[]"
@@ -766,135 +517,112 @@ export const CONST_ABI =[
 	{
 		"inputs": [],
 		"name": "helper",
-		"outputs": [
-			{
-				"internalType": "uint16",
-				"name": "",
-				"type": "uint16"
-			}
-		],
+		"outputs": [{
+			"internalType": "uint16",
+			"name": "",
+			"type": "uint16"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [],
 		"name": "lastDayTimestamp",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [],
 		"name": "org",
-		"outputs": [
-			{
-				"internalType": "address payable",
-				"name": "",
-				"type": "address"
-			}
-		],
+		"outputs": [{
+			"internalType": "address payable",
+			"name": "",
+			"type": "address"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"name": "orgWhithdraw",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
+		"outputs": [{
+			"internalType": "bool",
+			"name": "",
+			"type": "bool"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [],
 		"name": "owner",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
+		"outputs": [{
+			"internalType": "address",
+			"name": "",
+			"type": "address"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [],
 		"name": "playing",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
+		"outputs": [{
+			"internalType": "bool",
+			"name": "",
+			"type": "bool"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [],
 		"name": "pool",
-		"outputs": [
-			{
-				"internalType": "uint16",
-				"name": "",
-				"type": "uint16"
-			}
-		],
+		"outputs": [{
+			"internalType": "uint16",
+			"name": "",
+			"type": "uint16"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [],
 		"name": "poolRun",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"name": "poolSeasson",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
+		"inputs": [{
 				"internalType": "uint256[]",
 				"name": "arr",
 				"type": "uint256[]"
@@ -921,8 +649,7 @@ export const CONST_ABI =[
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
+		"inputs": [{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
@@ -934,8 +661,7 @@ export const CONST_ABI =[
 			}
 		],
 		"name": "seassons",
-		"outputs": [
-			{
+		"outputs": [{
 				"internalType": "address payable",
 				"name": "player",
 				"type": "address"
@@ -960,8 +686,123 @@ export const CONST_ABI =[
 		"type": "function"
 	},
 	{
-		"inputs": [
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "_cantDays",
+			"type": "uint256"
+		}],
+		"name": "setCantDays",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "_cantTokenGovernance",
+			"type": "uint256"
+		}],
+		"name": "setCantTokenGovernance",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "_cost",
+			"type": "uint256"
+		}],
+		"name": "setCostWei",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+			"internalType": "uint16",
+			"name": "_div",
+			"type": "uint16"
+		}],
+		"name": "setDiv",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+			"internalType": "uint16",
+			"name": "_helper",
+			"type": "uint16"
+		}],
+		"name": "setHelper",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+			"internalType": "address payable",
+			"name": "_org",
+			"type": "address"
+		}],
+		"name": "setOrg",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+			"internalType": "address",
+			"name": "_owner",
+			"type": "address"
+		}],
+		"name": "setOwner",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+			"internalType": "bool",
+			"name": "_playing",
+			"type": "bool"
+		}],
+		"name": "setPlaying",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+			"internalType": "uint16",
+			"name": "_pool",
+			"type": "uint16"
+		}],
+		"name": "setPool",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+				"internalType": "uint256",
+				"name": "indexSeasson",
+				"type": "uint256"
+			},
 			{
+				"internalType": "uint256",
+				"name": "cantWinner",
+				"type": "uint256"
+			}
+		],
+		"name": "setTotalWinnerSeasson",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [{
 				"internalType": "uint256[]",
 				"name": "data",
 				"type": "uint256[]"
@@ -973,8 +814,7 @@ export const CONST_ABI =[
 			}
 		],
 		"name": "sort",
-		"outputs": [
-			{
+		"outputs": [{
 				"internalType": "uint256[]",
 				"name": "",
 				"type": "uint256[]"
@@ -989,16 +829,13 @@ export const CONST_ABI =[
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"name": "times",
-		"outputs": [
-			{
+		"outputs": [{
 				"internalType": "uint256",
 				"name": "second",
 				"type": "uint256"
@@ -1015,38 +852,46 @@ export const CONST_ABI =[
 	{
 		"inputs": [],
 		"name": "totalPool",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"name": "totalWinnerSeasson",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "_timestamp",
+			"type": "uint256"
+		}],
+		"name": "winVerify",
+		"outputs": [{
+			"internalType": "address payable",
+			"name": "",
+			"type": "address"
+		}],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
@@ -1058,51 +903,26 @@ export const CONST_ABI =[
 			}
 		],
 		"name": "winnerCurrent",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
+		"outputs": [{
+			"internalType": "address",
+			"name": "",
+			"type": "address"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
 		"name": "winnerSeasson",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_timestamp",
-				"type": "uint256"
-			}
-		],
-		"name": "winVerify",
-		"outputs": [
-			{
-				"internalType": "address payable",
-				"name": "",
-				"type": "address"
-			}
-		],
+		"outputs": [{
+			"internalType": "address",
+			"name": "",
+			"type": "address"
+		}],
 		"stateMutability": "view",
 		"type": "function"
 	}
