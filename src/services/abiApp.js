@@ -213,17 +213,6 @@ export const CONST_ABI = [{
 	},
 	{
 		"inputs": [{
-			"internalType": "uint16",
-			"name": "_helper",
-			"type": "uint16"
-		}],
-		"name": "setHelper",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [{
 			"internalType": "address payable",
 			"name": "_org",
 			"type": "address"
@@ -498,7 +487,7 @@ export const CONST_ABI = [{
 		"name": "getCantGameForPlayer",
 		"outputs": [{
 				"internalType": "address[]",
-				"name": "player",
+				"name": "players",
 				"type": "address[]"
 			},
 			{
@@ -739,33 +728,6 @@ export const CONST_ABI = [{
 	},
 	{
 		"inputs": [{
-				"internalType": "uint256[]",
-				"name": "arr",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "address[]",
-				"name": "dataAux",
-				"type": "address[]"
-			},
-			{
-				"internalType": "int256",
-				"name": "left",
-				"type": "int256"
-			},
-			{
-				"internalType": "int256",
-				"name": "right",
-				"type": "int256"
-			}
-		],
-		"name": "quickSort",
-		"outputs": [],
-		"stateMutability": "pure",
-		"type": "function"
-	},
-	{
-		"inputs": [{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
@@ -796,33 +758,6 @@ export const CONST_ABI = [{
 				"internalType": "uint256",
 				"name": "cost",
 				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [{
-				"internalType": "uint256[]",
-				"name": "data",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "address[]",
-				"name": "dataAux",
-				"type": "address[]"
-			}
-		],
-		"name": "sort",
-		"outputs": [{
-				"internalType": "uint256[]",
-				"name": "",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "address[]",
-				"name": "",
-				"type": "address[]"
 			}
 		],
 		"stateMutability": "view",
@@ -874,6 +809,11 @@ export const CONST_ABI = [{
 				"internalType": "address",
 				"name": "",
 				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"name": "winnerCurrent",
