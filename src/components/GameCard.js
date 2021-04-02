@@ -4,7 +4,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, Tooltip } from '@material-ui/core';
 import AlertPop from './AlertPop'
 import { Eth } from 'react-cryptocoins';
 import { play, listPlayerLastSeassons, getUserLogued, watch, getCostPlay } from '../services/server';
@@ -12,7 +12,8 @@ import { UserProvider, useUser } from '../context/userContext'
 import LoginContext from '../context/LoginContext'
 import ListOfPlayers from './ListOfPlayers';
 import DetailsList from './DetailsList';
-
+import IconButton from '@material-ui/core/IconButton';
+import ReplayIcon from '@material-ui/icons/Replay';
 
 // export default ({ getRealPriceEth }) => (
 //   <UserProvider>
@@ -57,9 +58,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const useForceUpdate = () => useState()[1]
+
 const GameCard = ({ getRealPriceEth }) => {
 
-
+  console.log('render');
+  const forceUpdate = useForceUpdate();
   const { user, setUser, logued, setLogued } = useContext(LoginContext)
   // const { user, logued } = useUser()
   const classes = useStyles()
@@ -129,6 +133,7 @@ const GameCard = ({ getRealPriceEth }) => {
       console.log('user disconnected')
       setOpenPop(true)
     }
+
     // getUserLogued().then(
     //   (result) => {
     //     console.log(result)
@@ -171,6 +176,11 @@ const GameCard = ({ getRealPriceEth }) => {
             </Grid>
             <Grid item xs={12} sm={7} >
               <Button variant="contained" size="large" color="primary" onClick={handlePlay}>Play!</Button>
+              <IconButton onClick={forceUpdate}>
+                <Tooltip title="Reload players list" placement="top" >
+                  <ReplayIcon fontSize="inherit" />
+                </Tooltip>
+              </IconButton>
             </Grid>
           </Grid>
           <Grid item container xs={12} spacing={2} className={classes.margenButton} >

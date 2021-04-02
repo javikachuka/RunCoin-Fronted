@@ -4,6 +4,8 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography'
 import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
 import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied';
+import { transformSecondsToHuman } from '../utils/transformSecondsToHuman';
+import { Box } from '@material-ui/core';
 
 const BorderLinearProgressInGame = withStyles((theme) => ({
   root: {
@@ -66,17 +68,7 @@ export default function ProgressBar(props) {
   const begin = 20;
 
   const getHours = (seconds) => {
-    seconds = Number(seconds);
-    var d = Math.floor(seconds / (3600 * 24));
-    var h = Math.floor(seconds % (3600 * 24) / 3600);
-    var m = Math.floor(seconds % 3600 / 60);
-    var s = Math.floor(seconds % 60);
-
-    var dDisplay = d > 0 ? d + (d == 1 ? " day, " : " days, ") : "";
-    var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-    var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-    var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-    return dDisplay + hDisplay + mDisplay + sDisplay;
+    return transformSecondsToHuman(seconds)
   }
 
   const getWaitPorcent = () => {
@@ -88,13 +80,19 @@ export default function ProgressBar(props) {
     }
   }
 
+  const getDay = (timestamp) => {
+    const milliseconds = timestamp * 1000
+    const date = new Date(milliseconds)
+    return date.toLocaleDateString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+  }
+
 
   useEffect(
     () => {
       let montado = true
-      if(props.index === 0){
+      if (props.index === 0) {
         setIsLast(true)
-      }else{
+      } else {
         setIsLast(false)
       }
       // console.log(props)
@@ -142,22 +140,61 @@ export default function ProgressBar(props) {
     return (
       <div className={classes.root}>
         <BorderLinearProgressInGame variant="determinate" value={value} />
-        <Typography variant="subtitle1" color="initial">{getHours(esperar)}</Typography>
+        <Box component="div" display="flex" p={0} m={0}>
+          <Box width="50%">
+            <Typography variant="subtitle2" color="initial">{getHours(esperar)}</Typography>
+          </Box>
+          <Box width="50%">
+            <Typography variant="subtitle2" gutterBottom align='right' noWrap>
+              <strong>Date:</strong> {getDay(props.timestamp)}
+            </Typography>
+          </Box>
+        </Box>
+        {/* <Typography variant="subtitle2" style={{marginLeft:10}} gutterBottom align='right' noWrap>
+                <strong>Game Time:</strong> {props.timeGame}
+            </Typography> */}
+
       </div>
     );
   } else if (timeGame >= end) {
-    
+
     return (
       <div className={classes.root}>
         <BorderLinearProgressWin variant="determinate" value={value} />
-        <Typography variant="subtitle1" color="initial"><SentimentVerySatisfiedIcon color="secondary" /></Typography>
+        <Box component="div" display="flex" p={0} m={0}>
+          <Box width="50%">
+            <Typography variant="subtitle1" color="initial"><SentimentVerySatisfiedIcon color="secondary" /></Typography>
+          </Box>
+          <Box width="50%">
+            <Typography variant="subtitle2" gutterBottom align='right' noWrap>
+              <strong>Date:</strong> {getDay(props.timestamp)}
+            </Typography>
+          </Box>
+        </Box>
+        {/* <Typography variant="subtitle2" style={{marginLeft:10}} gutterBottom align='right' noWrap>
+                <strong>Game Time:</strong> {props.timeGame}
+            </Typography> */}
       </div>
     );
   } else {
     return (
       <div className={classes.root}>
         <BorderLinearProgressLoss variant="determinate" value={value} />
-        <Typography variant="subtitle1" color="initial"><SentimentDissatisfiedIcon color="action" style={{color : '#e57373'}} /></Typography>
+        {/* <div style={{ display: "flex", justifyContent: "flex-end" }}> */}
+        <Box component="div" display="flex" p={0} m={0}>
+          <Box width="50%">
+            <Typography variant="subtitle1" color="initial"><SentimentDissatisfiedIcon color="action" style={{ color: '#e57373' }} /></Typography>
+          </Box>
+          <Box width="50%">
+            <Typography variant="subtitle2" gutterBottom align='right' noWrap>
+              <strong>Date:</strong> {getDay(props.timestamp)}
+            </Typography>
+          </Box>
+        </Box>
+        {/* <Typography variant="subtitle2" style={{marginLeft:10}} gutterBottom align='right' noWrap>
+                <strong>Game Time:</strong> {props.timeGame}
+            </Typography> */}
+        {/* </div> */}
       </div>
     );
   }

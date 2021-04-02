@@ -87,7 +87,7 @@ const ListOfPlayers = () => {
             // setList([newGame, ...list])
 
             console.log('saliendo');
-        }, []
+        }, [] 
     )
 
     // async function fetchApi() {

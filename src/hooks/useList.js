@@ -1,21 +1,56 @@
 import React, { useEffect, useContext, useState } from 'react';
 import ListContext from '../context/ListContext';
-import { listPlayerLastSeassons } from '../services/server';
+import { listPlayerLastSeassons, getCantDaysCurrentOfSeassons, getReward } from '../services/server';
 
 export const useList = () => {
     const { list, setList } = useContext(ListContext)
     const [newGame, setNewGame] = useState(null)
     const [load, setLoad] = useState(true)
+    const [daysCurrentSeassons, setDaysCurrentSeassons] = useState(0)
+    const [reward, setReward] = useState({
+        recompensa: null,
+        nextRecompensa: null
+    })
     useEffect(
         () => {
+            console.log("el pepe");
             if(newGame == null){
                 fetchApi()
             }else {
                 setEstado()
             }
+            getDaysOfSeason()
+            getRew()
+
         }, [newGame]
     )
 
+    const getDaysOfSeason = () => {
+        getCantDaysCurrentOfSeassons().then(
+            (result) => {
+                console.log(result)
+                setDaysCurrentSeassons(result)
+            }
+        ).catch(
+            (error) => {
+                console.log(error)
+            }
+        )
+    }
+    const getRew = () => {
+        getReward().then(
+            (result) => {
+                console.log('entre a reward');
+                console.log(result.recompensa)
+                setReward({ recompensa: result.recompensa, nextRecompensa: result.nextRecompensa })
+
+            }
+        ).catch(
+            (error) => {
+                console.log(error)
+            }
+        )
+    }
     const setEstado = () => {
         setList([newGame, ...list])
     }
@@ -46,5 +81,5 @@ export const useList = () => {
                 }
             )
     }
-    return { list, setNewGame, load }
+    return { list, setNewGame, load, daysCurrentSeassons, reward }
 }
