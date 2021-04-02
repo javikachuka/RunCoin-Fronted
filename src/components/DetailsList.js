@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import { listPlayerLastSeassons } from '../services/server'
 import Loading from './Loading';
 import {transformAddress} from '../utils/transformAddress'
+import {transformSecondsToHuman} from '../utils/transformSecondsToHuman'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -106,8 +107,8 @@ const DetailsList = ({ scrollType, handleClose, open }) => {
                                                     {transformAddress(l.player)}
                                                 </TableCell>
                                                 <TableCell align="right">{getDay(l.timestamp)}</TableCell>
-                                                <TableCell component="th" scope="row" >{l.wait}</TableCell>
-                                                <TableCell component="th" scope="row" >{l.timeGame}</TableCell>
+                                                <TableCell component="th" scope="row" >{transformSecondsToHuman(l.wait)}</TableCell>
+                                                <TableCell component="th" scope="row" >{transformSecondsToHuman(l.timeGame)}</TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>
