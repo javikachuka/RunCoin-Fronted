@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Container } from "../../../globalStyles";
 import { Link } from "react-scroll";
+import { Link as PLink } from "wouter";
 
 export const Nav = styled.nav`
   display: flex;
@@ -33,10 +34,13 @@ export const NavLogo = styled(Link)`
   display: flex;
   align-items: center;
   color: #3f3f46;
+  font-family: "Lexend Mega", sans-serif;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 `;
 
 export const NavImg = styled.img`
-  width: 45px;
+  width: 2.5rem;
 `;
 
 export const MobileIcon = styled.div`
@@ -137,19 +141,57 @@ export const NavLink = styled(Link)`
   }
 `;
 
-export const NavItem = styled.li`
+export const PlayLink = styled(PLink)`
+  color: #fff;
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  height: 100%;
+  font-weight: 500;
+
+  @media screen and (max-width: 960px) {
+    text-align: center;
+    padding: 2rem;
+    width: 100%;
+    display: table;
+  }
+`;
+
+export const PlayItem = styled.li`
   margin-right: 10px;
   transition: all 0.5s ease;
   border-radius: 0.75rem;
   height: 40px;
+  background-image: linear-gradient(to right, #005bea, #00c6fb);
 
   &:hover {
-    /* background: #22d3ee; */
-    background: #00c6fb;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    transform: scale(1.08);
   }
 
-  &:hover > ${NavLink} {
-    color: #fff;
+  @media screen and (max-width: 960px) {
+    height: 80px;
+    transition: none;
+    margin-right: 0;
+    margin-bottom: 20px;
+    /* border-radius: 0; */
+    width: 95%;
+    &:hover {
+      background: none;
+      border: none;
+    }
+  }
+`;
+export const NavItem = styled.li`
+  margin-right: 10px;
+  transition: all 0.5s ease;
+  border: 2px solid transparent;
+  border-radius: 0.75rem;
+  height: 40px;
+
+  &:hover {
+    border: 2px solid #005bea;
   }
 
   @media screen and (max-width: 960px) {

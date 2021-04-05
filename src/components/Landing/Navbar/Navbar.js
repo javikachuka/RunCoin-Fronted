@@ -12,6 +12,8 @@ import {
   NavMenu,
   NavLink,
   NavItem,
+  PlayItem,
+  PlayLink,
 } from "./Navbar.elements";
 
 const Navbar = () => {
@@ -23,7 +25,7 @@ const Navbar = () => {
     <Nav className="shadow-sm">
       <NavBarContainer>
         <NavLogo to="/" onClick={() => scroll.scrollToTop()}>
-          <NavImg src={logoImg} alt="logo-img"></NavImg>
+          <NavImg src={logoImg} alt="logo-img"></NavImg>RUNCOIN
         </NavLogo>
         {/* <Hamburger onClick={handleClick} className={click ? '' : 'opened'}/> */}
         <MobileIcon onClick={handleClick}>
@@ -39,7 +41,7 @@ const Navbar = () => {
               exact="true"
               offset={-60}
             >
-              About
+              How it Works
             </NavLink>
           </NavItem>
           <NavItem>
@@ -51,7 +53,7 @@ const Navbar = () => {
               exact="true"
               offset={-60}
             >
-              Projects
+              Features
             </NavLink>
           </NavItem>
           <NavItem>
@@ -63,9 +65,12 @@ const Navbar = () => {
               exact="true"
               offset={-60}
             >
-              Contact
+              Team
             </NavLink>
           </NavItem>
+          <PlayItem>
+            <PlayLink href="/game">Start</PlayLink>
+          </PlayItem>
         </NavMenu>
       </NavBarContainer>
     </Nav>

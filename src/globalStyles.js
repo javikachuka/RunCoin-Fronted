@@ -14,6 +14,9 @@ body{
     background: #F8FAFF;
 }
 
+.text-blue{
+  color:rgba(37, 99, 235,1);
+}
 .shadow-sm{
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }

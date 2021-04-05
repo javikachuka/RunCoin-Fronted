@@ -14,7 +14,7 @@ const App = () => {
       <Route path="/">
         <GlobalStyle />
         <Landing />
-        <h1>Hola esta funcionando</h1>
+        {/* <h1>Hola esta funcionando</h1> */}
       </Route>
       <Route path="/game">
         <LoginContextProvider>
