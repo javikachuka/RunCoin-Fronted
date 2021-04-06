@@ -5,6 +5,7 @@ import Chip from '@material-ui/core/Chip';
 import HomeIcon from '@material-ui/icons/Home';
 import SportsEsports from '@material-ui/icons/SportsEsports';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Link } from 'wouter'
 
 const StyledBreadcrumb = withStyles((theme) => ({
   root: {
@@ -30,13 +31,15 @@ function handleClick(event) {
 export default function Navegation() {
   return (
     <Breadcrumbs aria-label="breadcrumb" >
-      <StyledBreadcrumb
-        component="a"
-        href="#"
-        label="Home"
-        icon={<HomeIcon fontSize="small" />}
-        onClick={handleClick}
-      />
+      <Link to="/">
+        <StyledBreadcrumb
+          component="a"
+          href="/"
+          label="Home"
+          icon={<HomeIcon fontSize="small" />}
+          onClick={handleClick}
+        />
+      </Link>
       <StyledBreadcrumb 
         component="a" 
         href="#" 
