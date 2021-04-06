@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "../../../globalStyles";
 
-import heroImg from "../../../images/hero-runcoinlogo.svg";
+import heroImg from "../../../images/runcoin-hero-img.svg";
 
 import {
   HeroSection,

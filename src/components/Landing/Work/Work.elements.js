@@ -1,20 +1,20 @@
 import styled from "styled-components";
 
-export const HeroSection = styled.div`
+export const WorkSection = styled.div`
   padding: 60px 0;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-export const HeroRow = styled.div`
+export const WorkRow = styled.div`
   width: 100%;
   display: flex;
   margin: 0 -15px -15px -15px;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
+  flex-direction: row-reverse;
 
   @media screen and (max-width: 768px) {
     width: 100%;
@@ -22,7 +22,7 @@ export const HeroRow = styled.div`
   }
 `;
 
-export const HeroColumn = styled.div`
+export const WorkColumn = styled.div`
   /* margin-bottom: 15px;
   padding-left: 15px;
   padding-right: 15px; */
@@ -78,7 +78,7 @@ export const Icon = styled.img`
 `;
 
 export const ImgWrapper = styled.div`
-  width: 100%;
+  max-width: 600px;
   display: flex;
   justify-content: flex-end;
   @media screen and (max-width: 968px) {
@@ -89,7 +89,7 @@ export const ImgWrapper = styled.div`
   }
 `;
 
-export const HeroImg = styled.img`
+export const WorkImg = styled.img`
   width: 100%;
   border: 0;
   padding-right: 0;
