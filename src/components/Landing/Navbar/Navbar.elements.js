@@ -6,16 +6,12 @@ import { Link as PLink } from "wouter";
 export const Nav = styled.nav`
   display: flex;
   background: #f8faff;
-  height: 80px;
+  height: 60px;
   justify-content: center;
   align-items: center;
   position: sticky;
   top: 0;
   z-index: 3;
-
-  @media screen and (max-width: 768px) {
-    height: 60px;
-  }
 `;
 
 export const NavBarContainer = styled(Container)`

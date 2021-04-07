@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logoImg from "../../../images/logo-runcoin.svg";
+import logoImg from "../../../images/runcoin-logo-img.svg";
 import { animateScroll as scroll } from "react-scroll";
 
 import {
@@ -34,7 +34,7 @@ const Navbar = () => {
         <NavMenu onClick={handleClick} click={click}>
           <NavItem>
             <NavLink
-              to="about"
+              to="work"
               smooth={true}
               duration={1000}
               onClick={handleClick}
@@ -46,7 +46,7 @@ const Navbar = () => {
           </NavItem>
           <NavItem>
             <NavLink
-              to="projects"
+              to="features"
               smooth={true}
               duration={1000}
               onClick={handleClick}
@@ -58,7 +58,7 @@ const Navbar = () => {
           </NavItem>
           <NavItem>
             <NavLink
-              to="contact"
+              to="team"
               smooth={true}
               duration={1000}
               onClick={handleClick}
