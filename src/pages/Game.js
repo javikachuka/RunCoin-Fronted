@@ -9,6 +9,7 @@ import { getCostPlay, getCantDaysCurrentOfSeassons, getReward } from '../service
 import * as Parameters from "../services/parameters.js";
 import { miContrato } from '../services/server'
 import { useList } from '../hooks/useList';
+import ListPlayersTop from '../components/ListPlayersTop';
 // aplicacion para la conexión con la blockchain 
 const Web3 = require("web3");
 //prueba conectar el proveedor de metamask primero sino usa la varabile en Parameters "provider"
@@ -120,11 +121,14 @@ const Game = () => {
             </Grid>
             <Box mt={2} mb={2}>
                 <Grid item container justify="center">
-                    <Grid item sm={2} ></Grid>
-                    <Grid item >
+                    <Grid item sm={8}>
                         <Content getRealPriceEth={getRealPriceEth} />
                     </Grid>
-                    <Grid item sm={2} ></Grid>
+                    <Grid item xs={4} md={4} >
+                        <Box ml={4}>
+                            <ListPlayersTop />
+                        </Box>
+                    </Grid>
                     {/* <Grid item container direction="column" sm={2} justify="space-evenly" alignItems="center">
               <Grid item>
                 <Button variant="contained" color="primary">
