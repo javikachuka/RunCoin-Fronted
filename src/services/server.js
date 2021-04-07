@@ -1,5 +1,7 @@
 import * as Parameters from "./parameters.js";
-import { CONST_ABI } from "./abiApp.js";
+import {
+    CONST_ABI
+} from "./abiApp.js";
 
 // aplicacion para la conexión con la blockchain
 const Web3 = require("web3");
@@ -8,8 +10,8 @@ let web3 = new Web3(Web3.givenProvider || Parameters.provider);
 //se crea el contrato
 // export const miContrato = new web3.eth.Contract(CONST_ABI, Parameters.addressContractR);
 export const miContrato = new web3.eth.Contract(
-  CONST_ABI,
-  Parameters.addressContractOKT
+    CONST_ABI,
+    Parameters.addressContractOKT
 );
 
 //inicia el juego y retorna su {player:string,timestamp:uint ,wait: uint}
@@ -18,33 +20,32 @@ export const miContrato = new web3.eth.Contract(
 
 // Account
 export async function play(_account) {
-  //_cost wei
+    //_cost wei
 
-  try {
-    const _cost = await miContrato.methods.cost().call((err, result) => result);
+    try {
+        const _cost = await miContrato.methods.cost().call((err, result) => result);
 
-    let confirm = false;
-    const player = await miContrato.methods.game(_cost).send(
-      {
-        from: _account,
-        value: _cost,
-      },
-      function (error, transactionHash) {
-        console.log(transactionHash);
-        if (transactionHash !== undefined) {
-          confirm = true;
-        }
-      }
-    );
-    return confirm;
-  } catch (Ex) {
-    console.log(Ex);
-    //ocurrieron los siguientes errores,
-    //1- No esta habilitado para jugar.
-    //2- el valor ingresado es menor al costo del juego el costo esta en WEI.
-    //3 - el valor ingresado no es el mismo que el valor enviado.
-    return false;
-  }
+        let confirm = false;
+        const player = await miContrato.methods.game(_cost).send({
+                from: _account,
+                value: _cost,
+            },
+            function (error, transactionHash) {
+                console.log(transactionHash);
+                if (transactionHash !== undefined) {
+                    confirm = true;
+                }
+            }
+        );
+        return confirm;
+    } catch (Ex) {
+        console.log(Ex);
+        //ocurrieron los siguientes errores,
+        //1- No esta habilitado para jugar.
+        //2- el valor ingresado es menor al costo del juego el costo esta en WEI.
+        //3 - el valor ingresado no es el mismo que el valor enviado.
+        return false;
+    }
 }
 
 //cant= cantidad de player que se quiere visualizar
@@ -55,41 +56,41 @@ export async function play(_account) {
 //opcion 2 timeGame= si es el ultimo jugador del array te devuelve el tiempo desde que empezo a jugar hasta que se consulto en la blockchain (cada vez que consultas va a cmbiar el tiempo)
 
 export async function listPlayerLastSeassons(cant = -1) {
-  try {
-    const currentSeassons = await miContrato.methods
-      .currentSeasson()
-      .call((err, result) => result);
+    try {
+        const currentSeassons = await miContrato.methods
+            .currentSeasson()
+            .call((err, result) => result);
 
-    let cantPlayer = await miContrato.methods
-      .getCantPlayer(currentSeassons)
-      .call((err, result) => result);
-    cantPlayer--;
-    if (cant <= 0) {
-      //trae desde el utlimo jugador hasta el primero
-      cant = 0;
-    } else {
-      //el limite de jugador es
+        let cantPlayer = await miContrato.methods
+            .getCantPlayer(currentSeassons)
+            .call((err, result) => result);
+        cantPlayer--;
+        if (cant <= 0) {
+            //trae desde el utlimo jugador hasta el primero
+            cant = 0;
+        } else {
+            //el limite de jugador es
 
-      cant = cant >= cantPlayer ? 0 : cantPlayer - cant;
+            cant = cant >= cantPlayer ? 0 : cantPlayer - cant;
+        }
+        var players = [];
+        let player = {};
+
+        while (cantPlayer >= cant) {
+            player = await miContrato.methods
+                .getPlayer(currentSeassons, cantPlayer)
+                .call((err, result) => result);
+
+            player.wait = parseInt(player.wait);
+            player.timeGame = parseInt(player.timeGame);
+            players.push(player);
+            cantPlayer--;
+        }
+        return players;
+    } catch (Ex) {
+        console.log(Ex);
+        return false;
     }
-    var players = [];
-    let player = {};
-
-    while (cantPlayer >= cant) {
-      player = await miContrato.methods
-        .getPlayer(currentSeassons, cantPlayer)
-        .call((err, result) => result);
-
-      player.wait = parseInt(player.wait);
-      player.timeGame = parseInt(player.timeGame);
-      players.push(player);
-      cantPlayer--;
-    }
-    return players;
-  } catch (Ex) {
-    console.log(Ex);
-    return false;
-  }
 }
 
 //si queres ver mas player en la lista pasas
@@ -97,260 +98,330 @@ export async function listPlayerLastSeassons(cant = -1) {
 // indexPlayer= a partir del indice que queres ver.
 //indexseasson= indice de la session,
 export async function getMorePlayer(cant, indexPlayer = -1, indexSeasson = -1) {
-  try {
-    var players = [];
-    let player = {};
-    if (indexSeasson == -1) {
-      indexSeasson = await miContrato.methods
-        .currentSeasson()
-        .call((err, result) => result);
-    }
-    if (indexPlayer == -1) {
-      indexPlayer = await miContrato.methods
-        .getCantPlayer(indexSeasson)
-        .call((err, result) => result - 1);
-    }
+    try {
+        var players = [];
+        let player = {};
+        if (indexSeasson == -1) {
+            indexSeasson = await miContrato.methods
+                .currentSeasson()
+                .call((err, result) => result);
+        }
+        if (indexPlayer == -1) {
+            indexPlayer = await miContrato.methods
+                .getCantPlayer(indexSeasson)
+                .call((err, result) => result - 1);
+        }
 
-    while (cant > 0 && indexPlayer >= 0) {
-      player = await miContrato.methods
-        .getPlayer(indexSeasson, indexPlayer)
-        .call((err, result) => result);
-      player.wait = parseInt(player.wait);
-      player.timeGame = parseInt(player.timeGame);
-      player.index = parseInt(indexPlayer);
-      players.push(player);
-      indexPlayer--;
-      cant--;
+        while (cant > 0 && indexPlayer >= 0) {
+            player = await miContrato.methods
+                .getPlayer(indexSeasson, indexPlayer)
+                .call((err, result) => result);
+            player.wait = parseInt(player.wait);
+            player.timeGame = parseInt(player.timeGame);
+            player.index = parseInt(indexPlayer);
+            players.push(player);
+            indexPlayer--;
+            cant--;
+        }
+        return players;
+    } catch (Ex) {
+        console.log(Ex);
+        return false;
     }
-    return players;
-  } catch (Ex) {
-    console.log(Ex);
-    return false;
-  }
 }
 
 //return {recompensa, nextRecompensa}
 export async function getReward() {
-  try {
-    const recompensa = await miContrato.methods
-      .getValueReward()
-      .call((err, result) => result);
-    return recompensa;
-  } catch (Ex) {
-    return false;
-  }
+    try {
+        const recompensa = await miContrato.methods
+            .getValueReward()
+            .call((err, result) => result);
+        return recompensa;
+    } catch (Ex) {
+        return false;
+    }
 }
 
 export async function getCostPlay() {
-  try {
-    const cost = await miContrato.methods.cost().call((err, result) => result);
-    return cost;
-  } catch (Ex) {
-    return false;
-  }
+    try {
+        const cost = await miContrato.methods.cost().call((err, result) => result);
+        return cost;
+    } catch (Ex) {
+        return false;
+    }
 }
 
 export async function getCantDaysCurrentOfSeassons() {
-  try {
-    const cantDaysCurrent = await miContrato.methods
-      .cantDaysCurrent()
-      .call((err, result) => result);
-    return cantDaysCurrent;
-  } catch (Ex) {
-    return false;
-  }
+    try {
+        const cantDaysCurrent = await miContrato.methods
+            .cantDaysCurrent()
+            .call((err, result) => result);
+        return cantDaysCurrent;
+    } catch (Ex) {
+        return false;
+    }
 }
-//trae solamente las direcciones de los ganadores, si la temporada tiene 3 ganadores solo trae los 3
-export async function getWinnersSeasson(indexSeasson = -1) {
-  try {
-    if (indexSeasson == -1) {
-      indexSeasson = await miContrato.methods
-        .currentSeasson()
-        .call((err, result) => result);
-    }
-    // winners.players son address   winner.cantGame la cantidad de veces que jugaron
-    let allWinners = [];
-    let winners = await miContrato.methods
-      .getWinnersSeasson(indexSeasson)
-      .call((err, result) => result);
-    for (let i = 0; i < winners.players.length; i++) {
-      allWinners.push({
-        address: winners.players[i],
-        cantGame: winners.cantGame[i],
-      });
-    }
+//trae solamente las direcciones de los ganadores y el jugador actual aunque no haya ganado, si la temporada tiene 3 ganadores solo trae los 3
+//retorna [  {address , cantGame, reward },{}]
+export async function getWinnersSeasson(indexSeasson = -1,account) {
+    try {
+        if (indexSeasson == -1) {
+            indexSeasson = await miContrato.methods
+                .currentSeasson()
+                .call((err, result) => result);
+        }
+        // winners.players son address   winner.cantGame la cantidad de veces que jugaron
+        let allWinners = [];
+        let winners = await miContrato.methods
+            .getWinnersSeasson(indexSeasson)
+            .call((err, result) => result);
+       
+        let entrar = true;
+        for (let i = 0; i < winners.players.length; i++) {
+            //si el jugador actual no esta en la lista hay que agregarlo al final
+            if (winners.players[i] == account) {
+                entrar = false;
+            }
+            allWinners.push({
+                address: winners.players[i],
+                cantGame: winners.cantGame[i],
+                reward: winners.reward[i],
+            });
+        }
+        if (entrar) {
+            let cantGame = await miContrato.methods
+                .cantPlayForSeasson(account, indexSeasson, 0)
+                .call((err, result) => result);
+            allWinners.push({
+                address: account,
+                cantGame: cantGame,
+                reward: 0
+            });
+        }
 
-    return allWinners;
-  } catch (Ex) {
-    console.log(Ex);
-    return [];
-  }
+        return allWinners;
+    } catch (Ex) {
+        console.log(Ex);
+        return [];
+    }
 }
 //obteiene todas las direcciones de todos los jugadores y la cantidad de vecees que jugaron
 export async function getAllGameOfPlayer(indexSeasson = -1) {
-  try {
-    if (indexSeasson == -1) {
-      indexSeasson = await miContrato.methods
-        .currentSeasson()
-        .call((err, result) => result);
-    }
-    // winners.players son address   winner.cantGame la cantidad de veces que jugaron
-    let allPlayers = [];
-    let players = await miContrato.methods
-      .getCantGameForPlayer(indexSeasson)
-      .call((err, result) => result);
-    for (let i = 0; i < players.player.length; i++) {
-      allPlayers.push({
-        address: players.player[i],
-        cantGame: players.cantGame[i],
-      });
-    }
+    try {
+        if (indexSeasson == -1) {
+            indexSeasson = await miContrato.methods
+                .currentSeasson()
+                .call((err, result) => result);
+        }
+        // winners.players son address   winner.cantGame la cantidad de veces que jugaron
+        let allPlayers = [];
+        let players = await miContrato.methods
+            .getCantGameForPlayer(indexSeasson)
+            .call((err, result) => result);
+        for (let i = 0; i < players.player.length; i++) {
+            allPlayers.push({
+                address: players.player[i],
+                cantGame: players.cantGame[i],
+            });
+        }
 
-    return allPlayers;
-  } catch (Ex) {
-    console.log(Ex);
-    return [];
-  }
+        return allPlayers;
+    } catch (Ex) {
+        console.log(Ex);
+        return [];
+    }
 }
 
 export async function getPoolSeasson(indexSeasson = -1) {
-  try {
-    if (indexSeasson == -1) {
-      indexSeasson = await miContrato.methods
-        .currentSeasson()
-        .call((err, result) => result);
+    try {
+        if (indexSeasson == -1) {
+            indexSeasson = await miContrato.methods
+                .currentSeasson()
+                .call((err, result) => result);
+        }
+        // winners.players son address   winner.cantGame la cantidad de veces que jugaron
+
+        let poolSeasson = await miContrato.methods
+            .poolSeasson(indexSeasson)
+            .call((err, result) => result);
+
+        return poolSeasson;
+    } catch (Ex) {
+        console.log(Ex);
+        return 0;
     }
-    // winners.players son address   winner.cantGame la cantidad de veces que jugaron
-
-    let poolSeasson = await miContrato.methods
-      .poolSeasson(indexSeasson)
-      .call((err, result) => result);
-
-    return poolSeasson;
-  } catch (Ex) {
-    console.log(Ex);
-    return 0;
-  }
 }
-//returna true si gano la temporada
-// indexSeassib la temporada que desa ver, account la cuenta del usuario que consulta
-export async function checkWinnerSeason(indexSeasson = -1) {
-  try {
-    if (indexSeasson < 0) {
-      indexSeasson = await miContrato.methods
-        .currentSeasson()
-        .call((err, result) => result);
+//checkea si el ganador de la temporada seleccionada
+export async function checkWinnerSeason(indexSeasson = -1,account) {
+    try {
+        if (indexSeasson < 0) {
+            indexSeasson = await miContrato.methods
+                .currentSeasson()
+                .call((err, result) => result);
+        }
+       
+        let winners = await miContrato.methods
+            .getWinnersSeasson(indexSeasson)
+            .call((err, result) => result);
+        for (let i = 0; i < winners.players.length; i++) {
+            if (winners.players[i] == account) {
+                return true;
+            }
+        }
+        return false;
+    } catch (Ex) {
+        console.log(Ex);
+        return 0;
     }
-    let account = getUserLogued();
-    let winners = await miContrato.methods
-      .getWinnersSeasson(indexSeasson)
-      .call((err, result) => result);
-    for (let i = 0; i < winners.players.length; i++) {
-      if (winners.players[i] == account) {
+}
+//reclama el premio uno de los ganadores de la temporada seleccionada
+export async function claimWinnerSeasson(indexSeasson = -1,account) {
+    try {
+        if (indexSeasson < 0) {
+            indexSeasson = await miContrato.methods
+                .currentSeasson()
+                .call((err, result) => result);
+        }
+       
+
+        await miContrato.methods.claimWinnerSeassonPool(indexSeasson).send({
+                from: account,
+                value: 0,
+            },
+            function (error, transactionHash) {
+                console.log(transactionHash);
+            }
+        );
         return true;
-      }
+    } catch (Ex) {
+        console.log(Ex);
+        return false;
     }
-    return false;
-  } catch (Ex) {
-    console.log(Ex);
-    return 0;
-  }
+}
+//checkea si el ultimo jugador es el ganador del POOL global
+//retorna true
+export async function checkWinnerPool(account) {
+    try {
+        
+        let address = await miContrato.methods
+            .winVerify(0)
+            .call((err, result) => result);
+        if(address ==  account){
+            return true;
+        }
+        return false;
+    } catch (Ex) {
+        console.log(Ex);
+        return 0;
+    }
+}
+//se reclama el pool global
+export async function claimWinnerPool(account) {
+    try {
+      
+
+        await miContrato.methods.claimLastPlayer().send({
+                from: account,
+                value: 0,
+            },
+            function (error, transactionHash) {
+                console.log(transactionHash);
+            }
+        );
+        return true;
+    } catch (Ex) {
+        console.log(Ex);
+        return false;
+    }
+}
+//obtener la cantidad de token de la direccion actual
+export async function cantToken(account) {
+    try {
+       
+        return await miContrato.methods
+            .cantTokenGForOwner(account)
+            .call((err, result) => result);
+        
+    } catch (Ex) {
+        console.log(Ex);
+        return 0;
+    }
 }
 
-export async function claimWinnerSeassonPool(indexSeasson = -1) {
-  try {
-    if (indexSeasson < 0) {
-      indexSeasson = await miContrato.methods
-        .currentSeasson()
-        .call((err, result) => result);
+//reclama los token que tiene
+export async function claimToken(account) {
+    try {
+        await miContrato.methods.claimToken().send({
+                from: account,
+                value: 0,
+            },
+            function (error, transactionHash) {
+                console.log(transactionHash);
+            }
+        );
+        return true;
+    } catch (Ex) {
+        console.log(Ex);
+        return false;
     }
-    let account = getUserLogued();
-
-    await miContrato.methods.claimWinnerSeassonPool(indexSeasson).send(
-      {
-        from: account,
-        value: 0,
-      },
-      function (error, transactionHash) {
-        console.log(transactionHash);
-      }
-    );
-    return true;
-  } catch (Ex) {
-    console.log(Ex);
-    return false;
-  }
+}
+export async function getSeassonCurrent() {
+    try {
+        return await miContrato.methods
+            .currentSeasson()
+            .call((err, result) => result);
+    } catch (Ex) {
+        console.log(Ex);
+        return false;
+    }
 }
 
 export async function getUserLogued() {
-  try {
-    let data = null;
-    await web3.eth.getAccounts(function (err, accounts) {
-      // chequea si hay un provider para poder conectarme la block
-      if (err != null) {
-        console.error("An error occurred: " + err);
-      } else if (accounts.length == 0) {
-        // checkea si hay algun usuario ya logueado a metamask
-        console.log("User is not logged in to MetaMask");
-      } else {
-        console.log("User is logged in to MetaMask");
-        data = accounts["0"];
-      }
-    });
-    return data;
-  } catch (Ex) {
-    console.log(Ex);
-    return false;
-  }
-}
-export async function getSeassonCurrent() {
-  try {
-    return await miContrato.methods
-      .currentSeasson()
-      .call((err, result) => result);
-  } catch (Ex) {
-    console.log(Ex);
-    return false;
-  }
-}
-export async function getMySeasson(indexSeasson = -1) {
-  try {
-    if (indexSeasson == -1) {
-      indexSeasson = await miContrato.methods
-        .currentSeasson()
-        .call((err, result) => result);
+    try {
+        let data = null;
+        await web3.eth.getAccounts(function (err, accounts) {
+            // chequea si hay un provider para poder conectarme la block
+            if (err != null) {
+                console.error("An error occurred: " + err);
+            } else if (accounts.length == 0) {
+                // checkea si hay algun usuario ya logueado a metamask
+                console.log("User is not logged in to MetaMask");
+            } else {
+                console.log("User is logged in to MetaMask");
+                data = accounts["0"];
+            }
+        });
+        return data;
+    } catch (Ex) {
+        console.log(Ex);
+        return false;
     }
-    let account = getSeassonCurrent();
-    return await miContrato.methods
-      .cantPlayForSeasson(account, indexSeasson, 0)
-      .call((err, result) => result);
-  } catch (Ex) {
-    console.log(Ex);
-    return false;
-  }
 }
+
+
+
 
 export async function watch() {
-  web3.eth.getBlockNumber().then((n) => {
-    n = n - 10;
-    miContrato
-      .getPastEvents("Game", {
-        fromBlock: "latest",
-        toBlock: n,
-      })
-      .then((events) => {
-        console.log(events);
-      });
-  });
+    web3.eth.getBlockNumber().then((n) => {
+        n = n - 10;
+        miContrato
+            .getPastEvents("Game", {
+                fromBlock: "latest",
+                toBlock: n,
+            })
+            .then((events) => {
+                console.log(events);
+            });
+    });
 
-  // await miContrato.events.Game({
-  //     // filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
-  //     fromBlock: 'latest'
-  // }, function (error, event) {
-  //     console.log('Evento activado');
-  //     console.log(event);
-  //     console.log(error)
-  // });
+    // await miContrato.events.Game({
+    //     // filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
+    //     fromBlock: 'latest'
+    // }, function (error, event) {
+    //     console.log('Evento activado');
+    //     console.log(event);
+    //     console.log(error)
+    // });
 }
 
 //**************Escuchar Eventos en la blockchain */
