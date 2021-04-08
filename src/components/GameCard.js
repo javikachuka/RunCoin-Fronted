@@ -58,12 +58,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const useForceUpdate = () => useState()[1]
-
 const GameCard = ({ getRealPriceEth }) => {
-
-  console.log('render');
-  const forceUpdate = useForceUpdate();
   const { user, setUser, logued, setLogued } = useContext(LoginContext)
   // const { user, logued } = useUser()
   const classes = useStyles()
@@ -176,11 +171,6 @@ const GameCard = ({ getRealPriceEth }) => {
             </Grid>
             <Grid item xs={12} sm={7} >
               <Button variant="contained" size="large" color="primary" onClick={handlePlay}>Play!</Button>
-              <IconButton onClick={forceUpdate}>
-                <Tooltip title="Reload players list" placement="top" >
-                  <ReplayIcon fontSize="inherit" />
-                </Tooltip>
-              </IconButton>
             </Grid>
           </Grid>
           <Grid item container xs={12} spacing={2} className={classes.margenButton} >

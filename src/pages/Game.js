@@ -15,9 +15,14 @@ const Web3 = require("web3");
 //prueba conectar el proveedor de metamask primero sino usa la varabile en Parameters "provider"
 let web3 = new Web3(Web3.givenProvider || Parameters.provider);
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     paper: {
         padding: 5,
+    },
+    top: {
+        [theme.breakpoints.up('sm')]: {
+            marginTop: 30
+        },
     }
 }))
 
@@ -124,8 +129,8 @@ const Game = () => {
                     <Grid item sm={8}>
                         <Content getRealPriceEth={getRealPriceEth} />
                     </Grid>
-                    <Grid item xs={4} md={4} >
-                        <Box ml={4}>
+                    <Grid item md={4} >
+                        <Box ml={2} mr={2} className={classes.top}>
                             <ListPlayersTop />
                         </Box>
                     </Grid>
