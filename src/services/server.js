@@ -18,19 +18,14 @@ export const miContrato = new web3.eth.Contract(
 //ejemplo de timestamp = 1287124121241 ; si resto el timestamp del anterior jugador con este serian los segundos que hay
 // de diferencia.
 
-async function getUser() {
-    const accounts = await ethereum.request({
-        method: 'eth_requestAccounts'
-    });
-    return accounts[0];
-}
+
 // Account
 export async function play() {
     //_cost wei
 
     try {
         const _cost = await miContrato.methods.cost().call((err, result) => result);
-        let _account=getUser();
+        let _account=await getUserLogued();
         let confirm = false;
         const player = await miContrato.methods.game(_cost).send({
                 from: _account,
@@ -171,7 +166,7 @@ export async function getCantDaysCurrentOfSeassons() {
 //retorna [  {address , cantGame, reward },{}]
 export async function getWinnersSeasson(indexSeasson = -1) {
     try {
-        let account=getUser();
+        let account=await getUserLogued();
         if (indexSeasson == -1) {
             indexSeasson = await miContrato.methods
                 .currentSeasson()
@@ -261,7 +256,7 @@ export async function getPoolSeasson(indexSeasson = -1) {
 //checkea si el ganador de la temporada seleccionada
 export async function checkWinnerSeason(indexSeasson = -1) {
     try {
-        let account=getUser();
+        let account=await getUserLogued();
         if (indexSeasson < 0) {
             indexSeasson = await miContrato.methods
                 .currentSeasson()
@@ -285,7 +280,7 @@ export async function checkWinnerSeason(indexSeasson = -1) {
 //reclama el premio uno de los ganadores de la temporada seleccionada
 export async function claimWinnerSeasson(indexSeasson = -1) {
     try {
-        let account=getUser();
+        let account=await getUserLogued();
         if (indexSeasson < 0) {
             indexSeasson = await miContrato.methods
                 .currentSeasson()
@@ -311,7 +306,7 @@ export async function claimWinnerSeasson(indexSeasson = -1) {
 //retorna true
 export async function checkWinnerPool() {
     try {
-        let account=getUser();
+        let account=await getUserLogued();
         let address = await miContrato.methods
             .winVerify(0)
             .call((err, result) => result);
@@ -328,7 +323,7 @@ export async function checkWinnerPool() {
 export async function claimWinnerPool() {
     try {
 
-        let account=getUser();
+        let account=await getUserLogued();
         await miContrato.methods.claimLastPlayer().send({
                 from: account,
                 value: 0,
@@ -346,7 +341,7 @@ export async function claimWinnerPool() {
 //obtener la cantidad de token de la direccion actual
 export async function cantToken() {
     try {
-        let account=getUser();
+        let account=await getUserLogued();
         return await miContrato.methods
             .cantTokenGForOwner(account)
             .call((err, result) => result);
@@ -360,7 +355,7 @@ export async function cantToken() {
 //reclama los token que tiene
 export async function claimToken() {
     try {
-        let account=getUser();
+        let account=await getUserLogued();
         await miContrato.methods.claimToken().send({
                 from: account,
                 value: 0,

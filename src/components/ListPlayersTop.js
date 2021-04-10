@@ -39,21 +39,19 @@ const ListPlayersTop = () => {
     };
 
     const { user } = useLogin()
-    const [top, setTop] = useState([{ player: "0xF60935CC2e22f50ded1f75b0aB0600de97Fe7518", cant: 15 }, { player: "0x6Ae00a23234c8654eA9ca61e198Cf9172a7CAdE8", cant: 15 }])
+    const [top, setTop] = useState([])
 
 
     useEffect(
         () => {
             if (user.player != "") {
-                console.log("useeffec", user.player);
-                getWinnersSeasson(user.player)
+                let res = getWinnersSeasson()
                     .then(
-                        (res) => console.log(res)
+                        (res) => setTop(res)
                     )
                     .catch(
                         (error) => console.log(error)
                     )
-
             }
             getSeassonCurrent()
                 .then(
@@ -93,7 +91,7 @@ const ListPlayersTop = () => {
                         }
                     </Select>
                 </FormControl>
-                <IconButton aria-label="delete" style={{marginTop: '12px'}}>
+                <IconButton aria-label="delete" style={{ marginTop: '12px' }}>
                     <SearchIcon />
                 </IconButton>
                 <TableContainer component={Paper}>
@@ -107,12 +105,12 @@ const ListPlayersTop = () => {
                         </TableHead>
                         <TableBody>
                             {top.map((row, index) => (
-                                <TableRow key={row.player}>
+                                <TableRow key={row.player+index}>
                                     <TableCell component="th" scope="row">
                                         {index + 1}
                                     </TableCell>
-                                    <TableCell align="right">{transformAddress(row.player)}</TableCell>
-                                    <TableCell align="right">{row.cant}</TableCell>
+                                    <TableCell align="right">{transformAddress(row.address)}</TableCell>
+                                    <TableCell align="right">{row.cantGame}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

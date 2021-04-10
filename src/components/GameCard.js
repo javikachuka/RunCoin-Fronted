@@ -113,7 +113,7 @@ const GameCard = ({ getRealPriceEth }) => {
 
   const handlePlay = () => {
     if (logued !== false) {
-      play(user.player).then(
+      play().then(
         (res) => {
           console.log(res);
           console.log("Has Jugado con exito")
