@@ -1,6 +1,6 @@
 import React from "react";
 import { Route } from "wouter";
-import Game from "./pages/Game";
+import Game from "./pages/Game2";
 import { LoginContextProvider } from "./context/LoginContext";
 import { ListContextProvider } from "./context/ListContext";
 import * as We from "./services/server";
@@ -11,8 +11,8 @@ const App = () => {
   We.getWinnersSeasson();
   return (
     <>
+      <GlobalStyle />
       <Route path="/">
-        <GlobalStyle />
         <Landing />
         {/* <h1>Hola esta funcionando</h1> */}
       </Route>

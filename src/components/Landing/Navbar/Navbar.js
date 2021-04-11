@@ -27,7 +27,6 @@ const Navbar = () => {
         <NavLogo to="/" onClick={() => scroll.scrollToTop()}>
           <NavImg src={logoImg} alt="logo-img"></NavImg>RUNCOIN
         </NavLogo>
-        {/* <Hamburger onClick={handleClick} className={click ? '' : 'opened'}/> */}
         <MobileIcon onClick={handleClick}>
           {click ? <Hamburger className="opened" /> : <Hamburger />}
         </MobileIcon>

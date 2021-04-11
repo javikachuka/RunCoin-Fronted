@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Web3 from 'web3';
@@ -7,7 +7,9 @@ import { UserProvider, useUser } from '../context/userContext'
 import LoginContext from '../context/LoginContext'
 import WalletModel from '../models/WalletModel';
 import { useLogin } from '../hooks/useLogin';
-import {transformAddress} from '../utils/transformAddress'
+import { transformAddress } from '../utils/transformAddress'
+import styled from "styled-components";
+
 
 // const web3 = new Web3(window.web3.currentProvider);
 
@@ -19,6 +21,26 @@ import {transformAddress} from '../utils/transformAddress'
 // )
 
 const ButtonLog = () => {
+
+    const Button = styled.a`
+  color: #DEDEE0;
+  background: transparent;
+  border: 0;
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  height: 100%;
+  font-weight: 500;
+
+  @media screen and (max-width: 960px) {
+    text-align: center;
+    padding: 2rem;
+    width: 100%;
+    display: table;
+  }
+`;
+
     // const {user, logued, setLogued} = useUser()
     const { user, setUser, logued, setLogued } = useLogin()
     const { web3Loading, getweb3, disconnect } = WalletModel();
@@ -109,13 +131,13 @@ const ButtonLog = () => {
     if (!logued) {
         return (
             <>
-                <Button color="inherit" size="small" onClick={connectWallet} endIcon={<ArrowForwardIcon />}>Connect to a Wallet</Button>
+                <Button  onClick={connectWallet}>Connect to a Wallet</Button>
             </>
         );
     } else {
         return (
             <>
-                <Button color="inherit" size="small" endIcon={<ExitToAppIcon />}>{transformAddress(user.player)}</Button>
+                <Button  >{transformAddress(user.player)}</Button>
             </>
         );
     }
