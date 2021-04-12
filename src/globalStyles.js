@@ -48,32 +48,16 @@ body{
   color: #354D5C !important;
 }
 
-
-.bitnetLogo{
-  width: 50%;
-  /* height:125%; */
+.game-ended{
+  background: #3A3E4A;
 }
 
-
-
-`;
-
-export const rotate = keyframes`
-  0% {
-    transform: rotate(35deg);
-  }
-
-  50%{
-    transform: rotate(60deg);
-  }
-
-  100%{
-    transform: rotate(35deg);
-  }
+.game-ended-player{
+  background: rgba(11, 235, 180, 0.3);
+}
 `;
 
 export const Container = styled.div`
-  /* z-index: 1; */
   width: 100%;
   max-width: 1366px;
   margin-right: auto;
@@ -85,24 +69,6 @@ export const Container = styled.div`
     padding-right: 30px;
     padding-left: 30px;
   }
-`;
-
-export const Pentagon = styled.div`
-  /* clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); */
-  width: 10vw;
-  height: 10vw;
-  transform: rotate(50deg);
-  position: absolute;
-  border-radius: 1rem;
-  top: 3%;
-  left: -10%;
-  /* background: rgba(34, 211, 238, 40%); */
-
-  background: linear-gradient(90deg, transparent (22px - 1px), transparent 1%)
-      center,
-    linear-gradient(transparent (22px - 1px), transparent 1%) center, #2567eb;
-  /* background-size: 22px 22px; */
-  animation: ${rotate} 10s ease-in-out infinite;
 `;
 
 export default GlobalStyle;

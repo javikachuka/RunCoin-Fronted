@@ -1,11 +1,12 @@
 import React from "react";
 import { Route } from "wouter";
-import Game from "./pages/Game2";
+import Game from "./pages/Game";
 import { LoginContextProvider } from "./context/LoginContext";
 import { ListContextProvider } from "./context/ListContext";
 import * as We from "./services/server";
 import Landing from "./pages/Landing";
 import GlobalStyle from "./globalStyles";
+import Game2 from "./pages/Game2";
 
 const App = () => {
   We.getWinnersSeasson();
@@ -20,6 +21,13 @@ const App = () => {
         <LoginContextProvider>
           <ListContextProvider>
             <Game />
+          </ListContextProvider>
+        </LoginContextProvider>
+      </Route>
+      <Route path="/game2">
+        <LoginContextProvider>
+          <ListContextProvider>
+            <Game2 />
           </ListContextProvider>
         </LoginContextProvider>
       </Route>
