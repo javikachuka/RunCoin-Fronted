@@ -49,43 +49,43 @@ export async function play() {
     }
 }
 
-//cant= cantidad de player que se quiere visualizar
+//count= countidad de player que se quiere visualizar
 
 //player {player= address , timestamp= el tiempo en el que empezo a jugar, timeGame= el tiempo en que termino de jugar}
 
 //opcion 1 timeGame= seria el tiempo desde que empezo a jugar hasta que otro jugador le corto el tiempo (cada vez que consultas siempre va ser el mismo tiempo).
 //opcion 2 timeGame= si es el ultimo jugador del array te devuelve el tiempo desde que empezo a jugar hasta que se consulto en la blockchain (cada vez que consultas va a cmbiar el tiempo)
 
-export async function listPlayerLastSeassons(cant = -1) {
+export async function listPlayerLastSeasons(count = -1) {
     try {
-        const currentSeassons = await miContrato.methods
-            .currentSeasson()
+        const currentSeasons = await miContrato.methods
+            .currentSeason()
             .call((err, result) => result);
 
-        let cantPlayer = await miContrato.methods
-            .getCantPlayer(currentSeassons)
+        let countPlayer = await miContrato.methods
+            .getCountPlayer(currentSeasons)
             .call((err, result) => result);
-        cantPlayer--;
-        if (cant <= 0) {
+        countPlayer--;
+        if (count <= 0) {
             //trae desde el utlimo jugador hasta el primero
-            cant = 0;
+            count = 0;
         } else {
             //el limite de jugador es
 
-            cant = cant >= cantPlayer ? 0 : cantPlayer - cant;
+            count = count >= countPlayer ? 0 : countPlayer - count;
         }
         var players = [];
         let player = {};
 
-        while (cantPlayer >= cant) {
+        while (countPlayer >= count) {
             player = await miContrato.methods
-                .getPlayer(currentSeassons, cantPlayer)
+                .getPlayer(currentSeasons, countPlayer)
                 .call((err, result) => result);
 
             player.wait = parseInt(player.wait);
             player.timeGame = parseInt(player.timeGame);
             players.push(player);
-            cantPlayer--;
+            countPlayer--;
         }
         return players;
     } catch (Ex) {
@@ -95,34 +95,34 @@ export async function listPlayerLastSeassons(cant = -1) {
 }
 
 //si queres ver mas player en la lista pasas
-//cant= la cantidad de player que queres ver,
+//count= la countidad de player que queres ver,
 // indexPlayer= a partir del indice que queres ver.
-//indexseasson= indice de la session,
-export async function getMorePlayer(cant, indexPlayer = -1, indexSeasson = -1) {
+//indexseason= indice de la session,
+export async function getMorePlayer(count, indexPlayer = -1, indexSeason = -1) {
     try {
         var players = [];
         let player = {};
-        if (indexSeasson == -1) {
-            indexSeasson = await miContrato.methods
-                .currentSeasson()
+        if (indexSeason == -1) {
+            indexSeason = await miContrato.methods
+                .currentSeason()
                 .call((err, result) => result);
         }
         if (indexPlayer == -1) {
             indexPlayer = await miContrato.methods
-                .getCantPlayer(indexSeasson)
+                .getCountPlayer(indexSeason)
                 .call((err, result) => result - 1);
         }
 
-        while (cant > 0 && indexPlayer >= 0) {
+        while (count > 0 && indexPlayer >= 0) {
             player = await miContrato.methods
-                .getPlayer(indexSeasson, indexPlayer)
+                .getPlayer(indexSeason, indexPlayer)
                 .call((err, result) => result);
             player.wait = parseInt(player.wait);
             player.timeGame = parseInt(player.timeGame);
             player.index = parseInt(indexPlayer);
             players.push(player);
             indexPlayer--;
-            cant--;
+            count--;
         }
         return players;
     } catch (Ex) {
@@ -152,30 +152,30 @@ export async function getCostPlay() {
     }
 }
 
-export async function getCantDaysCurrentOfSeassons() {
+export async function getCountDaysCurrentOfSeasons() {
     try {
-        const cantDaysCurrent = await miContrato.methods
-            .cantDaysCurrent()
+        const countDaysCurrent = await miContrato.methods
+            .countDaysCurrent()
             .call((err, result) => result);
-        return cantDaysCurrent;
+        return countDaysCurrent;
     } catch (Ex) {
         return false;
     }
 }
 //trae solamente las direcciones de los ganadores y el jugador actual aunque no haya ganado, si la temporada tiene 3 ganadores solo trae los 3
-//retorna [  {address , cantGame, reward },{}]
-export async function getWinnersSeasson(indexSeasson = -1) {
+//retorna [  {address , countGame, reward },{}]
+export async function getWinnersSeason(indexSeason = -1) {
     try {
         let account=await getUserLogued();
-        if (indexSeasson == -1) {
-            indexSeasson = await miContrato.methods
-                .currentSeasson()
+        if (indexSeason == -1) {
+            indexSeason = await miContrato.methods
+                .currentSeason()
                 .call((err, result) => result);
         }
-        // winners.players son address   winner.cantGame la cantidad de veces que jugaron
+        // winners.players son address   winner.countGame la countidad de veces que jugaron
         let allWinners = [];
         let winners = await miContrato.methods
-            .getWinnersSeasson(indexSeasson)
+            .getWinnersSeason(indexSeason)
             .call((err, result) => result);
 
         let entrar = true;
@@ -186,17 +186,17 @@ export async function getWinnersSeasson(indexSeasson = -1) {
             }
             allWinners.push({
                 address: winners.players[i],
-                cantGame: winners.cantGame[i],
+                countGame: winners.countGame[i],
                 reward: winners.reward[i],
             });
         }
         if (entrar) {
-            let cantGame = await miContrato.methods
-                .cantPlayForSeasson(account, indexSeasson, 0)
+            let countGame = await miContrato.methods
+                .countPlayForSeason(account, indexSeason, 0)
                 .call((err, result) => result);
             allWinners.push({
                 address: account,
-                cantGame: cantGame,
+                countGame: countGame,
                 reward: 0
             });
         }
@@ -207,23 +207,23 @@ export async function getWinnersSeasson(indexSeasson = -1) {
         return [];
     }
 }
-//obteiene todas las direcciones de todos los jugadores y la cantidad de vecees que jugaron
-export async function getAllGameOfPlayer(indexSeasson = -1) {
+//obteiene todas las direcciones de todos los jugadores y la countidad de vecees que jugaron
+export async function getAllGameOfPlayer(indexSeason = -1) {
     try {
-        if (indexSeasson == -1) {
-            indexSeasson = await miContrato.methods
-                .currentSeasson()
+        if (indexSeason == -1) {
+            indexSeason = await miContrato.methods
+                .currentSeason()
                 .call((err, result) => result);
         }
-        // winners.players son address   winner.cantGame la cantidad de veces que jugaron
+        // winners.players son address   winner.countGame la countidad de veces que jugaron
         let allPlayers = [];
         let players = await miContrato.methods
-            .getCantGameForPlayer(indexSeasson)
+            .getCountGameForPlayer(indexSeason)
             .call((err, result) => result);
         for (let i = 0; i < players.player.length; i++) {
             allPlayers.push({
                 address: players.player[i],
-                cantGame: players.cantGame[i],
+                countGame: players.countGame[i],
             });
         }
 
@@ -234,37 +234,37 @@ export async function getAllGameOfPlayer(indexSeasson = -1) {
     }
 }
 
-export async function getPoolSeasson(indexSeasson = -1) {
+export async function getPoolSeason(indexSeason = -1) {
     try {
-        if (indexSeasson == -1) {
-            indexSeasson = await miContrato.methods
-                .currentSeasson()
+        if (indexSeason == -1) {
+            indexSeason = await miContrato.methods
+                .currentSeason()
                 .call((err, result) => result);
         }
-        // winners.players son address   winner.cantGame la cantidad de veces que jugaron
+        // winners.players son address   winner.countGame la countidad de veces que jugaron
 
-        let poolSeasson = await miContrato.methods
-            .poolSeasson(indexSeasson)
+        let poolSeason = await miContrato.methods
+            .poolSeason(indexSeason)
             .call((err, result) => result);
 
-        return poolSeasson;
+        return poolSeason;
     } catch (Ex) {
         console.log(Ex);
         return 0;
     }
 }
 //checkea si el ganador de la temporada seleccionada
-export async function checkWinnerSeason(indexSeasson = -1) {
+export async function checkWinnerSeason(indexSeason = -1) {
     try {
         let account=await getUserLogued();
-        if (indexSeasson < 0) {
-            indexSeasson = await miContrato.methods
-                .currentSeasson()
+        if (indexSeason < 0) {
+            indexSeason = await miContrato.methods
+                .currentSeason()
                 .call((err, result) => result);
         }
 
         let winners = await miContrato.methods
-            .getWinnersSeasson(indexSeasson)
+            .getWinnersSeason(indexSeason)
             .call((err, result) => result);
         for (let i = 0; i < winners.players.length; i++) {
             if (winners.players[i] == account) {
@@ -278,17 +278,17 @@ export async function checkWinnerSeason(indexSeasson = -1) {
     }
 }
 //reclama el premio uno de los ganadores de la temporada seleccionada
-export async function claimWinnerSeasson(indexSeasson = -1) {
+export async function claimWinnerSeason(indexSeason = -1) {
     try {
         let account=await getUserLogued();
-        if (indexSeasson < 0) {
-            indexSeasson = await miContrato.methods
-                .currentSeasson()
+        if (indexSeason < 0) {
+            indexSeason = await miContrato.methods
+                .currentSeason()
                 .call((err, result) => result);
         }
 
 
-        await miContrato.methods.claimWinnerSeassonPool(indexSeasson).send({
+        await miContrato.methods.claimWinnerSeasonPool(indexSeason).send({
                 from: account,
                 value: 0,
             },
@@ -338,12 +338,12 @@ export async function claimWinnerPool() {
         return false;
     }
 }
-//obtener la cantidad de token de la direccion actual
-export async function cantToken() {
+//obtener la countidad de token de la direccion actual
+export async function countToken() {
     try {
         let account=await getUserLogued();
         return await miContrato.methods
-            .cantTokenGForOwner(account)
+            .countTokenGForOwner(account)
             .call((err, result) => result);
 
     } catch (Ex) {
@@ -371,10 +371,10 @@ export async function claimToken() {
     }
 }
 
-export async function getSeassonCurrent() {
+export async function getSeasonCurrent() {
     try {
         return await miContrato.methods
-            .currentSeasson()
+            .currentSeason()
             .call((err, result) => result);
     } catch (Ex) {
         console.log(Ex);
