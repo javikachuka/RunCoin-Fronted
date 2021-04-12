@@ -137,6 +137,49 @@ export const CONST_ABI_TG = [{
 		"type": "function"
 	},
 	{
+		"inputs": [{
+				"internalType": "address",
+				"name": "_account",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "burnFrom",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+			"internalType": "address",
+			"name": "_distributor",
+			"type": "address"
+		}],
+		"name": "changeDistributor",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+			"internalType": "address",
+			"name": "_newOwner",
+			"type": "address"
+		}],
+		"name": "changeOwner",
+		"outputs": [{
+			"internalType": "bool",
+			"name": "",
+			"type": "bool"
+		}],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "decimals",
 		"outputs": [{
@@ -178,21 +221,6 @@ export const CONST_ABI_TG = [{
 			"type": "address"
 		}],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [{
-			"internalType": "address",
-			"name": "_newOwner",
-			"type": "address"
-		}],
-		"name": "setOwner",
-		"outputs": [{
-			"internalType": "bool",
-			"name": "",
-			"type": "bool"
-		}],
-		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
