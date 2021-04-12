@@ -6,8 +6,8 @@ export let addressContractR='0x45B051108F46CD9E76360CF90aD395403786DC23' /* ulti
 export let TG_ContractR='0x278F8686ca6B3455cDc7Add34Ed114aD59a1bD62'  
 
 
-export let addressContractOKT='0x203BffC48b70930d7C16f0c09B2a92Bb8F6cC297';//red OKT
-export let TG_ContratOKT='0x8781FbfCA3FBB21C2a970E9e4C9636661332EBe3';
+export let addressContractOKT='0x8d5cDC74164bAf8aEFd376C900c0486c4f1A4C66';//red OKT
+export let TG_ContratOKT='0xa70c0FFf297B2dD315dd4C358d88D34155F02aA2';
 // export let addressContractR2='0xd457A1e1EDB98566f70507f1e7c601472A12A04B'
 // export let addressContractR3='0x7467ee6CA62DAB2bAdC7198A011f22D27Bc913e2'
 // export let TW_ContractR='0x478186922bcFb5f378E5604b8dFBBFfB7D2e365d'
