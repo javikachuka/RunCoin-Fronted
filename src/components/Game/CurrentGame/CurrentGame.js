@@ -28,7 +28,7 @@ function CurrentGame() {
         <BarRow>
           <PlayerId>you: 0x34...f9F7</PlayerId>
           <GameBar>
-            <Bar></Bar>
+            <Bar className="current-game-animation"></Bar>
           </GameBar>
           <TimeBar>End In: 1 day 45 min</TimeBar>
         </BarRow>

@@ -1,5 +1,6 @@
 import React from "react";
 import CurrentGame from "../CurrentGame/CurrentGame";
+import SeasonContent from "../SeasonContent/SeasonContent";
 import {
   ContentBody,
   ContentContainer,
@@ -14,7 +15,9 @@ function Content() {
         <GameRow>
           <CurrentGame />
         </GameRow>
-        <SeasonRow></SeasonRow>
+        <SeasonRow>
+          <SeasonContent />
+        </SeasonRow>
       </ContentContainer>
     </ContentBody>
   );

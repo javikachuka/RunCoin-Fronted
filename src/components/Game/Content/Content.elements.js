@@ -11,6 +11,12 @@ export const ContentContainer = styled(Container)`
   justify-content: space-between;
   padding-top: 30px;
   padding-bottom: 30px;
+  flex-direction: row;
+
+  @media screen and (max-width: 960px) {
+    flex-direction: column;
+    justify-content: center;
+  }
 
   ${Container}
 `;
@@ -18,8 +24,16 @@ export const GameRow = styled.div`
   width: 60%;
   margin-right: 20px;
   min-height: 200px;
+  @media screen and (max-width: 960px) {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
 `;
 export const SeasonRow = styled.div`
   width: 40%;
-  background: #242936;
+
+  @media screen and (max-width: 960px) {
+    width: 100%;
+  }
 `;

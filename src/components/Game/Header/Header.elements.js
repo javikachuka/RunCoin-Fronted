@@ -60,7 +60,7 @@ export const Hamburger = styled.div`
     position: relative;
     width: 1.5em;
     height: 0.2em;
-    background: #354d5c;
+    background: #dedee0;
 
     &:before,
     &:after {
@@ -69,7 +69,7 @@ export const Hamburger = styled.div`
       height: 100%;
       transition: all 0.4s ease-out;
       content: "";
-      background: #354d5c;
+      background: #dedee0;
     }
     &:before {
       top: 8px;

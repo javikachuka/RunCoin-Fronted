@@ -1,4 +1,16 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const barAnimation = keyframes`
+  0%
+    {
+      background-position: -800px 0
+      };
+  
+   100%{
+     background-position: 800px 0
+     };
+    
+`;
 
 export const CurrentGameContainer = styled.div`
   width: 100%;
@@ -8,6 +20,10 @@ export const CurrentGameContainer = styled.div`
   background: #242936;
   border-radius: 12px;
   padding: 40px;
+
+  @media screen and (max-width: 660px) {
+    padding: 25px;
+  }
 `;
 
 export const GameRow = styled.div`
@@ -27,6 +43,10 @@ export const JackPotAmount = styled.div`
   line-height: 30px;
 
   color: #0bebb4;
+
+  @media screen and (max-width: 660px) {
+    font-size: 22px;
+  }
 `;
 
 export const JackPotText = styled.div`
@@ -38,6 +58,9 @@ export const JackPotText = styled.div`
   text-transform: uppercase;
 
   color: #dedee0;
+  @media screen and (max-width: 660px) {
+    font-size: 12px;
+  }
 `;
 
 export const PlayButton = styled.div`
@@ -54,6 +77,16 @@ export const PlayButton = styled.div`
   font-weight: normal;
   font-size: 16px;
   line-height: 20px;
+  transition: all 0.5s ease;
+
+  &:hover {
+    background: rgba(11, 235, 180, 0.15);
+  }
+
+  @media screen and (max-width: 660px) {
+    width: 100px;
+    height: 45px;
+  }
 `;
 
 export const BarRow = styled.div`
@@ -85,6 +118,25 @@ export const Bar = styled.div`
   width: 65%;
   background: #0ad4a2;
   border-radius: 5px;
+
+  &.current-game-animation {
+    background-image: linear-gradient(
+      90deg,
+      #0ad4a2 0px,
+      #54f1cb 40px,
+      #0ad4a2 80px
+    );
+    background-size: 800px;
+    animation: ${barAnimation} 4s infinite linear;
+  }
+
+  &.game-ended {
+    background: #3a3e4a;
+  }
+
+  &.game-ended-player {
+    background: rgba(11, 235, 180, 0.3);
+  }
 `;
 
 export const TimeBar = styled.div`
