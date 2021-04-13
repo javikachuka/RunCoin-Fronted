@@ -1,25 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { listPlayerLastSeasons } from "../services/server";
-import { miContrato } from "../services/server";
-import ItemGame from "../components/ItemGame";
-import { Button, List } from "@material-ui/core";
-import { useList } from "../hooks/useList";
-import { player } from "../services/server";
-import AlertPop from "./AlertPop";
-import Loading from "./Loading";
+import { miContrato, listPlayerLastSeasons } from "../../../services/server";
+import Loading from "../../Loading";
+import ProgressBar from "../ProgressBar/ProgressBar";
 
 const ListOfPlayers = () => {
-  // const { list, setNewGame, load } = useList()
-
   const [list, setList] = useState([]);
   const [load, setLoad] = useState(true);
-  // const [newGame, setNewGame] = useState(null)
 
   useEffect(() => {
     fetchApi();
     miContrato.events.Game(
       {
-        // filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
         fromBlock: "latest",
       },
       (error, event) => {
@@ -58,24 +49,15 @@ const ListOfPlayers = () => {
       ) : (
         list.map((l, index) => {
           return (
-            <ItemGame
+            <ProgressBar
               player={l.player}
               timeGame={l.timeGame}
               timestamp={l.timestamp}
               wait={l.wait}
               index={index}
               key={l.player + l.timestamp}
-            ></ItemGame>
+            ></ProgressBar>
           );
-          // if (index === 0) {
-          //     return (
-          //         <ItemGame player={l.player} timeGame={l.timeGame} timestamp={l.timestamp} wait={l.wait} isLast={true} key={l.player + l.timestamp}></ItemGame>
-          //     )
-          // } else {
-          //     return (
-          //         <ItemGame player={l.player} timeGame={l.timeGame} timestamp={l.timestamp} wait={l.wait} isLast={false} key={l.player + l.timestamp}></ItemGame>
-          //     )
-          // }
         })
       )}
     </>

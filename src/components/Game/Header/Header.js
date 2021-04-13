@@ -6,9 +6,9 @@ import {
   NavImg,
   NavMenu,
   NavItem,
-  NavLink,
   MobileIcon,
   Hamburger,
+  NavCoin,
 } from "./Header.elements";
 import logoImg from "../../../images/runcoin-logo-img.svg";
 import ButtonLog from "../../ButtonLog";
@@ -30,11 +30,7 @@ const Header = () => {
           {click ? <Hamburger className="opened" /> : <Hamburger />}
         </MobileIcon>
         <NavMenu>
-          {logued ? (
-            <NavItem>
-              <NavLink>10 RUN</NavLink>
-            </NavItem>
-          ) : null}
+          {logued ? <NavCoin>10 RUN</NavCoin> : null}
           <NavItem>
             <ButtonLog />
           </NavItem>

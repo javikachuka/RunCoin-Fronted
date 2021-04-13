@@ -78,6 +78,7 @@ export const PlayButton = styled.div`
   font-size: 16px;
   line-height: 20px;
   transition: all 0.5s ease;
+  cursor: pointer;
 
   &:hover {
     background: rgba(11, 235, 180, 0.15);

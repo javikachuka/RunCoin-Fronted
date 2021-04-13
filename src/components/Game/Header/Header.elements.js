@@ -123,6 +123,7 @@ export const NavMenu = styled.ul`
   }
 `;
 export const NavItem = styled.li`
+  cursor: pointer;
   margin-right: 10px;
   transition: all 0.5s ease;
   border: 2px solid transparent;
@@ -147,7 +148,10 @@ export const NavItem = styled.li`
   }
 `;
 
-export const NavLink = styled.a`
+export const NavCoin = styled.a`
+  cursor: pointer;
+  transition: all 0.5s ease;
+  margin-right: 10px;
   color: #fff;
   background-image: linear-gradient(to right, #005bea, #00c6fb);
   border-radius: 0.75rem;
@@ -157,6 +161,9 @@ export const NavLink = styled.a`
   padding: 0.5rem 1rem;
   height: 100%;
   font-weight: 500;
+  &:hover {
+    opacity: 95%;
+  }
 
   @media screen and (max-width: 960px) {
     text-align: center;
