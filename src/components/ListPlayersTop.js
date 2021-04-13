@@ -9,7 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { transformAddress } from '../utils/transformAddress';
 import { Card, CardContent, CardHeader, Typography, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
-import { getSeassonCurrent, getWinnersSeasson } from '../services/server';
+import { getSeasonCurrent, getWinnersSeason } from '../services/server';
 import { useLogin } from '../hooks/useLogin';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
@@ -45,7 +45,7 @@ const ListPlayersTop = () => {
     useEffect(
         () => {
             if (user.player != "") {
-                let res = getWinnersSeasson()
+                let res = getWinnersSeason()
                     .then(
                         (res) => setTop(res)
                     )
@@ -53,7 +53,7 @@ const ListPlayersTop = () => {
                         (error) => console.log(error)
                     )
             }
-            getSeassonCurrent()
+            getSeasonCurrent()
                 .then(
                     (cant) => {
                         setCantSeason(cant)

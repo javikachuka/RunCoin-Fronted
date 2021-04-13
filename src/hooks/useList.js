@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import ListContext from '../context/ListContext';
-import { listPlayerLastSeassons, getCantDaysCurrentOfSeassons, getReward } from '../services/server';
+import { listPlayerLastSeasons, getCountDaysCurrentOfSeasons, getReward } from '../services/server';
 
 export const useList = () => {
     const { list, setList } = useContext(ListContext)
@@ -26,7 +26,7 @@ export const useList = () => {
     )
 
     const getDaysOfSeason = () => {
-        getCantDaysCurrentOfSeassons().then(
+        getCountDaysCurrentOfSeasons().then(
             (result) => {
                 console.log(result)
                 setDaysCurrentSeassons(result)
@@ -56,7 +56,7 @@ export const useList = () => {
     }
 
     async function fetchApi() {
-        await listPlayerLastSeassons(9)
+        await listPlayerLastSeasons(9)
             .then(
                 (result) => {
                     var array = result.map(

@@ -12,7 +12,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import { listPlayerLastSeassons } from '../services/server'
+import { listPlayerLastSeasons } from '../services/server'
 import Loading from './Loading';
 import {transformAddress} from '../utils/transformAddress'
 import {transformSecondsToHuman} from '../utils/transformSecondsToHuman'
@@ -48,7 +48,7 @@ const DetailsList = ({ scrollType, handleClose, open }) => {
         () => {
             setScroll(scrollType);
             if(listPlayersTotal.length == 0){
-                listPlayerLastSeassons().then(
+                listPlayerLastSeasons().then(
                     (result) => {
                         var array = result.map(
                             (r) => {

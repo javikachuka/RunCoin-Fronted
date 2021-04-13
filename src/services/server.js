@@ -56,7 +56,7 @@ export async function play() {
 //opcion 1 timeGame= seria el tiempo desde que empezo a jugar hasta que otro jugador le corto el tiempo (cada vez que consultas siempre va ser el mismo tiempo).
 //opcion 2 timeGame= si es el ultimo jugador del array te devuelve el tiempo desde que empezo a jugar hasta que se consulto en la blockchain (cada vez que consultas va a cmbiar el tiempo)
 
-export async function listPlayerLastSeassons(cant = -1) {
+export async function listPlayerLastSeasons(cant = -1) {
     try {
         const currentSeassons = await miContrato.methods
             .currentSeason()
@@ -152,7 +152,7 @@ export async function getCostPlay() {
     }
 }
 
-export async function getCantDaysCurrentOfSeassons() {
+export async function getCountDaysCurrentOfSeasons() {
     try {
         const cantDaysCurrent = await miContrato.methods
             .countDaysCurrent()
@@ -164,7 +164,7 @@ export async function getCantDaysCurrentOfSeassons() {
 }
 //trae solamente las direcciones de los ganadores y el jugador actual aunque no haya ganado, si la temporada tiene 3 ganadores solo trae los 3
 //retorna [  {address , cantGame, reward },{}]
-export async function getWinnersSeasson(indexSeasson = -1) {
+export async function getWinnersSeason(indexSeasson = -1) {
     try {
         let account=await getUserLogued();
         if (indexSeasson == -1) {
@@ -234,7 +234,7 @@ export async function getWinnersSeasson(indexSeasson = -1) {
 //     }
 // }
 
-export async function getPoolSeasson(indexSeasson = -1) {
+export async function getPoolSeason(indexSeasson = -1) {
     try {
         if (indexSeasson == -1) {
             indexSeasson = await miContrato.methods
@@ -254,7 +254,7 @@ export async function getPoolSeasson(indexSeasson = -1) {
     }
 }
 //checkea si el ganador de la temporada seleccionada
-export async function checkWinnerSeasson(indexSeasson = -1) {
+export async function checkWinnerSeason(indexSeasson = -1) {
     try {
         let account=await getUserLogued();
         if (indexSeasson < 0) {
@@ -278,7 +278,7 @@ export async function checkWinnerSeasson(indexSeasson = -1) {
     }
 }
 //reclama el premio uno de los ganadores de la temporada seleccionada
-export async function claimWinnerSeasson(indexSeasson = -1) {
+export async function claimWinnerSeason(indexSeasson = -1) {
     try {
         let account=await getUserLogued();
         if (indexSeasson < 0) {
@@ -371,7 +371,7 @@ export async function claimToken() {
     }
 }
 
-export async function getSeassonCurrent() {
+export async function getSeasonCurrent() {
     try {
         return await miContrato.methods
             .currentSeason()

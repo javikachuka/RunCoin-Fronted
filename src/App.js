@@ -9,7 +9,7 @@ import GlobalStyle from "./globalStyles";
 import Game2 from "./pages/Game2";
 
 const App = () => {
-  We.getWinnersSeasson();
+  We.getWinnersSeason();
   return (
     <>
       <GlobalStyle />
