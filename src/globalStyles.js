@@ -48,13 +48,7 @@ body{
   color: #354D5C !important;
 }
 
-.game-ended{
-  background: #3A3E4A;
-}
 
-.game-ended-player{
-  background: rgba(11, 235, 180, 0.3);
-}
 `;
 
 export const Container = styled.div`

@@ -18,7 +18,7 @@ export const WorkRow = styled.div`
 
   @media screen and (max-width: 768px) {
     width: 100%;
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
 `;
 
@@ -57,6 +57,7 @@ export const TopLine = styled.div`
 
   @media screen and (max-width: 420px) {
     font-size: 1.2rem;
+    padding-bottom: 1rem;
   }
 `;
 

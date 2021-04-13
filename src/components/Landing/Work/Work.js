@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "../../../globalStyles";
 
-import workImg from "../../../images/runcoin-work-img.svg";
+import workImg from "../../../images/runcoin-work-imgtest.svg";
 
 import {
   WorkSection,

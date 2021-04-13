@@ -18,14 +18,11 @@ export const HeroRow = styled.div`
 
   @media screen and (max-width: 768px) {
     width: 100%;
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
 `;
 
 export const HeroColumn = styled.div`
-  /* margin-bottom: 15px;
-  padding-left: 15px;
-  padding-right: 15px; */
   align-items: center;
   display: flex;
   max-width: 50%;
@@ -57,6 +54,7 @@ export const TopLine = styled.div`
 
   @media screen and (max-width: 420px) {
     font-size: 1.2rem;
+    padding-bottom: 1rem;
   }
 `;
 

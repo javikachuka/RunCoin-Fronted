@@ -55,8 +55,9 @@ export const Hamburger = styled.div`
   @media screen and (max-width: 960px) {
     display: flex;
     position: relative;
-    width: 1.5em;
-    height: 0.2em;
+    justify-content: flex-end;
+    width: 1.75em;
+    height: 0.15em;
     background: #354d5c;
 
     &:before,
@@ -70,7 +71,7 @@ export const Hamburger = styled.div`
     }
     &:before {
       top: 8px;
-      width: 1em;
+      width: 1.5em;
     }
 
     &:after {
@@ -79,14 +80,15 @@ export const Hamburger = styled.div`
     }
     &.opened {
       background: transparent;
+      transition: all 0.35s ease-out;
     }
     &.opened:before {
       width: 1.5em;
-      transform: rotate(-45deg);
+      transform: rotate(45deg);
     }
     &.opened:after {
       width: 1.5em;
-      transform: rotate(45deg);
+      transform: rotate(-45deg);
     }
     &.opened:after,
     &.opened:before {
