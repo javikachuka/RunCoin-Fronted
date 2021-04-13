@@ -5,7 +5,7 @@ import Navegation from '../components/Navegation';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { Box, Button, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import { getCostPlay, getCantDaysCurrentOfSeassons, getReward } from '../services/server';
+import { getCostPlay, getCountDaysCurrentOfSeasons, getReward } from '../services/server';
 import * as Parameters from "../services/parameters.js";
 import { miContrato } from '../services/server'
 import { useList } from '../hooks/useList';
@@ -54,7 +54,7 @@ const Game = () => {
     )
 
     const getDays = () => {
-        getCantDaysCurrentOfSeassons().then(
+        getCountDaysCurrentOfSeasons().then(
             (result) => {
                 console.log(result)
                 setDaysCurrentSeassons(result)

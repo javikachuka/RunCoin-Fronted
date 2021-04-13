@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/Game/Header/Header";
 import {
   getCostPlay,
-  getCantDaysCurrentOfSeassons,
+  getCountDaysCurrentOfSeasons,
   getReward,
 } from "../services/server";
 import * as Parameters from "../services/parameters.js";
@@ -43,7 +43,7 @@ const Game2 = () => {
   );
 
   const getDays = () => {
-    getCantDaysCurrentOfSeassons()
+    getCountDaysCurrentOfSeasons()
       .then((result) => {
         console.log(result);
         setDaysCurrentSeassons(result);

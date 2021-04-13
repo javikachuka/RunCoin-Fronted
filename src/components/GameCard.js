@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography, Tooltip } from '@material-ui/core';
 import AlertPop from './AlertPop'
 import { Eth } from 'react-cryptocoins';
-import { play, listPlayerLastSeassons, getUserLogued, watch, getCostPlay } from '../services/server';
+import { play, listPlayerLastSeasons, getUserLogued, watch, getCostPlay } from '../services/server';
 import { UserProvider, useUser } from '../context/userContext'
 import LoginContext from '../context/LoginContext'
 import ListOfPlayers from './ListOfPlayers';

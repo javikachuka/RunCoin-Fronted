@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { listPlayerLastSeassons } from '../services/server'
+import { listPlayerLastSeasons } from '../services/server'
 import { miContrato } from '../services/server'
 import ItemGame from '../components/ItemGame'
 import { Button, List } from '@material-ui/core';
@@ -36,7 +36,7 @@ const ListOfPlayers = () => {
     )
 
     async function fetchApi() {
-        await listPlayerLastSeassons(9)
+        await listPlayerLastSeasons(9)
             .then(
                 (result) => {
                     var array = result.map(
