@@ -15,6 +15,7 @@ export const Nav = styled.nav`
   position: sticky;
   top: 0;
   z-index: 3;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 `;
 
 export const NavBarContainer = styled(Container)`
@@ -58,8 +59,9 @@ export const Hamburger = styled.div`
   @media screen and (max-width: 960px) {
     display: flex;
     position: relative;
-    width: 1.5em;
-    height: 0.2em;
+    justify-content: flex-end;
+    width: 1.75em;
+    height: 0.15em;
     background: #dedee0;
 
     &:before,
@@ -73,7 +75,7 @@ export const Hamburger = styled.div`
     }
     &:before {
       top: 8px;
-      width: 1em;
+      width: 1.5em;
     }
 
     &:after {
@@ -82,14 +84,15 @@ export const Hamburger = styled.div`
     }
     &.opened {
       background: transparent;
+      transition: all 0.35s ease-out;
     }
     &.opened:before {
       width: 1.5em;
-      transform: rotate(-45deg);
+      transform: rotate(45deg);
     }
     &.opened:after {
       width: 1.5em;
-      transform: rotate(45deg);
+      transform: rotate(-45deg);
     }
     &.opened:after,
     &.opened:before {
@@ -104,22 +107,22 @@ export const NavMenu = styled.ul`
   list-style: none;
   text-align: center;
 
-  @media screen and (max-width: 960px) {
-    display: flex;
-    flex-direction: column;
+  @media screen and (max-width: 500px) {
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    justify-content: center;
+    justify-self: center;
+    max-width: 960px;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
     width: 100%;
-    height: 90vh;
-    position: absolute;
-    top: 80px;
-    left: ${({ click }) => (click ? 0 : "-100%")};
-    opacity: 1;
-    transition: all 0.5s ease;
-    background: #f8faff;
-  }
-
-  @media screen and (max-width: 768px) {
-    /* text-align: center; */
-    top: 60px;
+    z-index: 99;
+    height: 72px;
+    background: #242936;
+    border-radius: 12px 12px 0 0;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
   }
 `;
 export const NavItem = styled.li`
@@ -134,17 +137,16 @@ export const NavItem = styled.li`
     border: 2px solid #005bea;
   }
 
-  @media screen and (max-width: 960px) {
-    height: 80px;
+  @media screen and (max-width: 500px) {
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    display: flex;
+    padding: 1rem;
     transition: none;
     margin-right: 0;
-    margin-bottom: 20px;
-    /* border-radius: 0; */
-    width: 95%;
-    &:hover {
-      background: none;
-      border: none;
-    }
+    background: rgba(0, 91, 234, 0.15);
+    border: 2px solid #005bea;
   }
 `;
 
@@ -165,10 +167,10 @@ export const NavCoin = styled.a`
     opacity: 95%;
   }
 
-  @media screen and (max-width: 960px) {
+  @media screen and (max-width: 500px) {
+    display: flex;
     text-align: center;
-    padding: 2rem;
-    width: 100%;
-    display: table;
+
+    padding: 1rem;
   }
 `;

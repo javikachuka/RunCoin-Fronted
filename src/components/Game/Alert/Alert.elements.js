@@ -45,6 +45,10 @@ export const ToastAlert = styled.div`
   border-radius: 12px;
   padding: 25px;
   background: ${({ type }) => handleBackgroundType(type)};
+
+  @media screen and (max-width: 400px) {
+    flex-basis: 90%;
+  }
 `;
 export const ToastIcon = styled.img`
   margin-right: 25px;

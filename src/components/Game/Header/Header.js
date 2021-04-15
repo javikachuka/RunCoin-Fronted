@@ -26,10 +26,7 @@ const Header = () => {
         <NavLogo>
           <NavImg src={logoImg} alt="logo-img"></NavImg>RUNCOIN
         </NavLogo>
-        <MobileIcon onClick={handleClick}>
-          {click ? <Hamburger className="opened" /> : <Hamburger />}
-        </MobileIcon>
-        <NavMenu>
+        <NavMenu onClick={handleClick} click={click}>
           {logued ? <NavCoin>10 RUN</NavCoin> : null}
           <NavItem>
             <ButtonLog />

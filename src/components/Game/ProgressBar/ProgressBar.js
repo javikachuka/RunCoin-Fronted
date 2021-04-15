@@ -121,14 +121,14 @@ export default function ProgressBar(props) {
               <>
                 <PlayerId>you: {transformAddress(props.player)}</PlayerId>
                 <GameBar>
-                  <Bar value={value} className="game-ended-player"></Bar>
+                  <Bar value={value} className="game-early-ended-player"></Bar>
                 </GameBar>
               </>
             ) : (
               <>
                 <PlayerId>id: {transformAddress(props.player)}</PlayerId>
                 <GameBar>
-                  <Bar value={value} className="game-ended"></Bar>
+                  <Bar value={value} className="game-early-ended"></Bar>
                 </GameBar>
               </>
             )}

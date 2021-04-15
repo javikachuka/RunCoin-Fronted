@@ -18,6 +18,10 @@ export const ContentContainer = styled(Container)`
     flex-direction: column;
     justify-content: center;
   }
+  @media screen and (max-width: 410px) {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 
   ${Container}
 `;
