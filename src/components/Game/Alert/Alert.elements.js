@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import successIcon from "../../../images/successIcon.svg";
-import errorIcon from "../../../images/dangerIcon.svg";
 
 const handleBackgroundType = (type) => {
   switch (type) {
@@ -12,16 +10,7 @@ const handleBackgroundType = (type) => {
       return "#eee";
   }
 };
-const handleIconType = (icon) => {
-  switch (icon) {
-    case "success":
-      return "rgba(11, 235, 180, 0.15)";
-    case "error":
-      return "rgba(255, 0, 71, 0.15)";
-    default:
-      return "#eee";
-  }
-};
+
 const handleColorType = (type) => {
   switch (type) {
     case "success":
@@ -59,7 +48,6 @@ export const ToastAlert = styled.div`
 `;
 export const ToastIcon = styled.img`
   margin-right: 25px;
-  src: ${({ img }) => handleBackgroundType(img)};
 `;
 export const ToastMsg = styled.span`
   display: flex;
