@@ -7,6 +7,7 @@ export const ContentBody = styled.div`
   background: #1d212b;
 `;
 export const ContentContainer = styled(Container)`
+  /* position: relative; */
   display: flex;
   justify-content: space-between;
   padding-top: 30px;

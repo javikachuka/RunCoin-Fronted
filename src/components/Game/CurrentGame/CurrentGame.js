@@ -16,6 +16,7 @@ import {
   MoreButton,
 } from "./CurrentGame.elements";
 import ButtonPlay from "../ButtonPlay/ButtonPlay";
+import Alert from "../Alert/Alert";
 
 // aplicacion para la conexión con la blockchain
 const Web3 = require("web3");

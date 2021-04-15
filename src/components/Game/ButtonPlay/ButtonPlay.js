@@ -8,37 +8,37 @@ import {
   watch,
   getCostPlay,
 } from "../../../services/server";
+import AlertPop from "../../AlertPop";
+import Alert from "../Alert/Alert";
 
 function ButtonPlay() {
   const { user, setUser, logued, setLogued } = useContext(LoginContext);
   const [cost, setCost] = useState(0);
-  const [openPop, setOpenPop] = useState(false);
-  const [openPopInfo, setOpenPopInfo] = useState(false);
   const [open, setOpen] = useState(false);
+  const [type, setType] = useState(null);
+  const [msg, setMsg] = useState(null);
 
-  const handleClosePop = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpenPop(false);
-  };
-
-  const handleClosePopInfo = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpenPopInfo(false);
-  };
-
-  const handleClickOpen = (scrollType) => () => {
-    console.log("clickj");
+  const handleAlertError = (msg) => {
+    setType("error");
+    setMsg(msg);
     setOpen(true);
+    const timeout = setTimeout(() => {
+      setOpen(false);
+    }, 4000);
+    return () => {
+      clearTimeout(timeout);
+    };
   };
-
-  const handleClose = () => {
-    setOpen(false);
+  const handleAlertSuccess = (msg) => {
+    setType("success");
+    setMsg(msg);
+    setOpen(true);
+    const timeout = setTimeout(() => {
+      setOpen(false);
+    }, 4000);
+    return () => {
+      clearTimeout(timeout);
+    };
   };
 
   useEffect(() => {
@@ -56,18 +56,19 @@ function ButtonPlay() {
         .then((res) => {
           console.log(res);
           console.log("Has Jugado con exito");
-          setOpenPopInfo(true);
+          handleAlertSuccess("game successfully added");
         })
         .catch((error) => {
           console.log("error al juegar " + error);
         });
     } else {
       console.log("user disconnected");
-      setOpenPop(true);
+      handleAlertError("please connect to a wallet");
     }
   };
   return (
     <>
+      <Alert icon={type} msg={msg} open={open} type={type} />
       <PlayButton onClick={handlePlay}>PLAY</PlayButton>
     </>
   );

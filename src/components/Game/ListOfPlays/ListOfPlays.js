@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { miContrato, listPlayerLastSeasons } from "../../../services/server";
 import Loading from "../../Loading";
 import ProgressBar from "../ProgressBar/ProgressBar";
+import { LoadingRow } from "./ListOfPlays.elements";
 
 const ListOfPlayers = () => {
   const [list, setList] = useState([]);
@@ -45,7 +46,9 @@ const ListOfPlayers = () => {
   return (
     <>
       {load ? (
-        <Loading />
+        <LoadingRow>
+          <Loading />
+        </LoadingRow>
       ) : (
         list.map((l, index) => {
           return (
