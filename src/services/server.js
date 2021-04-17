@@ -32,7 +32,7 @@ export async function play() {
                 value: _cost,
             },
             function (error, transactionHash) {
-                console.log(transactionHash);
+                console.log(error);
                 if (transactionHash !== undefined) {
                     confirm = true;
                 }
