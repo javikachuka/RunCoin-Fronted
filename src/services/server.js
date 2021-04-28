@@ -352,6 +352,19 @@ export async function cantToken() {
     }
 }
 
+
+export async function getPoolRun() {
+    try {
+        return await miContrato.methods
+            .poolRun()
+            .call((err, result) => result);
+
+    } catch (Ex) {
+        console.log(Ex);
+        return 0;
+    }
+}
+
 //reclama los token que tiene
 export async function claimToken() {
     try {
@@ -428,6 +441,16 @@ export async function watch() {
     //     console.log(event);
     //     console.log(error)
     // });
+}
+
+export async function getPriceInEth(wei){
+    console.log(wei);
+    if (wei == 0 || wei == null) {
+        return 0
+    } else {
+        let aux = await web3.utils.fromWei(wei, 'ether')
+        return aux
+    }
 }
 
 //**************Escuchar Eventos en la blockchain */

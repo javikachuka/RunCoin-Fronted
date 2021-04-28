@@ -27,6 +27,7 @@ const Header = () => {
           <NavImg src={logoImg} alt="logo-img"></NavImg>RUNCOIN
         </NavLogo>
         <NavMenu onClick={handleClick} click={click}>
+          <NavCoin>Claim</NavCoin>
           {logued ? <NavCoin>10 RUN</NavCoin> : null}
           <NavItem>
             <ButtonLog />

@@ -1,10 +1,4 @@
 import React, { useState, useEffect } from "react";
-import {
-  getCountDaysCurrentOfSeasons,
-  getReward,
-  miContrato,
-} from "../../../services/server";
-import * as Parameters from "../../../services/parameters.js";
 import ListOfPlays from "../ListOfPlays/ListOfPlays";
 import {
   CurrentGameContainer,
@@ -17,68 +11,24 @@ import {
 } from "./CurrentGame.elements";
 import ButtonPlay from "../ButtonPlay/ButtonPlay";
 import Alert from "../Alert/Alert";
+import { getPriceInEth, getReward } from "../../../services/server";
 
-// aplicacion para la conexión con la blockchain
-const Web3 = require("web3");
-//prueba conectar el proveedor de metamask primero sino usa la varabile en Parameters "provider"
-let web3 = new Web3(Web3.givenProvider || Parameters.provider);
 
 function CurrentGame() {
-  const [daysCurrentSeassons, setDaysCurrentSeassons] = useState(0);
-  const [reward, setReward] = useState({
-    recompensa: null,
-    nextRecompensa: null,
-  });
+  
+  const [cost, setCost] = useState(0)
+
   useEffect(
     () => {
-      getDays();
-      getRew();
-      miContrato.events.Game(
-        {
-          fromBlock: "latest",
-        },
-        (error, event) => {
-          console.log("Evento activado2");
-          getDays();
-          getRew();
+      getReward().then(
+        (res) => {
+          if (res !== false) {
+            getPriceInEth(res.recompensa).then(val => setCost(val))
+          }
         }
-      );
-    },
-    [] // las llaves sirven para ejecutar solamente una vez el useEffect de esta manera copiamos el comportamiento de componentDidMount
-  );
-
-  const getDays = () => {
-    getCountDaysCurrentOfSeasons()
-      .then((result) => {
-        console.log(result);
-        setDaysCurrentSeassons(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const getRew = () => {
-    getReward()
-      .then((result) => {
-        console.log(result.recompensa);
-        setReward({
-          recompensa: result.recompensa,
-          nextRecompensa: result.nextRecompensa,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const getRealPriceEth = (wei) => {
-    if (wei == 0 || wei == null) {
-      return 0;
-    } else {
-      return web3.utils.fromWei(wei, "ether");
-    }
-  };
+      )
+    }, []
+  )
 
   return (
     <>
@@ -86,7 +36,7 @@ function CurrentGame() {
         <GameRow>
           <JackPot>
             <JackPotAmount>
-              ≈$ {getRealPriceEth(reward.recompensa)}
+              ≈$ {cost}
             </JackPotAmount>
             <JackPotText>current jackpot</JackPotText>
           </JackPot>

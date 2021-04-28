@@ -1,63 +1,83 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import TopPlayers from "../TopPlayers/TopPlayers";
 import {
   CardRow,
   SeasonCard,
-  TopListCard,
   PoolHeader,
   EndHeader,
   Subtitle,
-  TopHeader,
-  ListHeader,
-  ListItem,
-  HeaderNumber,
-  HeaderPlayer,
-  HeaderAmount,
-  ItemNumber,
-  ItemPlayer,
-  ItemAmount,
 } from "./SeasonContent.elements";
+import { getPoolSeason, miContrato } from '../../../services/server'
+import { getCountDaysCurrentOfSeasons, getReward, getPriceInEth } from "../../../services/server";
+
 
 function SeasonContent() {
+  const [daysCurrentSeassons, setDaysCurrentSeassons] = useState(0)
+  const [rewardInEth, setRewardInEth] = useState(0)
+  const [reward, setReward] = useState({
+    recompensa: null,
+    nextRecompensa: null
+  })
+
+  useEffect(
+    () => {
+      getDays()
+      getRew()
+      miContrato.events.Game(
+        {
+          // filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
+          fromBlock: 'latest'
+        }
+        , (error, event) => {
+          console.log('Evento activado2');
+          getDays()
+          getRew()
+        }
+      )
+    }, [] // las llaves sirven para ejecutar solamente una vez el useEffect de esta manera copiamos el comportamiento de componentDidMount
+  )
+
+  const getDays = () => {
+    getCountDaysCurrentOfSeasons().then(
+      (result) => {
+        console.log(result)
+        setDaysCurrentSeassons(result)
+      }
+    ).catch(
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+  const getRew = () => {
+    getPoolSeason().then(
+      (result) => {
+        console.log(result)
+        getPriceInEth(result).then(res => setRewardInEth(res))
+
+      }
+    ).catch(
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+
   return (
     <>
       <CardRow>
         <SeasonCard>
-          <PoolHeader>≈$ 125,23</PoolHeader>
+          <PoolHeader>≈$ {rewardInEth}</PoolHeader>
           <Subtitle>SEASON POOL</Subtitle>
         </SeasonCard>
         <SeasonCard>
-          <EndHeader>29 days </EndHeader>
+          <EndHeader>{daysCurrentSeassons} days </EndHeader>
           <Subtitle>END OF SEASON</Subtitle>
         </SeasonCard>
       </CardRow>
-      <TopListCard>
-        <TopHeader>top players</TopHeader>
-        <ListHeader>
-          <HeaderNumber>#</HeaderNumber>
-          <HeaderPlayer>player</HeaderPlayer>
-          <HeaderAmount>amount</HeaderAmount>
-        </ListHeader>
-        <ListItem>
-          <ItemNumber>1</ItemNumber>
-          <ItemPlayer>0x6A...AdE8 </ItemPlayer>
-          <ItemAmount>11</ItemAmount>
-        </ListItem>
-        <ListItem>
-          <ItemNumber>2</ItemNumber>
-          <ItemPlayer>0x6A...AdE8 </ItemPlayer>
-          <ItemAmount>9</ItemAmount>
-        </ListItem>
-        <ListItem className="player">
-          <ItemNumber>3</ItemNumber>
-          <ItemPlayer>0x34...F9F7</ItemPlayer>
-          <ItemAmount>6</ItemAmount>
-        </ListItem>
-        <ListItem>
-          <ItemNumber>4</ItemNumber>
-          <ItemPlayer>0x6A...AdE8 </ItemPlayer>
-          <ItemAmount>3</ItemAmount>
-        </ListItem>
-      </TopListCard>
+      <TopPlayers />
     </>
   );
 }
