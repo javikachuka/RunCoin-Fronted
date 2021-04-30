@@ -17,6 +17,11 @@ export const PlayButton = styled.div`
   transition: all 0.5s ease;
   cursor: pointer;
 
+  &.claim {
+    background: linear-gradient(90deg, #00c2fb 0%, #0ad4a2 100%);
+    color: #fff;
+  }
+
   &:hover {
     background: rgba(11, 235, 180, 0.15);
   }

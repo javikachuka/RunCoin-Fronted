@@ -70,6 +70,10 @@ function ButtonPlay() {
     <>
       <Alert icon={type} msg={msg} open={open} type={type} />
       <PlayButton onClick={handlePlay}>PLAY</PlayButton>
+      {/* Aca esta el boton de Claim, asi quedaria y ejecutaria otra funcion en onClick */}
+      {/* <PlayButton className="claim" onClick={handlePlay}>
+        CLAIM
+      </PlayButton> */}
     </>
   );
 }

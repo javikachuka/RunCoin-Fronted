@@ -79,6 +79,13 @@ export const TopListCard = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const TopContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+`;
+
 export const TopHeader = styled.div`
   text-align: center;
   font-family: Lexend Mega;
@@ -86,12 +93,58 @@ export const TopHeader = styled.div`
   font-weight: normal;
   font-size: 16px;
   line-height: 20px;
-  margin-bottom: 20px;
 
   text-transform: uppercase;
 
   color: #dedee0;
 `;
+
+export const SeasonSelect = styled.select`
+  /* appearance: none; */
+  cursor: inherit;
+  line-height: inherit;
+  background: transparent;
+  border: 0;
+  color: #dedee0;
+  font-family: Lexend Mega;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 15px;
+  text-transform: capitalize;
+  padding: 0 0.5rem;
+  border-color: transparent transparent #fff transparent;
+  border: 2px solid transparent;
+  border-radius: 0.55rem;
+  transition: all 0.5s ease;
+  outline: none;
+  margin: 0;
+  cursor: pointer;
+
+  &:hover {
+    border: 2px solid #005bea;
+  }
+  &:focus {
+    border: 2px solid #005bea;
+  }
+  & > option {
+    border: none;
+    border-color: transparent;
+    background: #242936;
+    font-family: Lexend Mega;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 15px;
+    text-transform: capitalize;
+  }
+
+  & > option::selection {
+    background: rgba(0, 91, 234, 0.15);
+    color: #005bea;
+  }
+`;
+
 export const ListHeader = styled.ul`
   width: 100%;
   display: flex;
