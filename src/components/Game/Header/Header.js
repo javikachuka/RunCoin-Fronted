@@ -20,6 +20,8 @@ const Header = () => {
   const { logued } = useLogin();
   const ref = useRef(null);
 
+  const handleClick = () => setClick(!click);
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
@@ -30,9 +32,7 @@ const Header = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [ref]);
-
-  const handleClick = () => setClick(!click);
+  }, [click]);
 
   return (
     <Nav className="shadow-sm">
@@ -45,7 +45,7 @@ const Header = () => {
             <DropDownMenu ref={ref}>
               <NavCoin onClick={handleClick}>10 RUN</NavCoin>
               <NavDropDown click={click}>
-                <DropDownOption>CLAIM RUN</DropDownOption>
+                <DropDownOption onClick={handleClick}>CLAIM RUN</DropDownOption>
               </NavDropDown>
             </DropDownMenu>
           ) : null}
