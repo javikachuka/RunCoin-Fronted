@@ -6,7 +6,7 @@ export let addressContractR='0x45B051108F46CD9E76360CF90aD395403786DC23' /* ulti
 export let TG_ContractR='0x278F8686ca6B3455cDc7Add34Ed114aD59a1bD62'  
 
 
-export let addressContractOKT='0x01ac7a1E18dE1b60680242a0F07ceBF350B5B1C2';//red OKT
+export let addressContractOKT='0x9D31F528ACF72392991A553c37f2e3c6E613939D';//red OKT
 export let TG_ContratOKT='0x8781FbfCA3FBB21C2a970E9e4C9636661332EBe3';
 // export let addressContractR2='0xd457A1e1EDB98566f70507f1e7c601472A12A04B'
 // export let addressContractR3='0x7467ee6CA62DAB2bAdC7198A011f22D27Bc913e2'
