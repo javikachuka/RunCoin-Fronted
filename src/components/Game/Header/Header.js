@@ -22,17 +22,18 @@ const Header = () => {
 
   const handleClick = () => setClick(!click);
 
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        handleClick();
-      }
+  function handleClickOutside(event) {
+    if (ref.current && !ref.current.contains(event.target)) {
+      setClick(false);
     }
-    document.addEventListener("mousedown", handleClickOutside);
+  }
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside, true);
     };
-  }, [click]);
+  });
 
   return (
     <Nav className="shadow-sm">
