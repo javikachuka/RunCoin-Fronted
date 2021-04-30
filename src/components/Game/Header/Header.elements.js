@@ -174,3 +174,34 @@ export const NavCoin = styled.a`
     padding: 1rem;
   }
 `;
+
+export const DropDownMenu = styled.li`
+  position: relative;
+  height: 100%;
+`;
+
+export const NavDropDown = styled.div`
+  display: flex;
+  margin-top: 0.3rem;
+  flex-direction: column;
+  opacity: ${({ click }) => (click ? 1 : 0)};
+  transition: all ease 0.2s;
+  position: absolute;
+  background: #242936;
+  right: 10px;
+  width: 150px;
+  border-radius: 0.55rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  z-index: 5;
+
+  @media screen and (max-width: 500px) {
+    bottom: 55px;
+    width: auto;
+  }
+`;
+
+export const DropDownOption = styled.a`
+  cursor: pointer;
+  padding: 0.75rem;
+  color: #dedee0;
+`;
