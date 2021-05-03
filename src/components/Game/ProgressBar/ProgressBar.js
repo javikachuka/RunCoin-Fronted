@@ -9,6 +9,7 @@ import {
   Bar,
   TimeBar,
 } from "./ProgressBar.elements";
+import { useFullBar } from "../../../hooks/useFullBar";
 
 export default function ProgressBar(props) {
   //login de user
@@ -22,6 +23,7 @@ export default function ProgressBar(props) {
   const [end, setEnd] = useState(props.wait);
   const [timeGame, setTimeGame] = useState(props.timeGame);
   const begin = 20;
+  const {setIsFull} = useFullBar()
 
   const getHours = (seconds) => {
     return transformSecondsToHuman(seconds);
@@ -65,6 +67,7 @@ export default function ProgressBar(props) {
     } else {
       if (timeGame >= end) {
         setValue(100);
+        setIsFull(true); 
       } else {
         setValue(begin + getWaitPorcent());
       }
