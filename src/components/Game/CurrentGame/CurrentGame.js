@@ -11,27 +11,47 @@ import {
 } from "./CurrentGame.elements";
 import ButtonPlay from "../ButtonPlay/ButtonPlay";
 import Alert from "../Alert/Alert";
-import { getPriceInEth, getReward } from "../../../services/server";
+import { getPriceInEth, getReward, miContrato } from "../../../services/server";
+import { BarContextProvider } from "../../../context/BarContext";
+import { useFullBar } from "../../../hooks/useFullBar";
+import ButtonClaim from "../ButtonClaim/ButtonClaim";
 
 
 function CurrentGame() {
-  
+
   const [cost, setCost] = useState(0)
+  const { isFull } = useFullBar()
 
   useEffect(
     () => {
-      getReward().then(
-        (res) => {
-          if (res !== false) {
-            getPriceInEth(res.recompensa).then(val => setCost(val))
-          }
+      loadCost()
+      console.log("Completaa bar");
+      console.log(isFull);
+      miContrato.events.Game(
+        {
+          // filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
+          fromBlock: 'latest'
+        }
+        , (error, event) => {
+          loadCost()
         }
       )
     }, []
   )
 
+  const loadCost = () => {
+    getReward().then(
+      (res) => {
+        if (res !== false) {
+          getPriceInEth(res.recompensa).then(val => setCost(val))
+        }
+      }
+    )
+  }
+
   return (
     <>
+
       <CurrentGameContainer>
         <GameRow>
           <JackPot>
@@ -40,7 +60,11 @@ function CurrentGame() {
             </JackPotAmount>
             <JackPotText>current jackpot</JackPotText>
           </JackPot>
-          <ButtonPlay />
+          {
+            !isFull 
+              ? <ButtonPlay />
+              : <ButtonClaim />
+          }
         </GameRow>
         <ListOfPlays />
         {/* <BarRow>
@@ -85,7 +109,6 @@ function CurrentGame() {
           </GameBar>
           <TimeBar>Ended</TimeBar>
         </BarRow> */}
-        <MoreButton>Show More</MoreButton>
       </CurrentGameContainer>
     </>
   );

@@ -3,6 +3,7 @@ import { Route } from "wouter";
 import Game from "./pages/Game";
 import { LoginContextProvider } from "./context/LoginContext";
 import { ListContextProvider } from "./context/ListContext";
+import {BarContextProvider} from './context/BarContext'
 import * as We from "./services/server";
 import Landing from "./pages/Landing";
 import GlobalStyle from "./globalStyles";
@@ -27,7 +28,9 @@ const App = () => {
       <Route path="/game2">
         <LoginContextProvider>
           <ListContextProvider>
-            <Game2 />
+            <BarContextProvider>
+              <Game2 />
+            </BarContextProvider>
           </ListContextProvider>
         </LoginContextProvider>
       </Route>

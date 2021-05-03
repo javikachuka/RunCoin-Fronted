@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { getWinnersSeason } from "../../../services/server";
+import React, { useEffect, useState, useContext } from "react";
+import { getWinnersSeason, miContrato, getSeasonCurrent } from "../../../services/server";
 import {
   TopListCard,
   TopHeader,
@@ -14,25 +14,70 @@ import {
   TopContainer,
   SeasonSelect,
 } from "../SeasonContent/SeasonContent.elements";
+import { transformAddress } from '../../../utils/transformAddress'
+import LoginContext from "../../../context/LoginContext";
 
 const TopPlayers = () => {
   const [top, setTop] = useState([]);
+  const { user } = useContext(LoginContext);
+  const [season, setSeason] = useState(0)
 
   useEffect(() => {
-    getWinnersSeason()
-      .then((res) => setTop(res))
-      .catch((error) => console.log(error));
+    loadList()
+    miContrato.events.Game(
+      {
+        // filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
+        fromBlock: 'latest'
+      }
+      , (error, event) => {
+        loadList()
+      }
+    )
   }, []);
+
+  const loadList = () => {
+    getSeasonCurrent().then(
+      (res) => {
+        setSeason(res)
+      }
+    )
+    getWinnersSeason()
+      .then((res) => {
+        setTop(res)
+      })
+      .catch((error) => console.log(error));
+
+  }
+
+  const listMenu = () => {
+    let menuItems = []
+    console.log("seasonnn" + season);
+    for (let index = season; index >= 0; index--) {
+      console.log('creandoooo');
+      if (season == index) {
+        menuItems.push(<option selected value={index} key={index}>Season {index}</option>)
+      } else {
+        menuItems.push(<option value={index} key={index}>Season {index}</option>)
+      }
+    }
+    return menuItems
+  }
+
+  const handleChange = (e) => {
+    getWinnersSeason(e.target.value)
+      .then((res) => {
+        setTop(res)
+      })
+      .catch((error) => console.log(error));
+  }
 
   return (
     <>
       <TopListCard>
         <TopContainer>
           <TopHeader>top players</TopHeader>
-          <SeasonSelect>
-            <option value="0">Season 1</option>
-            <option value="1">Season 2</option>
-            <option value="2">Season 3</option>
+          <SeasonSelect onChange={handleChange}>
+            {listMenu()}
           </SeasonSelect>
         </TopContainer>
 
@@ -40,15 +85,25 @@ const TopPlayers = () => {
           <HeaderNumber>#</HeaderNumber>
           <HeaderPlayer>player</HeaderPlayer>
           <HeaderAmount>amount</HeaderAmount>
+          <HeaderAmount>reward</HeaderAmount>
         </ListHeader>
 
-        {top.map((item, index) => (
-          <ListItem>
-            <ItemNumber>{index + 1}</ItemNumber>
-            <ItemPlayer>{item.address}</ItemPlayer>
-            <ItemAmount>{item.cantGame}</ItemAmount>
-          </ListItem>
-        ))}
+        {top.map((item, index) => {
+          return item.address == user.player ?
+            <ListItem className="player">
+              <ItemNumber>{index + 1}</ItemNumber>
+              <ItemPlayer>{transformAddress(item.address)}</ItemPlayer>
+              <ItemAmount>{item.cantGame}</ItemAmount>
+              <ItemAmount>{item.reward}</ItemAmount>
+            </ListItem>
+            :
+            <ListItem>
+              <ItemNumber>{index + 1}</ItemNumber>
+              <ItemPlayer>{transformAddress(item.address)}</ItemPlayer>
+              <ItemAmount>{item.cantGame}</ItemAmount>
+              <ItemAmount>{item.reward}</ItemAmount>
+            </ListItem>
+        })}
 
         {/* <ListItem>
                     <ItemNumber>2</ItemNumber>
