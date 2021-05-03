@@ -179,20 +179,23 @@ export async function getWinnersSeason(indexSeasson = -1) {
             .call((err, result) => result);
 
         let entrar = true;
+        console.log(winners);
         for (let i = 0; i < winners.players.length; i++) {
             //si el jugador actual no esta en la lista hay que agregarlo al final
             if (winners.players[i] == account) {
                 entrar = false;
             }
-            allWinners.push({
+            let auxWinner = {
                 address: winners.players[i],
-                cantGame: winners.cantGame[i],
-                reward: winners.reward[i],
-            });
+                cantGame: winners.countGame[i],
+                reward: 0,
+            }
+            auxWinner.reward = await getPriceInEth(winners.reward[i]);
+            allWinners.push(auxWinner);
         }
         if (entrar) {
             let cantGame = await miContrato.methods
-                .countPlayForSeason(account, indexSeasson, 0)
+                .countPlayForSeason(account, indexSeasson)
                 .call((err, result) => result);
             allWinners.push({
                 address: account,
@@ -417,6 +420,22 @@ export async function getUserLogued() {
     }
 }
 
+export async function getCountPlayersSeason(season = -1) {
+    try {
+        if (season == -1) {
+            season = await miContrato.methods
+                .currentSeason()
+                .call((err, result) => result);
+        }
+        const count = await miContrato.methods
+            .getCountPlayer(season)
+            .call((err, result) => result);
+        return count -1 ;
+    } catch (Ex) {
+        return false;
+    }
+}
+
 
 
 
@@ -445,6 +464,7 @@ export async function watch() {
 
 export async function getPriceInEth(wei){
     console.log(wei);
+    // wei = parseInt(wei)
     if (wei == 0 || wei == null) {
         return 0
     } else {
