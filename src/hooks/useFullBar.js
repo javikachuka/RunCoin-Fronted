@@ -1,10 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import BarContext from '../context/BarContext';
+import { useLogin } from './useLogin';
 
 export const useFullBar = () => {
 
-    const {isFull , setIsFull} = useContext(BarContext)
+    const {isFull , setIsFull, lastUser, setLastUser} = useContext(BarContext)
+    const {user} = useLogin()
 
-    return {isFull, setIsFull}
+    useEffect(
+        () => {
+            if(lastUser != null){
+                if(user.player == lastUser){
+                    setIsFull(true) ;
+                }
+            }
+        }, [lastUser]
+    )
+
+    return {isFull, setIsFull, setLastUser}
 }
  

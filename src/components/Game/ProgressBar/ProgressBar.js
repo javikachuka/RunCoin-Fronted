@@ -23,7 +23,7 @@ export default function ProgressBar(props) {
   const [end, setEnd] = useState(props.wait);
   const [timeGame, setTimeGame] = useState(props.timeGame);
   const begin = 20;
-  const {setIsFull} = useFullBar()
+  const {setLastUser} = useFullBar()
 
   const getHours = (seconds) => {
     return transformSecondsToHuman(seconds);
@@ -67,7 +67,9 @@ export default function ProgressBar(props) {
     } else {
       if (timeGame >= end) {
         setValue(100);
-        setIsFull(true); 
+        if(isLast){
+          setLastUser(props.player);
+        }
       } else {
         setValue(begin + getWaitPorcent());
       }
