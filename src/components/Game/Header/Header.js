@@ -14,13 +14,17 @@ import {
 import logoImg from "../../../images/runcoin-logo-img.svg";
 import ButtonLog from "../../ButtonLog";
 import { useLogin } from "../../../hooks/useLogin";
+import { countToken } from "../../../services/server";
 
 const Header = () => {
   const [click, setClick] = useState(false);
+  const [countRun , setCountRun] = useState(0) ;
   const { logued } = useLogin();
   const ref = useRef(null);
 
-  const handleClick = () => setClick(!click);
+  const handleClick = () =>{ 
+    setClick(!click)
+  };
 
   function handleClickOutside(event) {
     if (ref.current && !ref.current.contains(event.target)) {
@@ -30,10 +34,19 @@ const Header = () => {
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside, true);
+    countToken().then(
+      (res) =>{
+        setCountRun(res)
+      }
+    )
     return () => {
       document.removeEventListener("click", handleClickOutside, true);
     };
   });
+
+  const handleClaim = () => {
+    console.log('Claim');
+  }
 
   return (
     <Nav className="shadow-sm">
@@ -44,9 +57,9 @@ const Header = () => {
         <NavMenu>
           {logued ? (
             <DropDownMenu ref={ref}>
-              <NavCoin onClick={handleClick}>10 RUN</NavCoin>
+              <NavCoin onClick={handleClick}>{countRun} RUN</NavCoin>
               <NavDropDown click={click}>
-                <DropDownOption onClick={handleClick}>CLAIM RUN</DropDownOption>
+                <DropDownOption onClick={handleClaim}>Claim Run</DropDownOption>
               </NavDropDown>
             </DropDownMenu>
           ) : null}

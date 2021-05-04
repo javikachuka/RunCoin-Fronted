@@ -342,11 +342,11 @@ export async function claimWinnerPool() {
     }
 }
 //obtener la cantidad de token de la direccion actual
-export async function cantToken() {
+export async function countToken() {
     try {
         let account=await getUserLogued();
         return await miContrato.methods
-            .cantTokenGForOwner(account)
+            .amountTokenGForOwner(account)
             .call((err, result) => result);
 
     } catch (Ex) {
