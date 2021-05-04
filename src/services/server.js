@@ -2,6 +2,9 @@ import * as Parameters from "./parameters.js";
 import {
     CONST_ABI
 } from "./abiApp.js";
+import {
+    CONST_ABI_TOKEN
+} from "./abiTG.js";
 
 // aplicacion para la conexión con la blockchain
 const Web3 = require("web3");
@@ -345,10 +348,18 @@ export async function claimWinnerPool() {
 export async function countToken() {
     try {
         let account=await getUserLogued();
-        return await miContrato.methods
+        
+       let TokenContract= new web3.eth.Contract(
+            CONST_ABI_TOKEN,
+            Parameters.TG_ContratOKT
+        );
+        
+        let decimals= await TokenContract.methods.decimals().call((err, result) => result); 
+
+        let countToken= await miContrato.methods
             .amountTokenGForOwner(account)
             .call((err, result) => result);
-
+        return countToken / (10^(decimals));
     } catch (Ex) {
         console.log(Ex);
         return 0;

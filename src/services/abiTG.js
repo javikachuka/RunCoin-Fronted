@@ -1,4 +1,4 @@
-export const CONST_ABI_TG = [{
+export const CONST_ABI_TOKEN = [{
 		"inputs": [],
 		"stateMutability": "nonpayable",
 		"type": "constructor"

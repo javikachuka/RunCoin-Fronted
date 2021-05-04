@@ -56,6 +56,17 @@ export const CONST_ABI = [{
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "deposit",
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
 		"inputs": [{
 				"internalType": "uint256",
 				"name": "_index",
@@ -432,17 +443,6 @@ export const CONST_ABI = [{
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "getBalance",
-		"outputs": [{
-			"internalType": "uint256",
-			"name": "",
-			"type": "uint256"
-		}],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [{
 			"internalType": "uint256",
 			"name": "_indexSeason",
@@ -452,6 +452,17 @@ export const CONST_ABI = [{
 		"outputs": [{
 			"internalType": "uint256",
 			"name": "",
+			"type": "uint256"
+		}],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getLengthTimes",
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "length",
 			"type": "uint256"
 		}],
 		"stateMutability": "view",
@@ -501,6 +512,21 @@ export const CONST_ABI = [{
 			"type": "uint256"
 		}],
 		"name": "getSecondMax",
+		"outputs": [{
+			"internalType": "uint256",
+			"name": "",
+			"type": "uint256"
+		}],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+			"internalType": "uint256",
+			"name": "_time",
+			"type": "uint256"
+		}],
+		"name": "getTimeMax",
 		"outputs": [{
 			"internalType": "uint256",
 			"name": "",
@@ -735,17 +761,6 @@ export const CONST_ABI = [{
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "totalBalance",
-		"outputs": [{
-			"internalType": "bool",
-			"name": "",
-			"type": "bool"
-		}],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [{
 			"internalType": "uint256",
 			"name": "",
@@ -816,4 +831,4 @@ export const CONST_ABI = [{
 		"stateMutability": "view",
 		"type": "function"
 	}
-];
+]
