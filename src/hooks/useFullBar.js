@@ -9,12 +9,12 @@ export const useFullBar = () => {
 
     useEffect(
         () => {
-            if(lastUser != null){
+            if(lastUser != null ){
                 if(user.player == lastUser){
                     setIsFull(true) ;
                 }
             }
-        }, [lastUser]
+        }, [isFull,lastUser]
     )
 
     return {isFull, setIsFull, setLastUser}

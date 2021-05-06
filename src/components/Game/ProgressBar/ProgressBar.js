@@ -48,7 +48,6 @@ export default function ProgressBar(props) {
   };
 
   useEffect(() => {
-    let montado = true;
     if (props.index === 0) {
       setIsLast(true);
     } else {
@@ -61,21 +60,28 @@ export default function ProgressBar(props) {
           setEsperar(esperar - 1);
           setValue(begin + getWaitPorcent());
         } else {
+          console.log('ukltima option');
+          if(isLast){
+            setLastUser(props.player);
+          }
           return () => clearTimeout(timer);
         }
       }, 1000);
     } else {
+      console.log('assaasa');
       if (timeGame >= end) {
+        console.log('entre aca');
         setValue(100);
         if(isLast){
+          console.log('ultimooo paaaa');
           setLastUser(props.player);
         }
       } else {
+        console.log('aaaaquiiiiii papaa');
         setValue(begin + getWaitPorcent());
       }
+      console.log('pepeepepep');
     }
-
-    return () => console.log("desmontando");
   }, [esperar, value]);
 
   if (isLast && timeGame < end) {

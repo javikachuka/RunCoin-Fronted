@@ -10,16 +10,12 @@ import { SmsOutlined } from "@material-ui/icons";
 const ListOfPlayers = () => {
   const [list, setList] = useState([]);
   const [load, setLoad] = useState(true);
+  const [loadMore, setLoadMore] = useState(false);
   const [countList, setCountList] = useState(0);
 
   useEffect(() => {
     fetchApi();
-    getCountPlayersSeason().then(
-      res => {
-        console.log(res);
-        setCountList(res)
-      }
-    )
+    loadCountPlayers()
     miContrato.events.Game(
       {
         fromBlock: "latest",
@@ -28,6 +24,7 @@ const ListOfPlayers = () => {
         console.log("Evento activado");
         setLoad(true);
         fetchApi();
+        loadCountPlayers()
       }
     );
     console.log("saliendo");
@@ -35,20 +32,30 @@ const ListOfPlayers = () => {
 
   const loadMorePlayers = () => {
     console.log('pidiendo mas');
-    getMorePlayer(9, countList - list.length).then(
+    setLoadMore(true)
+    console.log(countList);
+    console.log(list.length);
+    console.log(list);
+    if(countList != list.length){
+      getMorePlayer(9, countList - list.length).then(
+        res => {
+          console.log(res);
+          if(res != false){
+            const newList = list.concat(res)
+            console.log(newList);
+            setList(newList)
+          }
+          setLoadMore(false)
+        }
+      )
+    }
+  }
+
+  const loadCountPlayers = () => {
+    getCountPlayersSeason().then(
       res => {
-        var array = res.map((r) => {
-          return {
-            ...r,
-            player: r.player,
-            timeGame: r.timeGame,
-            timestamp: r.timestamp,
-            wait: r.wait,
-          };
-        });
-        console.log(array);
-        setList([...list,array]);
-        console.log(list);
+        console.log(res);
+        setCountList(res)
       }
     )
   }
@@ -98,6 +105,14 @@ const ListOfPlayers = () => {
           );
         })
       )}
+      {
+        loadMore 
+          ?
+            <LoadingRow>
+              <Loading />
+            </LoadingRow>
+          : null
+      }
       <MoreButton onClick={handleLoadMore}>Show More</MoreButton>
     </>
   );

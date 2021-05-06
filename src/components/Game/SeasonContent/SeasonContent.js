@@ -41,7 +41,7 @@ function SeasonContent() {
     getCountDaysCurrentOfSeasons().then(
       (result) => {
         console.log(result)
-        setDaysCurrentSeassons(result)
+        setDaysCurrentSeassons(result.countDays)
       }
     ).catch(
       (error) => {

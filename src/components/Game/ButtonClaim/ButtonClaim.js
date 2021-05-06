@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { claimWinnerPool } from '../../../services/server';
 import { PlayButton } from '../CurrentGame/CurrentGame.elements';
 import Alert from "../Alert/Alert";
+import { useFullBar } from '../../../hooks/useFullBar';
 
 const ButtonClaim = () => {
 
     const [open, setOpen] = useState(false);
     const [type, setType] = useState(null);
     const [msg, setMsg] = useState(null);
+    const {setIsFull} = useFullBar()
 
     const handleClick = () => {
         claimWinnerPool().then(
@@ -16,6 +18,13 @@ const ButtonClaim = () => {
                     setType("success")
                     setMsg("Claimed")
                     setOpen(true)
+                    setIsFull(false)
+                    const timeout = setTimeout(() => {
+                        setOpen(false);
+                    }, 4000);
+                    return () => {
+                        clearTimeout(timeout);
+                    };
                 }
             }
         )
