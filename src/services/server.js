@@ -28,7 +28,7 @@ export async function play() {
 
     try {
         const _cost = await miContrato.methods.cost().call((err, result) => result);
-        let _account=await getUserLogued();
+        let _account = await getUserLogued();
         let confirm = false;
         const player = await miContrato.methods.game(_cost).send({
                 from: _account,
@@ -154,22 +154,36 @@ export async function getCostPlay() {
         return false;
     }
 }
-
+//obtiene los dias que faltan que termine los atributos con el tiempo en segundos que falta para que termine 
+// por ejemplo temporada 1 , 3124124 segundos para que termine en caso que termino es 0
 export async function getCountDaysCurrentOfSeasons() {
     try {
-        const cantDaysCurrent = await miContrato.methods
+        let time = 0;
+        const countDaysCurrent = await miContrato.methods
             .countDaysCurrent()
             .call((err, result) => result);
-        return cantDaysCurrent;
+        countDaysCurrent--;
+        let lastTimstamp = await miContrato.methods
+            .lastDayTimestamp()
+            .call((err, result) => result);
+        time = lastTimstamp - Date.now();
+        if (time < 0) {
+            time = 0;
+        }
+
+        return {
+            countDays: countDaysCurrent,
+            time: time
+        };
     } catch (Ex) {
-        return false;
+        return {};
     }
 }
 //trae solamente las direcciones de los ganadores y el jugador actual aunque no haya ganado, si la temporada tiene 3 ganadores solo trae los 3
 //retorna [  {address , cantGame, reward },{}]
 export async function getWinnersSeason(indexSeasson = -1) {
     try {
-        let account=await getUserLogued();
+        let account = await getUserLogued();
         if (indexSeasson == -1) {
             indexSeasson = await miContrato.methods
                 .currentSeason()
@@ -262,7 +276,7 @@ export async function getPoolSeason(indexSeasson = -1) {
 //checkea si el ganador de la temporada seleccionada
 export async function checkWinnerSeason(indexSeasson = -1) {
     try {
-        let account=await getUserLogued();
+        let account = await getUserLogued();
         if (indexSeasson < 0) {
             indexSeasson = await miContrato.methods
                 .currentSeason()
@@ -286,7 +300,7 @@ export async function checkWinnerSeason(indexSeasson = -1) {
 //reclama el premio uno de los ganadores de la temporada seleccionada
 export async function claimWinnerSeason(indexSeasson = -1) {
     try {
-        let account=await getUserLogued();
+        let account = await getUserLogued();
         if (indexSeasson < 0) {
             indexSeasson = await miContrato.methods
                 .currentSeason()
@@ -312,7 +326,7 @@ export async function claimWinnerSeason(indexSeasson = -1) {
 //retorna true
 export async function checkWinnerPool() {
     try {
-        let account=await getUserLogued();
+        let account = await getUserLogued();
         let address = await miContrato.methods
             .winVerify(0)
             .call((err, result) => result);
@@ -329,7 +343,7 @@ export async function checkWinnerPool() {
 export async function claimWinnerPool() {
     try {
 
-        let account=await getUserLogued();
+        let account = await getUserLogued();
         await miContrato.methods.claimLastPlayer().send({
                 from: account,
                 value: 0,
@@ -347,21 +361,21 @@ export async function claimWinnerPool() {
 //obtener la cantidad de token de la direccion actual
 export async function countToken() {
     try {
-        let account=await getUserLogued();
-        
-       let TokenContract= new web3.eth.Contract(
+        let account = await getUserLogued();
+
+        let TokenContract = new web3.eth.Contract(
             CONST_ABI_TOKEN,
             Parameters.TG_ContratOKT
         );
-        
-        let decimals= await TokenContract.methods.decimals().call((err, result) => result); 
 
-        let countToken= await miContrato.methods
+        let decimals = await TokenContract.methods.decimals().call((err, result) => result);
+
+        let countToken = await miContrato.methods
             .amountTokenGForOwner(account)
             .call((err, result) => result);
         console.log("Imprimiendo decimals");
         // console.log(decimals);
-        let aux = countToken / Math.pow(10,decimals)
+        let aux = countToken / Math.pow(10, decimals)
         console.log(countToken);
         return aux;
     } catch (Ex) {
@@ -386,7 +400,7 @@ export async function getPoolRun() {
 //reclama los token que tiene
 export async function claimToken() {
     try {
-        let account=await getUserLogued();
+        let account = await getUserLogued();
         await miContrato.methods.claimToken().send({
                 from: account,
                 value: 0,
@@ -447,11 +461,12 @@ export async function getCountPlayersSeason(season = -1) {
         const count = await miContrato.methods
             .getCountPlayer(season)
             .call((err, result) => result);
-        return count -1 ;
+        return count - 1;
     } catch (Ex) {
         return false;
     }
 }
+
 
 // devuelve el tiempo que el jugador debe esperar para ganar el pozo del juego cuando se llene la barrita
 export async function getWaitForPlay() {
@@ -499,7 +514,7 @@ export async function watch() {
     // });
 }
 
-export async function getPriceInEth(wei){
+export async function getPriceInEth(wei) {
     console.log(wei);
     // wei = parseInt(wei)
     if (wei == 0 || wei == null) {
