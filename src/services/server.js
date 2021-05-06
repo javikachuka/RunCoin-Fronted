@@ -110,10 +110,12 @@ export async function getMorePlayer(cant, indexPlayer = -1, indexSeasson = -1) {
                 .currentSeason()
                 .call((err, result) => result);
         }
-        if (indexPlayer == -1) {
-            indexPlayer = await miContrato.methods
-                .getCountPlayer(indexSeasson)
-                .call((err, result) => result - 1);
+        if (indexPlayer < 0) {
+            return false;
+            //antes traia desde la ultima posicion, pero ahora controla que no pida indices negativos
+            // indexPlayer = await miContrato.methods
+            //     .getCountPlayer(indexSeasson)
+            //     .call((err, result) => result - 1);
         }
 
         while (cant > 0 && indexPlayer >= 0) {
@@ -129,7 +131,7 @@ export async function getMorePlayer(cant, indexPlayer = -1, indexSeasson = -1) {
         }
         return players;
     } catch (Ex) {
-        // console.log(Ex);
+        console.log(Ex);
         return false;
     }
 }
@@ -159,14 +161,15 @@ export async function getCostPlay() {
 export async function getCountDaysCurrentOfSeasons() {
     try {
         let time = 0;
-        let countDaysCurrent = await miContrato.methods
+        const countDaysCurrent = await miContrato.methods
             .countDaysCurrent()
             .call((err, result) => result);
         countDaysCurrent--;
         let lastTimstamp = await miContrato.methods
             .lastDayTimestamp()
             .call((err, result) => result);
-        time =  Date.now() -lastTimstamp;
+
+        time =  Math.floor(Date.now() / 1000) - lastTimstamp  ;
         if (time < 0) {
             time = 0;
         }
@@ -176,7 +179,6 @@ export async function getCountDaysCurrentOfSeasons() {
             time: time
         };
     } catch (Ex) {
-        console.log(Ex);
         return {};
     }
 }
@@ -374,7 +376,10 @@ export async function countToken() {
         let countToken = await miContrato.methods
             .amountTokenGForOwner(account)
             .call((err, result) => result);
+        console.log("Imprimiendo decimals");
+        // console.log(decimals);
         let aux = countToken / Math.pow(10, decimals)
+        console.log(countToken);
         return aux;
     } catch (Ex) {
         console.log(Ex);
