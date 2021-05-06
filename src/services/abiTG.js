@@ -14,6 +14,24 @@ export const CONST_ABI_TOKEN = [{
 			{
 				"indexed": true,
 				"internalType": "address",
+				"name": "newDistributor",
+				"type": "address"
+			}
+		],
+		"name": "AddDistributor",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [{
+				"indexed": true,
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
 				"name": "spender",
 				"type": "address"
 			},
@@ -25,6 +43,24 @@ export const CONST_ABI_TOKEN = [{
 			}
 		],
 		"name": "Approval",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [{
+				"indexed": true,
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "oldDistributor",
+				"type": "address"
+			}
+		],
+		"name": "RemoveDistributor",
 		"type": "event"
 	},
 	{
@@ -50,6 +86,17 @@ export const CONST_ABI_TOKEN = [{
 		],
 		"name": "Transfer",
 		"type": "event"
+	},
+	{
+		"inputs": [{
+			"internalType": "address",
+			"name": "_distributor",
+			"type": "address"
+		}],
+		"name": "addDistributor",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
 		"inputs": [{
@@ -132,7 +179,11 @@ export const CONST_ABI_TOKEN = [{
 			"type": "uint256"
 		}],
 		"name": "burn",
-		"outputs": [],
+		"outputs": [{
+			"internalType": "bool",
+			"name": "",
+			"type": "bool"
+		}],
 		"stateMutability": "payable",
 		"type": "function"
 	},
@@ -149,17 +200,6 @@ export const CONST_ABI_TOKEN = [{
 			}
 		],
 		"name": "burnFrom",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [{
-			"internalType": "address",
-			"name": "_distributor",
-			"type": "address"
-		}],
-		"name": "changeDistributor",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -191,12 +231,16 @@ export const CONST_ABI_TOKEN = [{
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "distributor",
-		"outputs": [{
+		"inputs": [{
 			"internalType": "address",
 			"name": "",
 			"type": "address"
+		}],
+		"name": "distributors",
+		"outputs": [{
+			"internalType": "bool",
+			"name": "",
+			"type": "bool"
 		}],
 		"stateMutability": "view",
 		"type": "function"
@@ -221,6 +265,17 @@ export const CONST_ABI_TOKEN = [{
 			"type": "address"
 		}],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [{
+			"internalType": "address",
+			"name": "_distributor",
+			"type": "address"
+		}],
+		"name": "removeDistributor",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
