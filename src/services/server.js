@@ -359,7 +359,11 @@ export async function countToken() {
         let countToken= await miContrato.methods
             .amountTokenGForOwner(account)
             .call((err, result) => result);
-        return countToken / (10^(decimals));
+        console.log("Imprimiendo decimals");
+        // console.log(decimals);
+        let aux = countToken / Math.pow(10,decimals)
+        console.log(countToken);
+        return aux;
     } catch (Ex) {
         console.log(Ex);
         return 0;
@@ -412,6 +416,8 @@ export async function getSeasonCurrent() {
 export async function getUserLogued() {
     try {
         let data = null;
+        console.log('antes p[epeep');
+        getWaitForPlay().then(res => console.log(res))
         await web3.eth.getAccounts(function (err, accounts) {
             // chequea si hay un provider para poder conectarme la block
             if (err != null) {
@@ -443,6 +449,26 @@ export async function getCountPlayersSeason(season = -1) {
             .call((err, result) => result);
         return count -1 ;
     } catch (Ex) {
+        return false;
+    }
+}
+
+// devuelve el tiempo que el jugador debe esperar para ganar el pozo del juego cuando se llene la barrita
+export async function getWaitForPlay() {
+    try {
+        let cost = await miContrato.methods
+            .cost()
+            .call((err, result) => result);
+        let helper = await miContrato.methods
+            .helper()
+            .call((err, result) => result);
+        let calc = (cost - (cost * helper / 100))
+        calc = (calc - (calc * helper / 100))
+        return await miContrato.methods
+            .getSecondMax(calc)
+            .call((err, result) => result);
+    } catch (Ex) {
+        console.log(Ex);
         return false;
     }
 }

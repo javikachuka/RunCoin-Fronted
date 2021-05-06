@@ -14,7 +14,7 @@ import {
 import logoImg from "../../../images/runcoin-logo-img.svg";
 import ButtonLog from "../../ButtonLog";
 import { useLogin } from "../../../hooks/useLogin";
-import { countToken } from "../../../services/server";
+import { claimToken, countToken } from "../../../services/server";
 
 const Header = () => {
   const [click, setClick] = useState(false);
@@ -46,6 +46,18 @@ const Header = () => {
 
   const handleClaim = () => {
     console.log('Claim');
+    claimToken().then(
+      (res) => {
+        if(res){
+          console.log("reclamado");
+          countToken().then(
+            (res) =>{
+              setCountRun(res)
+            }
+          )
+        }
+      }
+    )
   }
 
   return (
