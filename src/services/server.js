@@ -374,10 +374,7 @@ export async function countToken() {
         let countToken = await miContrato.methods
             .amountTokenGForOwner(account)
             .call((err, result) => result);
-        console.log("Imprimiendo decimals");
-        // console.log(decimals);
         let aux = countToken / Math.pow(10, decimals)
-        console.log(countToken);
         return aux;
     } catch (Ex) {
         console.log(Ex);
