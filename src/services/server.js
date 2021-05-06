@@ -129,7 +129,7 @@ export async function getMorePlayer(cant, indexPlayer = -1, indexSeasson = -1) {
         }
         return players;
     } catch (Ex) {
-        console.log(Ex);
+        // console.log(Ex);
         return false;
     }
 }
@@ -159,14 +159,14 @@ export async function getCostPlay() {
 export async function getCountDaysCurrentOfSeasons() {
     try {
         let time = 0;
-        const countDaysCurrent = await miContrato.methods
+        let countDaysCurrent = await miContrato.methods
             .countDaysCurrent()
             .call((err, result) => result);
         countDaysCurrent--;
         let lastTimstamp = await miContrato.methods
             .lastDayTimestamp()
             .call((err, result) => result);
-        time = lastTimstamp - Date.now();
+        time =  Date.now() -lastTimstamp;
         if (time < 0) {
             time = 0;
         }
@@ -176,6 +176,7 @@ export async function getCountDaysCurrentOfSeasons() {
             time: time
         };
     } catch (Ex) {
+        console.log(Ex);
         return {};
     }
 }
