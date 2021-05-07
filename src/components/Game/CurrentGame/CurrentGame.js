@@ -4,10 +4,9 @@ import {
   CurrentGameContainer,
   GameRow,
   JackPot,
-  PlayButton,
+  SeasonTitle,
   JackPotAmount,
   JackPotText,
-  MoreButton,
 } from "./CurrentGame.elements";
 import ButtonPlay from "../ButtonPlay/ButtonPlay";
 import Alert from "../Alert/Alert";
@@ -46,6 +45,7 @@ function CurrentGame() {
   return (
     <>
       <CurrentGameContainer>
+        <SeasonTitle>Season 0</SeasonTitle>
         <GameRow>
           <JackPot>
             <JackPotAmount>≈$ {cost}</JackPotAmount>

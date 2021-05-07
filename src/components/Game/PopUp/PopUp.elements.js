@@ -8,7 +8,7 @@ export const PopupContainer = styled.div`
   min-width: 160px;
   padding: 1rem;
   background: #1f1c2a;
-  border-radius: 10px;
+  border-radius: 12px;
   left: 110%;
   visibility: hidden;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;

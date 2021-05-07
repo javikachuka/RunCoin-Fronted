@@ -25,7 +25,19 @@ export const CurrentGameContainer = styled.div`
     padding: 25px;
   }
 `;
+export const SeasonTitle = styled.h1`
+  font-family: Lexend Mega;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 30px;
+  line-height: 37px;
+  /* identical to box height */
 
+  text-transform: uppercase;
+
+  color: #dedee0;
+  padding-bottom: 1rem;
+`;
 export const GameRow = styled.div`
   display: flex;
   justify-content: space-between;
