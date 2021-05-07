@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const PlayButton = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,6 +25,10 @@ export const PlayButton = styled.div`
 
   &:hover {
     background: rgba(11, 235, 180, 0.15);
+  }
+
+  &:hover > div {
+    visibility: visible;
   }
 
   @media screen and (max-width: 660px) {

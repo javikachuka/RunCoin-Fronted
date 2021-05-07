@@ -8,8 +8,8 @@ import {
   watch,
   getCostPlay,
 } from "../../../services/server";
-import AlertPop from "../../AlertPop";
 import Alert from "../Alert/Alert";
+import PopUp from "../PopUp/PopUp";
 
 function ButtonPlay() {
   const { user, setUser, logued, setLogued } = useContext(LoginContext);
@@ -69,7 +69,10 @@ function ButtonPlay() {
   return (
     <>
       <Alert icon={type} msg={msg} open={open} type={type} />
-      <PlayButton onClick={handlePlay}>PLAY</PlayButton>
+      <PlayButton onClick={handlePlay}>
+        PLAY
+        <PopUp />
+      </PlayButton>
       {/* Aca esta el boton de Claim, asi quedaria y ejecutaria otra funcion en onClick */}
       {/* <PlayButton className="claim" onClick={handlePlay}>
         CLAIM
