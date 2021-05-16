@@ -78,6 +78,10 @@ export const TopListCard = styled.div`
   padding: 20px 40px;
   display: flex;
   flex-direction: column;
+
+  @media screen and (max-width: 500px) {
+    margin-bottom: 63px;
+  }
 `;
 
 export const TopContainer = styled.div`
@@ -193,11 +197,61 @@ export const HeaderAmount = styled.li`
   color: #dedee0;
 `;
 
+export const ListContainer = styled.div`
+  overflow: auto;
+  max-height: 360px;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    padding-left: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #1d212b;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+`;
+
+export const ClaimReward = styled.div`
+  display: flex;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(90deg, #00c2fb 0%, #0ad4a2 100%);
+  border-radius: 8px;
+
+  font-family: Lexend Mega;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 15px;
+
+  text-transform: uppercase;
+
+  color: #ffffff;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+`;
+
 export const ListItem = styled.div`
   display: flex;
   width: 100%;
   padding: 10px 0;
   border-bottom: 1px solid rgba(222, 222, 224, 0.2);
+
   &:last-child {
     border-bottom: 0;
   }

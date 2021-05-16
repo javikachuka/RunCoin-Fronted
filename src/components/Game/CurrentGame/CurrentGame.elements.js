@@ -176,4 +176,8 @@ export const MoreButton = styled.div`
   text-transform: uppercase;
 
   color: #dedee0;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

@@ -21,7 +21,18 @@ export const PopupContainer = styled.div`
     margin-top: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent #1f1c2a transparent transparent;
+    border-color: transparent transparent transparent #1f1c2a;
+  }
+
+  @media screen and (max-width: 960px) {
+    right: 120%;
+    left: unset;
+
+    &::after {
+      top: 50%;
+      left: 100%; /* To the right of the tooltip */
+      right: unset;
+    }
   }
 `;
 
