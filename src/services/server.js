@@ -161,7 +161,7 @@ export async function getCostPlay() {
 export async function getCountDaysCurrentOfSeasons() {
     try {
         let time = 0;
-        const countDaysCurrent = await miContrato.methods
+        let countDaysCurrent = await miContrato.methods
             .countDaysCurrent()
             .call((err, result) => result);
         countDaysCurrent--;
@@ -169,7 +169,11 @@ export async function getCountDaysCurrentOfSeasons() {
             .lastDayTimestamp()
             .call((err, result) => result);
 
-        time =  Math.floor(Date.now() / 1000) - lastTimstamp  ;
+        lastTimstamp = parseInt(lastTimstamp) + 86400
+        console.log(Date.now());
+        console.log(lastTimstamp);
+        time =   lastTimstamp  - Math.floor(Date.now() / 1000)  ;
+        console.log(time);
         if (time < 0) {
             time = 0;
         }
@@ -376,10 +380,8 @@ export async function countToken() {
         let countToken = await miContrato.methods
             .amountTokenGForOwner(account)
             .call((err, result) => result);
-        console.log("Imprimiendo decimals");
         // console.log(decimals);
         let aux = countToken / Math.pow(10, decimals)
-        console.log(countToken);
         return aux;
     } catch (Ex) {
         console.log(Ex);

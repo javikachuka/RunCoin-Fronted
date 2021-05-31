@@ -60,27 +60,24 @@ export default function ProgressBar(props) {
           setEsperar(esperar - 1);
           setValue(begin + getWaitPorcent());
         } else {
-          console.log('ukltima option');
           if(isLast){
+            console.log(timeGame);
+            console.log(end);
+            console.log(esperar);
             setLastUser(props.player);
           }
           return () => clearTimeout(timer);
         }
       }, 1000);
     } else {
-      console.log('assaasa');
       if (timeGame >= end) {
-        console.log('entre aca');
         setValue(100);
         if(isLast){
-          console.log('ultimooo paaaa');
           setLastUser(props.player);
         }
       } else {
-        console.log('aaaaquiiiiii papaa');
         setValue(begin + getWaitPorcent());
       }
-      console.log('pepeepepep');
     }
   }, [esperar, value]);
 

@@ -21,28 +21,20 @@ const ListOfPlayers = () => {
         fromBlock: "latest",
       },
       (error, event) => {
-        console.log("Evento activado");
         setLoad(true);
         fetchApi();
         loadCountPlayers()
       }
     );
-    console.log("saliendo");
   }, []);
 
   const loadMorePlayers = () => {
-    console.log('pidiendo mas');
     setLoadMore(true)
-    console.log(countList);
-    console.log(list.length);
-    console.log(list);
     if(countList != list.length){
       getMorePlayer(9, countList - list.length).then(
         res => {
-          console.log(res);
           if(res != false){
             const newList = list.concat(res)
-            console.log(newList);
             setList(newList)
           }
           setLoadMore(false)
@@ -54,7 +46,6 @@ const ListOfPlayers = () => {
   const loadCountPlayers = () => {
     getCountPlayersSeason().then(
       res => {
-        console.log(res);
         setCountList(res)
       }
     )
@@ -81,7 +72,6 @@ const ListOfPlayers = () => {
   }
 
   const handleLoadMore = () => {
-    console.log('apretado');
     loadMorePlayers()
   }
 

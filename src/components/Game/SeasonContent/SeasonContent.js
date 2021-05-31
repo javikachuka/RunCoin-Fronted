@@ -9,6 +9,8 @@ import {
 } from "./SeasonContent.elements";
 import { getPoolSeason, miContrato } from '../../../services/server'
 import { getCountDaysCurrentOfSeasons, getReward, getPriceInEth } from "../../../services/server";
+import { transformSecondsToHuman } from "../../../utils/transformSecondsToHuman";
+import { transformSecondsToHumanMin } from "../../../utils/transformSecondsToHumanMin";
 
 
 function SeasonContent() {
@@ -41,7 +43,11 @@ function SeasonContent() {
     getCountDaysCurrentOfSeasons().then(
       (result) => {
         console.log(result)
-        setDaysCurrentSeassons(result.countDays)
+        if(result.countDays != 0){
+          setDaysCurrentSeassons(result.countDays+" days")
+        }else {
+          setDaysCurrentSeassons(transformSecondsToHumanMin(result.time))
+        }
       }
     ).catch(
       (error) => {
@@ -73,7 +79,7 @@ function SeasonContent() {
           <Subtitle>SEASON POOL</Subtitle>
         </SeasonCard>
         <SeasonCard>
-          <EndHeader>{daysCurrentSeassons} days </EndHeader>
+          <EndHeader>{daysCurrentSeassons}</EndHeader>
           <Subtitle>END OF SEASON</Subtitle>
         </SeasonCard>
       </CardRow>

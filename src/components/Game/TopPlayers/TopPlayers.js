@@ -3,6 +3,7 @@ import {
   getWinnersSeason,
   miContrato,
   getSeasonCurrent,
+  claimWinnerSeason,
 } from "../../../services/server";
 import {
   TopListCard,
@@ -23,11 +24,17 @@ import {
 } from "../SeasonContent/SeasonContent.elements";
 import { transformAddress } from "../../../utils/transformAddress";
 import LoginContext from "../../../context/LoginContext";
+import Alert from "../Alert/Alert";
 
 const TopPlayers = () => {
   const [top, setTop] = useState([]);
   const { user } = useContext(LoginContext);
   const [season, setSeason] = useState(0);
+  const [seasonSelected, setSeasonSelected] = useState(0)
+  //alert
+  const [open, setOpen] = useState(false);
+  const [type, setType] = useState(null);
+  const [msg, setMsg] = useState(null);
 
   useEffect(() => {
     loadList();
@@ -45,6 +52,7 @@ const TopPlayers = () => {
   const loadList = () => {
     getSeasonCurrent().then((res) => {
       setSeason(res);
+      setSeasonSelected(res)
     });
     getWinnersSeason()
       .then((res) => {
@@ -76,12 +84,57 @@ const TopPlayers = () => {
   };
 
   const handleChange = (e) => {
+    setSeasonSelected(e.target.value)
     getWinnersSeason(e.target.value)
       .then((res) => {
         setTop(res);
       })
       .catch((error) => console.log(error));
   };
+
+  const handleClick = () => {
+    console.log('con ganas de claim');
+    if (seasonSelected == season) {
+      setType("error")
+      setMsg("Can't claim in the last season")
+      setOpen(true)
+      const timeout = setTimeout(() => {
+        setOpen(false);
+      }, 4000);
+      return () => {
+        clearTimeout(timeout);
+      }
+    } else {
+      claimWinnerSeason(seasonSelected)
+        .then(
+          (res) => {
+            if (res == true) {
+              setType("success")
+              setMsg("Claimed")
+              setOpen(true)
+              const timeout = setTimeout(() => {
+                setOpen(false);
+              }, 4000);
+              return () => {
+                clearTimeout(timeout);
+              };
+            }
+            else {
+              setType("error")
+              setMsg("Can't claim in this season")
+              setOpen(true)
+              const timeout = setTimeout(() => {
+                setOpen(false);
+              }, 4000);
+              return () => {
+                clearTimeout(timeout);
+              }
+            }
+          }
+        )
+    }
+
+  }
 
   return (
     <>
@@ -117,8 +170,9 @@ const TopPlayers = () => {
           })}
         </ListContainer>
         {/* solo cuando pueda reclamar la persona */}
+        <Alert icon={type} msg={msg} open={open} type={type} />
         <ButtonContainer>
-          <ClaimReward>Claim</ClaimReward>
+          <ClaimReward onClick={handleClick}>Claim</ClaimReward>
         </ButtonContainer>
 
         {/* <ListItem>
