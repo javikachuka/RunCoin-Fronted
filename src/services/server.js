@@ -490,6 +490,18 @@ export async function getWaitForPlay() {
         return false;
     }
 }
+//devuelve la cantidad de token necesario para poder Darle PLAY al juego
+export async function getPassport() {
+    try {
+        
+        return await miContrato.methods
+            .passport()
+            .call((err, result) => result);
+    } catch (Ex) {
+        console.log(Ex);
+        return 0;
+    }
+}
 
 
 
@@ -527,6 +539,8 @@ export async function getPriceInEth(wei) {
         return aux
     }
 }
+
+
 
 //**************Escuchar Eventos en la blockchain */
 //docs : https://web3js.readthedocs.io/en/v1.2.11/web3-eth-contract.html#id48
