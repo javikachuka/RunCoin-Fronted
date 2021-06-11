@@ -31,9 +31,9 @@ export async function play() {
         let _account = await getUserLogued();
         let confirm = false;
         const player = await miContrato.methods.game(_cost).send({
-                from: _account,
-                value: _cost,
-            },
+            from: _account,
+            value: _cost,
+        },
             function (error, transactionHash) {
                 console.log(error);
                 if (transactionHash !== undefined) {
@@ -172,7 +172,7 @@ export async function getCountDaysCurrentOfSeasons() {
         lastTimstamp = parseInt(lastTimstamp) + 86400
         console.log(Date.now());
         console.log(lastTimstamp);
-        time =   lastTimstamp  - Math.floor(Date.now() / 1000)  ;
+        time = lastTimstamp - Math.floor(Date.now() / 1000);
         console.log(time);
         if (time < 0) {
             time = 0;
@@ -316,9 +316,9 @@ export async function claimWinnerSeason(indexSeasson = -1) {
 
 
         await miContrato.methods.claimWinnerSeasonPool(indexSeasson).send({
-                from: account,
-                value: 0,
-            },
+            from: account,
+            value: 0,
+        },
             function (error, transactionHash) {
                 console.log(transactionHash);
             }
@@ -352,9 +352,9 @@ export async function claimWinnerPool() {
 
         let account = await getUserLogued();
         await miContrato.methods.claimLastPlayer().send({
-                from: account,
-                value: 0,
-            },
+            from: account,
+            value: 0,
+        },
             function (error, transactionHash) {
                 console.log(transactionHash);
             }
@@ -407,9 +407,9 @@ export async function claimToken() {
     try {
         let account = await getUserLogued();
         await miContrato.methods.claimToken().send({
-                from: account,
-                value: 0,
-            },
+            from: account,
+            value: 0,
+        },
             function (error, transactionHash) {
                 console.log(transactionHash);
             }
@@ -495,7 +495,7 @@ export async function getWaitForPlay() {
 //devuelve la cantidad de token necesario para poder Darle PLAY al juego
 export async function getPassport() {
     try {
-        
+
         return await miContrato.methods
             .passport()
             .call((err, result) => result);
@@ -541,6 +541,14 @@ export async function getPriceInEth(wei) {
         return aux
     }
 }
+
+export async function getIdNetwork() {
+    return await web3.eth.net.getId();
+}
+
+window.ethereum.on('chainChanged', () => {
+    document.location.reload()
+})
 
 
 
