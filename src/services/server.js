@@ -38,7 +38,10 @@ export async function play() {
                 console.log(error);
                 if (transactionHash !== undefined) {
                     confirm = true;
+                }else{
+                    return false
                 }
+
             }
         );
         return confirm;
