@@ -508,7 +508,24 @@ export async function getPassport() {
     }
 }
 
-
+export async function getIfClaim(season = -1) {
+    try {
+        let account = await getUserLogued();
+        if(season == -1){
+            season= await miContrato.methods
+            .currentSeason()
+            .call((err, result) => result);
+        }
+        let claim = await miContrato.methods
+            .playerWithdraw(account,season)
+            .call((err, result) => result);
+        return claim;
+    } catch (Ex) {
+        
+        console.log(Ex);
+        return false;
+    }
+}
 
 
 export async function watch() {
@@ -544,6 +561,8 @@ export async function getPriceInEth(wei) {
         return aux
     }
 }
+
+
 
 export async function getIdNetwork() {
     return await web3.eth.net.getId();
