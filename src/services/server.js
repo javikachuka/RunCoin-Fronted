@@ -516,14 +516,22 @@ export async function getIfClaim(season = -1) {
             .currentSeason()
             .call((err, result) => result);
         }
+        let listWinner=await getWinnersSeason(season);
+        let amount=0;
+        listWinner.forEach((winner)=>{
+            if(winner.address == account){
+                amount=winner.reward;
+            }
+        })
         let claim = await miContrato.methods
             .playerWithdraw(account,season)
             .call((err, result) => result);
-        return claim;
+            getWinnersSeason()                    
+        return {claimed:claim,reward:amount};
     } catch (Ex) {
         
         console.log(Ex);
-        return false;
+        return {claimed:false,reward:0};
     }
 }
 
