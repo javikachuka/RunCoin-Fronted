@@ -173,10 +173,7 @@ export async function getCountDaysCurrentOfSeasons() {
             .call((err, result) => result);
 
         lastTimstamp = parseInt(lastTimstamp) + 86400
-        console.log(Date.now());
-        console.log(lastTimstamp);
         time = lastTimstamp - Math.floor(Date.now() / 1000);
-        console.log(time);
         if (time < 0) {
             time = 0;
         }
@@ -569,6 +566,25 @@ export async function getPriceInEth(wei) {
         return aux
     }
 }
+
+
+export async function addToken() {
+    return await window.ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20', // Initially only supports ERC20, but eventually more!
+          options: {
+            address: Parameters.TG_ContratOKT, // The address that the token is at.
+            symbol: 'RUN', // A ticker symbol or shorthand, up to 5 chars.
+            decimals: 18, // The number of decimals in the token
+            // image: tokenImage, // A string url of the token logo
+          },
+        },
+      });
+       
+}
+
+
 
 
 

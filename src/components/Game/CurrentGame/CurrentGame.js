@@ -17,16 +17,23 @@ import ButtonClaim from "../ButtonClaim/ButtonClaim";
 import { Bc } from 'react-cryptocoins';
 import { reduceDecimal } from "../../../utils/reduceDecimal";
 
-function CurrentGame() {
+function CurrentGame({reload, setReload}) {
   const [cost, setCost] = useState(0);
   const [season, setSeason] = useState(0);
+  const [stopReload, setStopReload] = useState(false);
   const { isFull } = useFullBar();
 
   useEffect(() => {
-    loadCost();
-    loadSeason()
-    console.log("Completaa bar");
-    console.log(isFull);
+    if(reload){
+      loadCost()
+      loadSeason()
+      const timer = setTimeout(() => {
+        setStopReload(!stopReload)
+      }, 60000 )
+    }
+  }, [reload,stopReload])
+
+  useEffect(() => {
     miContrato.events.Game(
       {
         // filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},

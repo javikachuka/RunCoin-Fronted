@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import CurrentGame from "../CurrentGame/CurrentGame";
 import SeasonContent from "../SeasonContent/SeasonContent";
 import {
@@ -8,15 +8,16 @@ import {
   SeasonRow,
 } from "./Content.elements";
 
-function Content() {
+function Content({reload, setReload}) {
+
   return (
     <ContentBody>
       <ContentContainer>
         <GameRow>
-          <CurrentGame />
+          <CurrentGame reload={reload} setReload={setReload} />
         </GameRow>
         <SeasonRow>
-          <SeasonContent />
+          <SeasonContent reload={reload} setReload={setReload} />
         </SeasonRow>
       </ContentContainer>
     </ContentBody>

@@ -14,20 +14,28 @@ import { transformSecondsToHumanMin } from "../../../utils/transformSecondsToHum
 import { reduceDecimal } from "../../../utils/reduceDecimal";
 
 
-function SeasonContent() {
+function SeasonContent({ reload, setReload }) {
   const [daysCurrentSeassons, setDaysCurrentSeassons] = useState(0)
   const [rewardInEth, setRewardInEth] = useState(0)
   const [showTimeShort, setShowTimeShort] = useState(false)
   const [seconds, setSeconds] = useState(0)
-  const [reward, setReward] = useState({
-    recompensa: null,
-    nextRecompensa: null
-  })
+  const [stopReload, setStopReload] = useState(false);
+
 
   useEffect(
     () => {
-      getDays()
-      getRew()
+      if (reload) {
+        getDays()
+        getRew()
+        const timer = setTimeout(() => {
+          setStopReload(!stopReload)
+        }, 60000)
+      }
+    }, [reload, stopReload]
+  )
+
+  useEffect(
+    () => {
       miContrato.events.Game(
         {
           // filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
@@ -44,10 +52,10 @@ function SeasonContent() {
 
   useEffect(
     () => {
-      if(seconds > 0){
+      if (seconds > 0) {
         const timer = setTimeout(() => {
           setSeconds(seconds - 1)
-        }, 1000 )
+        }, 1000)
       }
     }, [seconds]
   )
@@ -55,10 +63,9 @@ function SeasonContent() {
   const getDays = () => {
     getCountDaysCurrentOfSeasons().then(
       (result) => {
-        console.log(result)
-        if(result.countDays != 0){
-          setDaysCurrentSeassons(result.countDays+" days")
-        }else {
+        if (result.countDays != 0) {
+          setDaysCurrentSeassons(result.countDays + " days")
+        } else {
           setShowTimeShort(true)
           setSeconds(result.time)
         }
@@ -73,7 +80,6 @@ function SeasonContent() {
   const getRew = () => {
     getPoolSeason().then(
       (result) => {
-        console.log(result)
         getPriceInEth(result).then(res => setRewardInEth(res))
 
       }
@@ -89,20 +95,20 @@ function SeasonContent() {
     <>
       <CardRow>
         <SeasonCard>
-          
+
           <PoolHeader>≈ {reduceDecimal(rewardInEth, 6)} BNB</PoolHeader>
           <Subtitle>SEASON POOL</Subtitle>
         </SeasonCard>
         <SeasonCard>
           {
-            !showTimeShort 
-             ? <EndHeader>{daysCurrentSeassons}</EndHeader>
-             : <EndHeader>{transformSecondsToHumanMin(seconds)}</EndHeader>
+            !showTimeShort
+              ? <EndHeader>{daysCurrentSeassons}</EndHeader>
+              : <EndHeader>{transformSecondsToHumanMin(seconds)}</EndHeader>
           }
           <Subtitle>END OF SEASON</Subtitle>
         </SeasonCard>
       </CardRow>
-      <TopPlayers />
+      <TopPlayers reload={reload} setReload={setReload} />
     </>
   );
 }

@@ -28,7 +28,7 @@ import LoginContext from "../../../context/LoginContext";
 import Alert from "../Alert/Alert";
 import { reduceDecimal } from "../../../utils/reduceDecimal";
 
-const TopPlayers = () => {
+const TopPlayers = ({reload, setReload}) => {
   const [top, setTop] = useState([]);
   const { user } = useContext(LoginContext);
   const [season, setSeason] = useState(0);
@@ -37,9 +37,20 @@ const TopPlayers = () => {
   const [open, setOpen] = useState(false);
   const [type, setType] = useState(null);
   const [msg, setMsg] = useState(null);
+  const [stopReload, setStopReload] = useState(false);
+
+  useEffect(
+    () => {
+      if (reload) {
+        loadList()
+        const timer = setTimeout(() => {
+          setStopReload(!stopReload)
+        }, 60000)
+      }
+    }, [reload, stopReload]
+  )
 
   useEffect(() => {
-    loadList();
     miContrato.events.Game(
       {
         // filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
@@ -65,9 +76,7 @@ const TopPlayers = () => {
 
   const listMenu = () => {
     let menuItems = [];
-    console.log("seasonnn" + season);
     for (let index = season; index >= 0; index--) {
-      console.log("creandoooo");
       if (season == index) {
         menuItems.push(
           <option selected value={index} key={index}>
