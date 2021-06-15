@@ -67,6 +67,11 @@ const Header = () => {
           <NavImg src={logoImg} alt="logo-img"></NavImg>RUNCOIN
         </NavLogo>
         <NavMenu>
+        <NavCoin >
+          <a style={{color: 'white', textDecoration: 'none'}} target="_blank" href="https://pancakeswap.finance/">
+            Buy 
+          </a>
+        </NavCoin>
           {logued ? (
             <DropDownMenu ref={ref}>
               <NavCoin onClick={handleClick}>{countRun} RUN</NavCoin>
