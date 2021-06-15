@@ -10,7 +10,7 @@ import GlobalStyle from "./globalStyles";
 import Game2 from "./pages/Game2";
 import Alert from "./components/Game/Alert/Alert";
 
-const ID_NET = 65
+const ID_NET = 3
 
 const App = () => {
   const [load, setLoad] = useState(false)

@@ -82,21 +82,46 @@ export default function ProgressBar(props) {
   }, [esperar, value]);
 
   if (isLast && timeGame < end) {
-    return (
-      <>
-        <BarRow>
-          {user.player == props.player ? (
-            <PlayerId>you: {transformAddress(props.player)}</PlayerId>
-          ) : (
-            <PlayerId>id: {transformAddress(props.player)}</PlayerId>
-          )}
-          <GameBar>
-            <Bar value={value} className="current-game-animation"></Bar>
-          </GameBar>
-          <TimeBar>End In: {getHours(esperar)}</TimeBar>
-        </BarRow>
-      </>
-    );
+    if(isLast && esperar > 0){
+      return (
+        <>
+          <BarRow>
+            {user.player == props.player ? (
+              <PlayerId>you: {transformAddress(props.player)}</PlayerId>
+            ) : (
+              <PlayerId>id: {transformAddress(props.player)}</PlayerId>
+            )}
+            <GameBar>
+              <Bar value={value} className="current-game-animation"></Bar>
+            </GameBar>
+            <TimeBar>End In: {getHours(esperar)}</TimeBar>
+          </BarRow>
+        </>
+      );
+    }else{
+      return (
+        <>
+          <BarRow>
+            {user.player == props.player ? (
+              <>
+                <PlayerId>you: {transformAddress(props.player)}</PlayerId>
+                <GameBar>
+                  <Bar value={value} className="game-ended-player"></Bar>
+                </GameBar>
+              </>
+            ) : (
+              <>
+                <PlayerId>id: {transformAddress(props.player)}</PlayerId>
+                <GameBar>
+                  <Bar value={value} className="game-ended"></Bar>
+                </GameBar>
+              </>
+            )}
+            <TimeBar>Ended</TimeBar>
+          </BarRow>
+        </>
+      )
+    }
   } else if (timeGame >= end) {
     return (
       <>

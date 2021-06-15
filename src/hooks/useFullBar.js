@@ -11,8 +11,13 @@ export const useFullBar = () => {
         () => {
             if(lastUser != null ){
                 if(user.player == lastUser){
+                    console.log('la concha de la lora');
                     setIsFull(true) ;
+                }else{
+                    setIsFull(false)
                 }
+            }else{
+                setIsFull(false)
             }
         }, [isFull,lastUser]
     )

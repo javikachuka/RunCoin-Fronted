@@ -56,7 +56,9 @@ function ButtonPlay() {
         .then((res) => {
           console.log(res);
           console.log("Has Jugado con exito");
-          handleAlertSuccess("game successfully added");
+          if(res){
+            handleAlertSuccess("game successfully added");
+          }
         })
         .catch((error) => {
           console.log("error al juegar " + error);

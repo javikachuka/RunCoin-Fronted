@@ -10,17 +10,21 @@ import {
 } from "./CurrentGame.elements";
 import ButtonPlay from "../ButtonPlay/ButtonPlay";
 import Alert from "../Alert/Alert";
-import { getPriceInEth, getReward, miContrato } from "../../../services/server";
+import { getPriceInEth, getReward, getSeasonCurrent, miContrato } from "../../../services/server";
 import { BarContextProvider } from "../../../context/BarContext";
 import { useFullBar } from "../../../hooks/useFullBar";
 import ButtonClaim from "../ButtonClaim/ButtonClaim";
+import { Bc } from 'react-cryptocoins';
+import { reduceDecimal } from "../../../utils/reduceDecimal";
 
 function CurrentGame() {
   const [cost, setCost] = useState(0);
+  const [season, setSeason] = useState(0);
   const { isFull } = useFullBar();
 
   useEffect(() => {
     loadCost();
+    loadSeason()
     console.log("Completaa bar");
     console.log(isFull);
     miContrato.events.Game(
@@ -30,6 +34,7 @@ function CurrentGame() {
       },
       (error, event) => {
         loadCost();
+        loadSeason()
       }
     );
   }, []);
@@ -41,14 +46,20 @@ function CurrentGame() {
       }
     });
   };
+  const loadSeason = () => {
+    getSeasonCurrent().then((res) => {
+      setSeason(res)
+    });
+  };
 
   return (
     <>
       <CurrentGameContainer>
-        <SeasonTitle>Season 0</SeasonTitle>
+        <SeasonTitle>Season {season}</SeasonTitle>
         <GameRow>
           <JackPot>
-            <JackPotAmount>≈$ {cost}</JackPotAmount>
+            
+            <JackPotAmount>≈ {reduceDecimal(cost, 6)} BNB</JackPotAmount>
             <JackPotText>current jackpot</JackPotText>
           </JackPot>
           {!isFull ? <ButtonPlay /> : <ButtonClaim />}

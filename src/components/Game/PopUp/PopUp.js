@@ -36,7 +36,7 @@ const PopUp = () => {
           <img alt="infoIcon" src={infoIcon} />
           <Title>PLAY INFO</Title>
         </Row>
-        <Info>Cost: {cost} ETH</Info>
+        <Info>Cost: {cost} BNB</Info>
         <Info>Wait time: {timeWait}</Info>
         <Info>Passport: 0 RUN</Info>
       </PopupContainer>

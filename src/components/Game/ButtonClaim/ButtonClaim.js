@@ -9,7 +9,7 @@ const ButtonClaim = () => {
     const [open, setOpen] = useState(false);
     const [type, setType] = useState(null);
     const [msg, setMsg] = useState(null);
-    const {setIsFull} = useFullBar()
+    const {setLastUser} = useFullBar()
 
     const handleClick = () => {
         claimWinnerPool().then(
@@ -18,7 +18,7 @@ const ButtonClaim = () => {
                     setType("success")
                     setMsg("Claimed")
                     setOpen(true)
-                    setIsFull(false)
+                    setLastUser(null)
                     const timeout = setTimeout(() => {
                         setOpen(false);
                     }, 4000);

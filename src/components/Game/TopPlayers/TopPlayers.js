@@ -4,6 +4,7 @@ import {
   miContrato,
   getSeasonCurrent,
   claimWinnerSeason,
+  getIfClaim,
 } from "../../../services/server";
 import {
   TopListCard,
@@ -25,6 +26,7 @@ import {
 import { transformAddress } from "../../../utils/transformAddress";
 import LoginContext from "../../../context/LoginContext";
 import Alert from "../Alert/Alert";
+import { reduceDecimal } from "../../../utils/reduceDecimal";
 
 const TopPlayers = () => {
   const [top, setTop] = useState([]);
@@ -93,7 +95,6 @@ const TopPlayers = () => {
   };
 
   const handleClick = () => {
-    console.log('con ganas de claim');
     if (seasonSelected == season) {
       setType("error")
       setMsg("Can't claim in the last season")
@@ -105,33 +106,50 @@ const TopPlayers = () => {
         clearTimeout(timeout);
       }
     } else {
-      claimWinnerSeason(seasonSelected)
-        .then(
-          (res) => {
-            if (res == true) {
-              setType("success")
-              setMsg("Claimed")
-              setOpen(true)
-              const timeout = setTimeout(() => {
-                setOpen(false);
-              }, 4000);
-              return () => {
-                clearTimeout(timeout);
-              };
-            }
-            else {
-              setType("error")
-              setMsg("Can't claim in this season")
-              setOpen(true)
-              const timeout = setTimeout(() => {
-                setOpen(false);
-              }, 4000);
-              return () => {
-                clearTimeout(timeout);
-              }
+      getIfClaim(season).then(
+        (value) => {
+          if (!value) {
+            claimWinnerSeason(seasonSelected)
+              .then(
+                (res) => {
+                  if (res == true) {
+                    setType("success")
+                    setMsg("Claimed")
+                    setOpen(true)
+                    const timeout = setTimeout(() => {
+                      setOpen(false);
+                    }, 4000);
+                    return () => {
+                      clearTimeout(timeout);
+                    };
+                  }
+                  else {
+                    setType("error")
+                    setMsg("Can't claim in this season")
+                    setOpen(true)
+                    const timeout = setTimeout(() => {
+                      setOpen(false);
+                    }, 4000);
+                    return () => {
+                      clearTimeout(timeout);
+                    }
+                  }
+                }
+              )
+          } else {
+            setType("error")
+            setMsg("You were claim")
+            setOpen(true)
+            const timeout = setTimeout(() => {
+              setOpen(false);
+            }, 4000);
+            return () => {
+              clearTimeout(timeout);
             }
           }
-        )
+        }
+      )
+
     }
 
   }
@@ -157,14 +175,14 @@ const TopPlayers = () => {
                 <ItemNumber>{index + 1}</ItemNumber>
                 <ItemPlayer>{transformAddress(item.address)}</ItemPlayer>
                 <ItemAmount>{item.cantGame}</ItemAmount>
-                <ItemAmount>{item.reward}</ItemAmount>
+                <ItemAmount>{reduceDecimal(item.reward, 6)}</ItemAmount>
               </ListItem>
             ) : (
               <ListItem>
                 <ItemNumber>{index + 1}</ItemNumber>
                 <ItemPlayer>{transformAddress(item.address)}</ItemPlayer>
                 <ItemAmount>{item.cantGame}</ItemAmount>
-                <ItemAmount>{item.reward}</ItemAmount>
+                <ItemAmount>{reduceDecimal(item.reward, 6)}</ItemAmount>
               </ListItem>
             );
           })}

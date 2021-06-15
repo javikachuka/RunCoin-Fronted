@@ -11,11 +11,14 @@ import { getPoolSeason, miContrato } from '../../../services/server'
 import { getCountDaysCurrentOfSeasons, getReward, getPriceInEth } from "../../../services/server";
 import { transformSecondsToHuman } from "../../../utils/transformSecondsToHuman";
 import { transformSecondsToHumanMin } from "../../../utils/transformSecondsToHumanMin";
+import { reduceDecimal } from "../../../utils/reduceDecimal";
 
 
 function SeasonContent() {
   const [daysCurrentSeassons, setDaysCurrentSeassons] = useState(0)
   const [rewardInEth, setRewardInEth] = useState(0)
+  const [showTimeShort, setShowTimeShort] = useState(false)
+  const [seconds, setSeconds] = useState(0)
   const [reward, setReward] = useState({
     recompensa: null,
     nextRecompensa: null
@@ -39,6 +42,16 @@ function SeasonContent() {
     }, [] // las llaves sirven para ejecutar solamente una vez el useEffect de esta manera copiamos el comportamiento de componentDidMount
   )
 
+  useEffect(
+    () => {
+      if(seconds > 0){
+        const timer = setTimeout(() => {
+          setSeconds(seconds - 1)
+        }, 1000 )
+      }
+    }, [seconds]
+  )
+
   const getDays = () => {
     getCountDaysCurrentOfSeasons().then(
       (result) => {
@@ -46,7 +59,8 @@ function SeasonContent() {
         if(result.countDays != 0){
           setDaysCurrentSeassons(result.countDays+" days")
         }else {
-          setDaysCurrentSeassons(transformSecondsToHumanMin(result.time))
+          setShowTimeShort(true)
+          setSeconds(result.time)
         }
       }
     ).catch(
@@ -75,11 +89,16 @@ function SeasonContent() {
     <>
       <CardRow>
         <SeasonCard>
-          <PoolHeader>≈$ {rewardInEth}</PoolHeader>
+          
+          <PoolHeader>≈ {reduceDecimal(rewardInEth, 6)} BNB</PoolHeader>
           <Subtitle>SEASON POOL</Subtitle>
         </SeasonCard>
         <SeasonCard>
-          <EndHeader>{daysCurrentSeassons}</EndHeader>
+          {
+            !showTimeShort 
+             ? <EndHeader>{daysCurrentSeassons}</EndHeader>
+             : <EndHeader>{transformSecondsToHumanMin(seconds)}</EndHeader>
+          }
           <Subtitle>END OF SEASON</Subtitle>
         </SeasonCard>
       </CardRow>
