@@ -42,7 +42,13 @@ const App = () => {
       <GlobalStyle />
       <Alert msg="Error Network" open={openAlert} type="error" icon="error"  />
       <Route exact path="/">
-        <Redirect to="/game" />
+        <LoginContextProvider>
+          <ListContextProvider>
+            <BarContextProvider>
+              <Game2 />
+            </BarContextProvider>
+          </ListContextProvider>
+        </LoginContextProvider>
       </Route>
       <Route path="/home">
         <Landing />
@@ -52,15 +58,6 @@ const App = () => {
         <LoginContextProvider>
           <ListContextProvider>
             <Game />
-          </ListContextProvider>
-        </LoginContextProvider>
-      </Route>
-      <Route path="/game">
-        <LoginContextProvider>
-          <ListContextProvider>
-            <BarContextProvider>
-              <Game2 />
-            </BarContextProvider>
           </ListContextProvider>
         </LoginContextProvider>
       </Route>
