@@ -9,8 +9,8 @@ export function transformSecondsToHumanMin (seconds) {
         var dDisplay = d > 0 ? d + (d == 1 ? " day, " : " days, ") : "";
         return dDisplay
     }
-    var hDisplay = h > 0 ? h + ":" : "";
-    var mDisplay = m > 0 ? m + ":" : "";
-    var sDisplay = s > 0 ? s : "";
+    var hDisplay = h > 0 ? h < 10 ? "0"+h + ":" : h + ":" : "00";
+    var mDisplay = m > 0 ? m < 10 ? "0"+m +":" : m + ":" : "00";
+    var sDisplay = s > 0 ? s < 10 ? "0"+s : s : "00";
     return  hDisplay + mDisplay + sDisplay;
 }
