@@ -66,8 +66,8 @@ export default function ProgressBar(props) {
             console.log(esperar);
             setLastUser(props.player);
           }
-          return () => clearTimeout(timer);
         }
+        return () => clearTimeout(timer);
       }, 1000);
     } else {
       if (timeGame >= end) {

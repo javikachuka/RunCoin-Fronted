@@ -91,7 +91,7 @@ const Header = ({ reload, setReload }) => {
             />}
             label={
               <Tooltip title="Reload Every Minute">
-                <h6 style={{ color: 'white', fontFamily: 'Lexend Mega' }}>Reload</h6>
+                <h6 style={{ color: 'white', fontFamily: 'Lexend Mega', fontWeight: 'lighter'  }}>Reload</h6>
               </Tooltip>
             }
             labelPlacement="end"

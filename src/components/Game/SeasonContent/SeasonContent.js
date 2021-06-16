@@ -27,9 +27,14 @@ function SeasonContent({ reload, setReload }) {
       if (reload) {
         getDays()
         getRew()
-        const timer = setTimeout(() => {
+        const timerWaitSeason = setTimeout(() => {
           setStopReload(!stopReload)
         }, 60000)
+
+        return () => {
+          clearTimeout(timerWaitSeason)
+        }
+
       }
     }, [reload, stopReload]
   )
@@ -53,9 +58,12 @@ function SeasonContent({ reload, setReload }) {
   useEffect(
     () => {
       if (seconds > 0) {
-        const timer = setTimeout(() => {
+        const timerSeason = setTimeout(() => {
           setSeconds(seconds - 1)
         }, 1000)
+        return () => {
+          clearTimeout(timerSeason);
+        };
       }
     }, [seconds]
   )

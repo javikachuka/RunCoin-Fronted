@@ -27,9 +27,12 @@ function CurrentGame({reload, setReload}) {
     if(reload){
       loadCost()
       loadSeason()
-      const timer = setTimeout(() => {
+      const timerStopGame = setTimeout(() => {
         setStopReload(!stopReload)
       }, 60000 )
+      return () => {
+        clearTimeout(timerStopGame)
+      }
     }
   }, [reload,stopReload])
 
