@@ -42,7 +42,6 @@ function ButtonPlay() {
   };
 
   useEffect(() => {
-    console.log("render game card");
     getCostPlay().then((res) => {
       if (res !== false) {
         setCost(res);
@@ -54,8 +53,6 @@ function ButtonPlay() {
     if (logued !== false) {
       play()
         .then((res) => {
-          console.log(res);
-          console.log("Has Jugado con exito");
           if(res){
             handleAlertSuccess("game successfully added");
           }
@@ -64,7 +61,6 @@ function ButtonPlay() {
           console.log("error al juegar " + error);
         });
     } else {
-      console.log("user disconnected");
       handleAlertError("please connect to a wallet");
     }
   };

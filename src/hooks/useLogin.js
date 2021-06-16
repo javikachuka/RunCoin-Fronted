@@ -8,7 +8,6 @@ export const useLogin = () => {
 
     useEffect(
         () => {
-            console.log('render');
             getUserLogued().then(
                 (res) => {
                     if(res != null){

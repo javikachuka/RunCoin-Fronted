@@ -203,7 +203,6 @@ export async function getWinnersSeason(indexSeasson = -1) {
             .call((err, result) => result);
 
         let entrar = true;
-        console.log(winners);
         for (let i = 0; i < winners.players.length; i++) {
             //si el jugador actual no esta en la lista hay que agregarlo al final
             if (winners.players[i] == account) {
@@ -435,7 +434,6 @@ export async function getSeasonCurrent() {
 export async function getUserLogued() {
     try {
         let data = null;
-        console.log('antes p[epeep');
         getWaitForPlay().then(res => console.log(res))
         await web3.eth.getAccounts(function (err, accounts) {
             // chequea si hay un provider para poder conectarme la block
@@ -557,8 +555,6 @@ export async function watch() {
 }
 
 export async function getPriceInEth(wei) {
-    console.log(wei);
-    // wei = parseInt(wei)
     if (wei == 0 || wei == null) {
         return 0
     } else {
