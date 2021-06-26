@@ -104,7 +104,7 @@ function SeasonContent({ reload, setReload }) {
       <CardRow>
         <SeasonCard>
 
-          <PoolHeader>≈ {reduceDecimal(rewardInEth, 6)} BNB</PoolHeader>
+          <PoolHeader>≈ {reduceDecimal(rewardInEth, 2)} MATIC</PoolHeader>
           <Subtitle>SEASON POOL</Subtitle>
         </SeasonCard>
         <SeasonCard>

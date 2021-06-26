@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { PopupContainer, Row, Title, Info } from "./PopUp.elements";
 import infoIcon from "../../../images/infoIcon.svg";
-import { getCostPlay, getPriceInEth, getWaitForPlay } from "../../../services/server";
+import { getCostPlay, getPriceInEth, getWaitForPlay,getPassport } from "../../../services/server";
 import { transformSecondsToHuman } from "../../../utils/transformSecondsToHuman";
 
 const PopUp = () => {
@@ -27,6 +27,11 @@ const PopUp = () => {
         setTimeWait(transformSecondsToHuman(res))
       }
     )
+    getPassport().then(
+      (res) => {
+        setPassport((res))
+      }
+    )
   }
 
   return (
@@ -36,9 +41,9 @@ const PopUp = () => {
           <img alt="infoIcon" src={infoIcon} />
           <Title>PLAY INFO</Title>
         </Row>
-        <Info>Cost: {cost} BNB</Info>
+        <Info>Cost: {cost} MATIC</Info>
         <Info>Wait time: {timeWait}</Info>
-        <Info>Passport: 0 RUN</Info>
+        <Info>Passport: {passport} RUN</Info>
       </PopupContainer>
     </>
   );

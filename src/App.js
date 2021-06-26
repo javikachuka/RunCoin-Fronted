@@ -40,7 +40,7 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
-      <Alert msg="Error Network" open={openAlert} type="error" icon="error"  />
+      <Alert msg="Network error, you must select the  Polygon / MATIC network" open={openAlert} type="error" icon="error"  />
       <Route exact path="/">
         <LoginContextProvider>
           <ListContextProvider>

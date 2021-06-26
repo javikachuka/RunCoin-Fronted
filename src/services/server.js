@@ -17,6 +17,11 @@ export const miContrato = new web3.eth.Contract(
     Parameters.addressContractOKT
 );
 
+const TokenContract = new web3.eth.Contract(
+    CONST_ABI_TOKEN,
+    Parameters.TG_ContratOKT
+);
+
 //inicia el juego y retorna su {player:string,timestamp:uint ,wait: uint}
 //ejemplo de timestamp = 1287124121241 ; si resto el timestamp del anterior jugador con este serian los segundos que hay
 // de diferencia.
@@ -369,10 +374,7 @@ export async function countToken() {
     try {
         let account = await getUserLogued();
 
-        let TokenContract = new web3.eth.Contract(
-            CONST_ABI_TOKEN,
-            Parameters.TG_ContratOKT
-        );
+      
 
         let decimals = await TokenContract.methods.decimals().call((err, result) => result);
 
@@ -494,9 +496,15 @@ export async function getWaitForPlay() {
 export async function getPassport() {
     try {
 
-        return await miContrato.methods
-            .passport()
-            .call((err, result) => result);
+        let decimals = await TokenContract.methods.decimals().call((err, result) => result);
+       let countPassport= await miContrato.methods
+        .passport()
+        .call((err, result) => result);
+      
+        // console.log(decimals);
+        let aux = countPassport / Math.pow(10, decimals)
+        return aux;
+         
     } catch (Ex) {
         console.log(Ex);
         return 0;
@@ -588,9 +596,21 @@ export async function getIdNetwork() {
     return await web3.eth.net.getId();
 }
 
-window.ethereum.on('chainChanged', () => {
-    document.location.reload()
-})
+try{
+    if (typeof window.ethereum !== 'undefined') {
+        window.ethereum.on('chainChanged', () => {
+            document.location.reload()
+        });
+        window.ethereum.on('accountsChanged', () => {
+            document.location.reload()
+        });
+      }else{
+          alert("You need install metamask");
+      }
+    
+}catch(Ex){
+    console.log("ERROR METAMASK")    
+}
 
 
 

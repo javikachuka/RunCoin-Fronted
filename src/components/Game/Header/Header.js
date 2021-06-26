@@ -30,6 +30,9 @@ const Header = ({ reload, setReload }) => {
   const handleClick = () => {
     setClick(!click)
   };
+  const handleClickHome = () => {
+    window.open("https://runcoin.page/", '_blank');
+  }
 
   function handleClickOutside(event) {
     if (ref.current && !ref.current.contains(event.target)) {
@@ -78,8 +81,8 @@ const Header = ({ reload, setReload }) => {
     <Nav className="shadow-sm">
       {/* <Alert icon="success" msg="Token added" open={open} type="success" /> */}
       <NavBarContainer>
-        <NavLogo>
-          <NavImg src={logoImg} alt="logo-img"></NavImg>RUNCOIN
+        <NavLogo onClick={handleClickHome} >
+          <NavImg  src={logoImg} alt="logo-img" ></NavImg>RUNCOIN
         </NavLogo>
         <NavMenu>
           <FormControlLabel

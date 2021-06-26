@@ -69,7 +69,7 @@ function CurrentGame({reload, setReload}) {
         <GameRow>
           <JackPot>
             
-            <JackPotAmount>≈ {reduceDecimal(cost, 6)} BNB</JackPotAmount>
+            <JackPotAmount>≈ {reduceDecimal(cost, 2)} MATIC</JackPotAmount>
             <JackPotText>current jackpot</JackPotText>
           </JackPot>
           {!isFull ? <ButtonPlay /> : <ButtonClaim />}
