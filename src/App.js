@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Redirect, Route } from "wouter";
-import Game from "./pages/Game";
 import { LoginContextProvider } from "./context/LoginContext";
 import { ListContextProvider } from "./context/ListContext";
 import { BarContextProvider } from './context/BarContext'
 import * as We from "./services/server";
-import Landing from "./pages/Landing";
 import GlobalStyle from "./globalStyles";
 import Game2 from "./pages/Game2";
 import Alert from "./components/Game/Alert/Alert";
@@ -32,15 +30,13 @@ const App = () => {
       }
     }, [load]
   )
-
-
   We.getWinnersSeason();
 
 
   return (
     <>
       <GlobalStyle />
-      <Alert msg="Network error, you must select the  Polygon / MATIC network" open={openAlert} type="error" icon="error"  />
+      <Alert msg="You must select the chain Polygon/MATIC" open={openAlert} type="error" icon="error"  />
       <Route exact path="/">
         <LoginContextProvider>
           <ListContextProvider>
@@ -50,17 +46,7 @@ const App = () => {
           </ListContextProvider>
         </LoginContextProvider>
       </Route>
-      <Route path="/home">
-        <Landing />
-        {/* <h1>Hola esta funcionando</h1> */}
-      </Route>
-      <Route path="/game2">
-        <LoginContextProvider>
-          <ListContextProvider>
-            <Game />
-          </ListContextProvider>
-        </LoginContextProvider>
-      </Route>
+     
     </>
   );
 

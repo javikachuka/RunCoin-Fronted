@@ -3,11 +3,11 @@ import React, { useEffect, useState, useContext } from "react";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import Web3 from "web3";
-import { UserProvider, useUser } from "../context/userContext";
-import LoginContext from "../context/LoginContext";
-import WalletModel from "../models/WalletModel";
-import { useLogin } from "../hooks/useLogin";
-import { transformAddress } from "../utils/transformAddress";
+import { UserProvider, useUser } from "../../context/userContext";
+import LoginContext from "../../context/LoginContext";
+import WalletModel from "../../models/WalletModel";
+import { useLogin } from "../../hooks/useLogin";
+import { transformAddress } from "../../utils/transformAddress";
 import styled from "styled-components";
 
 // const web3 = new Web3(window.web3.currentProvider);

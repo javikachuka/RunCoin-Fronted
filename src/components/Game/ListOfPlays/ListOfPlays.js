@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { miContrato, listPlayerLastSeasons, getMorePlayer, getCountPlayersSeason } from "../../../services/server";
-import Loading from "../../Loading";
+import Loading from "../../Logic/Loading";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { LoadingRow } from "./ListOfPlays.elements";
 import { MoreButton } from "../CurrentGame/CurrentGame.elements"

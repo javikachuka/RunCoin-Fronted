@@ -12,7 +12,7 @@ import {
   DropDownOption,
 } from "./Header.elements";
 import logoImg from "../../../images/runcoin-logo-img.svg";
-import ButtonLog from "../../ButtonLog";
+import ButtonLog from "../../Logic/ButtonLog";
 import { useLogin } from "../../../hooks/useLogin";
 import { addToken, claimToken, countToken } from "../../../services/server";
 import Checkbox from '@material-ui/core/Checkbox';

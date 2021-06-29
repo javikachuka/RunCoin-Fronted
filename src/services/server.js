@@ -6,30 +6,17 @@ import {
     CONST_ABI_TOKEN
 } from "./abiTG.js";
 
-// aplicacion para la conexión con la blockchain
 const Web3 = require("web3");
-//prueba conectar el proveedor de metamask primero sino usa la varabile en Parameters "provider"
 let web3 = new Web3(Web3.givenProvider || Parameters.provider);
-//se crea el contrato
-// export const miContrato = new web3.eth.Contract(CONST_ABI, Parameters.addressContractR);
+
 export const miContrato = new web3.eth.Contract(
     CONST_ABI,
     Parameters.addressContractOKT
 );
 
-const TokenContract = new web3.eth.Contract(
-    CONST_ABI_TOKEN,
-    Parameters.TG_ContratOKT
-);
 
-//inicia el juego y retorna su {player:string,timestamp:uint ,wait: uint}
-//ejemplo de timestamp = 1287124121241 ; si resto el timestamp del anterior jugador con este serian los segundos que hay
-// de diferencia.
-
-
-// Account
 export async function play() {
-    //_cost wei
+
 
     try {
         const _cost = await miContrato.methods.cost().call((err, result) => result);
@@ -52,20 +39,15 @@ export async function play() {
         return confirm;
     } catch (Ex) {
         console.log(Ex);
-        //ocurrieron los siguientes errores,
-        //1- No esta habilitado para jugar.
-        //2- el valor ingresado es menor al costo del juego el costo esta en WEI.
-        //3 - el valor ingresado no es el mismo que el valor enviado.
         return false;
     }
 }
 
-//cant= cantidad de player que se quiere visualizar
+//cant= count player you want see.
 
-//player {player= address , timestamp= el tiempo en el que empezo a jugar, timeGame= el tiempo en que termino de jugar}
-
-//opcion 1 timeGame= seria el tiempo desde que empezo a jugar hasta que otro jugador le corto el tiempo (cada vez que consultas siempre va ser el mismo tiempo).
-//opcion 2 timeGame= si es el ultimo jugador del array te devuelve el tiempo desde que empezo a jugar hasta que se consulto en la blockchain (cada vez que consultas va a cmbiar el tiempo)
+//player {player= address , timestamp= the time that the player begin to play, timeGame= time that the player has finished}
+//option 1 timeGame=  the time from that the player  play and other  player play too   (the time is fixed).
+//option 2 timeGame= if it is the last player then the time change for every query 
 
 export async function listPlayerLastSeasons(cant = -1) {
     try {
@@ -105,10 +87,7 @@ export async function listPlayerLastSeasons(cant = -1) {
     }
 }
 
-//si queres ver mas player en la lista pasas
-//cant= la cantidad de player que queres ver,
-// indexPlayer= a partir del indice que queres ver.
-//indexseason= indice de la session,
+
 export async function getMorePlayer(cant, indexPlayer = -1, indexSeasson = -1) {
     try {
         var players = [];
@@ -120,10 +99,7 @@ export async function getMorePlayer(cant, indexPlayer = -1, indexSeasson = -1) {
         }
         if (indexPlayer < 0) {
             return false;
-            //antes traia desde la ultima posicion, pero ahora controla que no pida indices negativos
-            // indexPlayer = await miContrato.methods
-            //     .getCountPlayer(indexSeasson)
-            //     .call((err, result) => result - 1);
+          
         }
 
         while (cant > 0 && indexPlayer >= 0) {
@@ -166,6 +142,7 @@ export async function getCostPlay() {
 }
 //obtiene los dias que faltan que termine los atributos con el tiempo en segundos que falta para que termine 
 // por ejemplo temporada 1 , 3124124 segundos para que termine en caso que termino es 0
+//get the days in  the sesason will finish
 export async function getCountDaysCurrentOfSeasons() {
     try {
         let time = 0;
@@ -191,8 +168,8 @@ export async function getCountDaysCurrentOfSeasons() {
         return {};
     }
 }
-//trae solamente las direcciones de los ganadores y el jugador actual aunque no haya ganado, si la temporada tiene 3 ganadores solo trae los 3
-//retorna [  {address , cantGame, reward },{}]
+//Get only winner of season + the current player 
+//returns [  {address , cantGame, reward },{}]
 export async function getWinnersSeason(indexSeasson = -1) {
     try {
         let account = await getUserLogued();
@@ -201,7 +178,6 @@ export async function getWinnersSeason(indexSeasson = -1) {
                 .currentSeason()
                 .call((err, result) => result);
         }
-        // winners.players son address   winner.cantGame la cantidad de veces que jugaron
         let allWinners = [];
         let winners = await miContrato.methods
             .getWinnersSeason(indexSeasson)
@@ -209,7 +185,6 @@ export async function getWinnersSeason(indexSeasson = -1) {
 
         let entrar = true;
         for (let i = 0; i < winners.players.length; i++) {
-            //si el jugador actual no esta en la lista hay que agregarlo al final
             if (winners.players[i] == account) {
                 entrar = false;
             }
@@ -238,32 +213,7 @@ export async function getWinnersSeason(indexSeasson = -1) {
         return [];
     }
 }
-//obteiene todas las direcciones de todos los jugadores y la cantidad de vecees que jugaron
-// export async function getAllGameOfPlayer(indexSeasson = -1) {
-//     try {
-//         if (indexSeasson == -1) {
-//             indexSeasson = await miContrato.methods
-//                 .currentSeasson()
-//                 .call((err, result) => result);
-//         }
-//         // winners.players son address   winner.cantGame la cantidad de veces que jugaron
-//         let allPlayers = [];
-//         let players = await miContrato.methods
-//             .getCantGameForPlayer(indexSeasson)
-//             .call((err, result) => result);
-//         for (let i = 0; i < players.player.length; i++) {
-//             allPlayers.push({
-//                 address: players.player[i],
-//                 cantGame: players.cantGame[i],
-//             });
-//         }
 
-//         return allPlayers;
-//     } catch (Ex) {
-//         console.log(Ex);
-//         return [];
-//     }
-// }
 
 export async function getPoolSeason(indexSeasson = -1) {
     try {
@@ -284,7 +234,7 @@ export async function getPoolSeason(indexSeasson = -1) {
         return 0;
     }
 }
-//checkea si el ganador de la temporada seleccionada
+
 export async function checkWinnerSeason(indexSeasson = -1) {
     try {
         let account = await getUserLogued();
@@ -308,7 +258,7 @@ export async function checkWinnerSeason(indexSeasson = -1) {
         return 0;
     }
 }
-//reclama el premio uno de los ganadores de la temporada seleccionada
+
 export async function claimWinnerSeason(indexSeasson = -1) {
     try {
         let account = await getUserLogued();
@@ -333,7 +283,7 @@ export async function claimWinnerSeason(indexSeasson = -1) {
         return false;
     }
 }
-//checkea si el ultimo jugador es el ganador del POOL global
+
 //retorna true
 export async function checkWinnerPool() {
     try {
@@ -350,7 +300,7 @@ export async function checkWinnerPool() {
         return 0;
     }
 }
-//se reclama el pool global
+
 export async function claimWinnerPool() {
     try {
 
@@ -369,12 +319,15 @@ export async function claimWinnerPool() {
         return false;
     }
 }
-//obtener la cantidad de token de la direccion actual
+//it get the token count  of the current player
 export async function countToken() {
     try {
         let account = await getUserLogued();
 
-      
+        let TokenContract = new web3.eth.Contract(
+            CONST_ABI_TOKEN,
+            Parameters.TG_ContratOKT
+        );
 
         let decimals = await TokenContract.methods.decimals().call((err, result) => result);
 
@@ -403,7 +356,6 @@ export async function getPoolRun() {
     }
 }
 
-//reclama los token que tiene
 export async function claimToken() {
     try {
         let account = await getUserLogued();
@@ -438,11 +390,9 @@ export async function getUserLogued() {
         let data = null;
         getWaitForPlay().then(res => console.log(res))
         await web3.eth.getAccounts(function (err, accounts) {
-            // chequea si hay un provider para poder conectarme la block
             if (err != null) {
                 console.error("An error occurred: " + err);
             } else if (accounts.length == 0) {
-                // checkea si hay algun usuario ya logueado a metamask
                 console.log("User is not logged in to MetaMask");
             } else {
                 console.log("User is logged in to MetaMask");
@@ -496,15 +446,9 @@ export async function getWaitForPlay() {
 export async function getPassport() {
     try {
 
-        let decimals = await TokenContract.methods.decimals().call((err, result) => result);
-       let countPassport= await miContrato.methods
-        .passport()
-        .call((err, result) => result);
-      
-        // console.log(decimals);
-        let aux = countPassport / Math.pow(10, decimals)
-        return aux;
-         
+        return await miContrato.methods
+            .passport()
+            .call((err, result) => result);
     } catch (Ex) {
         console.log(Ex);
         return 0;
@@ -552,14 +496,6 @@ export async function watch() {
             });
     });
 
-    // await miContrato.events.Game({
-    //     // filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
-    //     fromBlock: 'latest'
-    // }, function (error, event) {
-    //     console.log('Evento activado');
-    //     console.log(event);
-    //     console.log(error)
-    // });
 }
 
 export async function getPriceInEth(wei) {
@@ -601,29 +537,16 @@ try{
         window.ethereum.on('chainChanged', () => {
             document.location.reload()
         });
-        window.ethereum.on('accountsChanged', () => {
+        window.ethereum.on('accountsChanged', function (accounts) {
             document.location.reload()
-        });
-      }else{
-          alert("You need install metamask");
-      }
+        })
+    }else{
+        alert("you need install metamask")
+    }
     
 }catch(Ex){
-    console.log("ERROR METAMASK")    
+
 }
 
 
 
-//**************Escuchar Eventos en la blockchain */
-//docs : https://web3js.readthedocs.io/en/v1.2.11/web3-eth-contract.html#id48
-//nose si funciona, se supone que escucha cuando el evento se dispara en la blockchain se ejecuta el codigo de adentro.
-// este escucha cada vez que alguien juegue.
-// si funciona te retorna estos parametros {address owner_play, uint256 cost,uint256 timestamp, uint256 wait}
-
-// miContrato.events.Game({
-//     // filter: {myIndexedParam: [20,23], myOtherIndexedParam: '0x123456789...'},
-//     fromBlock: 'latest'
-// }, function (error, event) {
-//     console.log('Evento activado');
-//     console.log(event);
-// });
